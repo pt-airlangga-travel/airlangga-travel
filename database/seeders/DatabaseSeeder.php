@@ -348,5 +348,62 @@ class DatabaseSeeder extends Seeder
             'views' => 890,
             'is_published' => true,
         ]);
+
+        // 8. Documentation Photo Gallery
+        \App\Models\Gallery::create([
+            'title' => 'Keberangkatan Jamaah Umrah Executive Makkah',
+            'image_url' => 'https://images.unsplash.com/photo-1565552645632-d725f8bfc19a?q=80&w=1200',
+            'sort_order' => 1,
+            'is_active' => true,
+        ]);
+
+        \App\Models\Gallery::create([
+            'title' => 'Gathering Perusahaan Tour Bali & Nusa Penida',
+            'image_url' => 'https://images.unsplash.com/photo-1537996194471-e657df975ab4?q=80&w=1200',
+            'sort_order' => 2,
+            'is_active' => true,
+        ]);
+
+        \App\Models\Gallery::create([
+            'title' => 'Sailing Phinisi Trip Labuan Bajo Komodo',
+            'image_url' => 'https://images.unsplash.com/photo-1518548419970-58e3b4079ab2?q=80&w=1200',
+            'sort_order' => 3,
+            'is_active' => true,
+        ]);
+
+        \App\Models\Gallery::create([
+            'title' => 'Dokumentasi Tour Musim Semi Japan Sakura Golden Route',
+            'image_url' => 'https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e?q=80&w=1200',
+            'sort_order' => 4,
+            'is_active' => true,
+        ]);
+
+        \App\Models\Gallery::create([
+            'title' => 'Ziarah Masjid Nabawi Madinah Munawwarah',
+            'image_url' => 'https://images.unsplash.com/photo-1591604466107-ec97de577aff?q=80&w=1200',
+            'sort_order' => 5,
+            'is_active' => true,
+        ]);
+
+        // 9. Trusted Partners & Corporate Clients
+        $partners = [
+            ['name' => 'PT Petrokimia Gresik', 'logo_url' => 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=300'],
+            ['name' => 'PT Telkomsel Indonesia', 'logo_url' => 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=300'],
+            ['name' => 'Bank Jatim', 'logo_url' => 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=300'],
+            ['name' => 'Garuda Indonesia', 'logo_url' => 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=300'],
+            ['name' => 'Saudia Airlines', 'logo_url' => 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=300'],
+            ['name' => 'ASITA Indonesia', 'logo_url' => 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=300'],
+        ];
+
+        foreach ($partners as $idx => $p) {
+            \App\Models\Partner::create([
+                'name' => $p['name'],
+                'logo_url' => $p['logo_url'],
+                'sort_order' => $idx + 1,
+                'is_active' => true,
+            ]);
+        }
+
+        $this->call(ServicesSeeder::class);
     }
 }

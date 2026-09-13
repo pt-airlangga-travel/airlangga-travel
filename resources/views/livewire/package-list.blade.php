@@ -103,6 +103,41 @@
                                     {{ $pkg->description }}
                                 </p>
 
+                                <!-- Labeled Sub-destinations Grid (From Screenshot 1) -->
+                                @if(!empty($pkg->sub_destinations))
+                                    <div class="pt-2 grid grid-cols-3 gap-2">
+                                        @foreach($pkg->sub_destinations as $sub)
+                                            <div class="relative rounded-xl overflow-hidden group/sub border border-slate-100 shadow-sm">
+                                                <img src="{{ $sub['image'] }}" alt="{{ $sub['name'] }}" class="w-full h-16 object-cover group-hover/sub:scale-110 transition-transform">
+                                                <div class="absolute inset-x-0 bottom-0 bg-amber-400 text-slate-950 text-[10px] font-extrabold text-center py-0.5 truncate">
+                                                    {{ $sub['name'] }}
+                                                </div>
+                                            </div>
+                                        @endforeach
+                                    </div>
+                                @endif
+
+                                <!-- Pax Pricing Tier Table (From Screenshot 2) -->
+                                @if(!empty($pkg->pricing_tiers))
+                                    <div class="pt-2">
+                                        <div class="bg-sky-900 text-white rounded-xl p-2 text-[11px] space-y-1">
+                                            <div class="font-extrabold text-amber-300 text-center border-b border-sky-700 pb-1">Tabel Harga Rombongan Pax</div>
+                                            <div class="grid grid-cols-3 font-bold text-slate-200 text-center">
+                                                <span>Jumlah</span>
+                                                <span>Harga</span>
+                                                <span>Keterangan</span>
+                                            </div>
+                                            @foreach(array_slice($pkg->pricing_tiers, 0, 3) as $tier)
+                                                <div class="grid grid-cols-3 text-center border-t border-sky-800/60 py-0.5">
+                                                    <span class="font-bold text-amber-300">{{ $tier['pax'] }}</span>
+                                                    <span>Rp {{ number_format($tier['price'], 0, ',', '.') }}</span>
+                                                    <span class="text-slate-300 text-[10px]">{{ $tier['note'] }}</span>
+                                                </div>
+                                            @endforeach
+                                        </div>
+                                    </div>
+                                @endif
+
                                 <div class="pt-3 border-t border-slate-100 flex items-baseline justify-between">
                                     <div>
                                         <span class="text-[10px] text-slate-400 block font-semibold">Mulai Dari</span>

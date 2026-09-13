@@ -47,7 +47,7 @@ class HomePage extends Component
             ->get();
 
         $categories = Category::all();
-        $testimonials = Testimonial::latest()->take(3)->get();
+        $testimonials = Testimonial::latest()->take(10)->get();
         $articles = Article::where('is_published', true)->latest()->take(3)->get();
 
         return view('livewire.home-page', [

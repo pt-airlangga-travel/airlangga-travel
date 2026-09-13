@@ -10,7 +10,7 @@
 
     <div class="max-w-7xl mx-auto px-4 py-16">
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
-            
+
             <!-- Office Details -->
             <div class="space-y-8">
                 <div>
@@ -34,19 +34,11 @@
                             <p class="text-xs text-slate-500 mt-0.5">+62 812-3456-7890 (24 Jam)</p>
                         </div>
                     </div>
-
-                    <div class="flex items-start gap-4 p-5 bg-white rounded-2xl border border-slate-100 shadow-sm">
-                        <div class="w-10 h-10 rounded-xl bg-purple-100 text-purple-600 flex items-center justify-center font-bold text-lg shrink-0">☎️</div>
-                        <div>
-                            <h4 class="font-bold text-slate-900">Telepon Kantor</h4>
-                            <p class="text-xs text-slate-500 mt-0.5">{{ $phone }}</p>
-                        </div>
-                    </div>
                 </div>
 
                 <!-- Google Maps Embed Container -->
                 <div class="rounded-3xl overflow-hidden shadow-lg border border-slate-200 h-64">
-                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3957.73489!2d112.7567!3d-7.2712!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zN8KwMTYnMTYuMyJTIDExMsKwNDUnMjQuMSJF!5e0!3m2!1sid!2sid!4v1620000000000!5m2!1sid!2sid" 
+                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3957.73489!2d112.7567!3d-7.2712!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zN8KwMTYnMTYuMyJTIDExMsKwNDUnMjQuMSJF!5e0!3m2!1sid!2sid!4v1620000000000!5m2!1sid!2sid"
                             width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
                 </div>
             </div>
@@ -55,8 +47,15 @@
             <div class="bg-white p-8 sm:p-10 rounded-3xl border border-slate-200 shadow-xl space-y-6">
                 <div>
                     <h3 class="text-2xl font-bold text-slate-900">Kirim Pesan Langsung</h3>
-                    <p class="text-xs text-slate-500 mt-1">Isi formulir di bawah ini untuk terhubung langsung dengan tim kami via WA.</p>
+                    <p class="text-xs text-slate-500 mt-1">Isi formulir di bawah ini untuk mengirim pesan langsung ke Database Admin Airlangga Travel.</p>
                 </div>
+
+                @if(session()->has('message'))
+                    <div class="p-4 bg-emerald-50 border border-emerald-200 text-emerald-800 rounded-2xl font-bold text-xs sm:text-sm flex items-center gap-3 shadow-sm">
+                        <span class="text-2xl">✅</span>
+                        <span>{{ session('message') }}</span>
+                    </div>
+                @endif
 
                 <form wire:submit.prevent="sendMessage" class="space-y-4">
                     <div>
@@ -89,8 +88,8 @@
                         @error('messageText') <span class="text-xs text-rose-500 block">{{ $message }}</span> @enderror
                     </div>
 
-                    <button type="submit" class="w-full py-4 bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-sm rounded-2xl shadow-lg shadow-emerald-600/30 flex items-center justify-center gap-2">
-                        Kirim via WhatsApp
+                    <button type="submit" class="w-full py-4 bg-sky-600 hover:bg-sky-500 text-white font-bold text-sm rounded-2xl shadow-lg shadow-sky-600/30 flex items-center justify-center gap-2">
+                        📩 Kirim Pesan Langsung ke Admin
                     </button>
                 </form>
             </div>

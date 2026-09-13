@@ -33,15 +33,7 @@ class ContactPage extends Component
             'status' => 'pending',
         ]);
 
-        $msg = "Halo Airlangga Travel, saya mengirim pesan via Website Kontak:\n\n" .
-               "👤 *Nama*: {$this->name}\n" .
-               "📞 *No. WA*: {$this->phone}\n" .
-               "📌 *Subjek*: {$this->subject}\n" .
-               "💬 *Pesan*: {$this->messageText}\n";
-
-        $waUrl = "https://wa.me/6281234567890?text=" . urlencode($msg);
-
-        $this->dispatch('open-wa-window', url: $waUrl);
+        session()->flash('message', 'Pesan Anda telah berhasil dikirim ke Database Admin Airlangga Travel! Tim kami akan segera menghubungi Anda.');
         $this->reset(['name', 'phone', 'email', 'messageText']);
     }
 
