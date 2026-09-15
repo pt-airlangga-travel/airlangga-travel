@@ -1,6 +1,6 @@
 <div>
     <!-- Traveloka Light Gradient Hero Section with NAVY Text -->
-    <section class="relative bg-gradient-to-br from-sky-100 via-blue-50 to-cyan-100/80 hero-pattern pt-16 pb-32 px-4 overflow-hidden border-b border-sky-100">
+    <section class="relative bg-gradient-to-br from-sky-100 via-blue-50 to-cyan-100/80 hero-pattern pt-12 pb-36 px-4 overflow-hidden border-b border-sky-100">
         <div class="max-w-7xl mx-auto text-center relative z-10 space-y-6">
             <div>
                 <span class="inline-block px-4 py-2 rounded-full bg-sky-600/10 text-sky-900 border border-sky-300/60 text-xs sm:text-sm font-bold tracking-wide shadow-sm">
@@ -8,11 +8,14 @@
                 </span>
             </div>
             
-            <h1 class="text-3xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight leading-tight max-w-4xl mx-auto text-slate-900">
-                Jelajahi Dunia & Ibadah Umrah Khusyuk Bersama <span class="text-sky-600 underline decoration-sky-400 decoration-wavy">Airlangga Travel</span>
-            </h1>
+            <!-- Hero Banner Image (ytpbg.png) -->
+            <div class="my-4 flex justify-center">
+                <img src="{{ asset('assets/ytpbg.png') }}" 
+                     alt="your travelling partner" 
+                     class="h-32 sm:h-48 lg:h-60 max-h-[240px] sm:max-h-[360px] lg:max-h-[480px] w-auto max-w-full object-contain drop-shadow-md transition-transform hover:scale-105">
+            </div>
 
-            <p class="text-slate-700 text-sm sm:text-lg max-w-2xl mx-auto font-medium leading-relaxed">
+            <p class="text-slate-600 text-xs sm:text-sm max-w-2xl mx-auto font-medium leading-relaxed pt-2">
                 Nikmati kemudahan booking paket wisata bali, labuan bajo, umrah bintang 5, serta tiket pesawat & sewa armada transportasi fast response via WhatsApp.
             </p>
         </div>

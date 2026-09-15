@@ -34,6 +34,14 @@
                             <p class="text-xs text-slate-500 mt-0.5">+62 812-3456-7890 (24 Jam)</p>
                         </div>
                     </div>
+
+                    <div class="flex items-start gap-4 p-5 bg-white rounded-2xl border border-slate-100 shadow-sm">
+                        <div class="w-10 h-10 rounded-xl bg-purple-100 text-purple-600 flex items-center justify-center font-bold text-lg shrink-0">✉️</div>
+                        <div>
+                            <h4 class="font-bold text-slate-900">Email Resmi</h4>
+                            <a href="mailto:tourmice@airlanggatravel.com" class="text-xs text-sky-600 hover:underline font-bold mt-0.5 block">tourmice@airlanggatravel.com</a>
+                        </div>
+                    </div>
                 </div>
 
                 <!-- Google Maps Embed Container -->
@@ -46,8 +54,8 @@
             <!-- Send Message Form -->
             <div class="bg-white p-8 sm:p-10 rounded-3xl border border-slate-200 shadow-xl space-y-6">
                 <div>
-                    <h3 class="text-2xl font-bold text-slate-900">Kirim Pesan Langsung</h3>
-                    <p class="text-xs text-slate-500 mt-1">Isi formulir di bawah ini untuk mengirim pesan langsung ke Database Admin Airlangga Travel.</p>
+                    <h3 class="text-2xl font-bold text-slate-900">Kirim Email Langsung</h3>
+                    <p class="text-xs text-slate-500 mt-1">Isi formulir di bawah ini untuk mengirimkan pesan langsung ke <strong class="text-sky-600">tourmice@airlanggatravel.com</strong>.</p>
                 </div>
 
                 @if(session()->has('message'))
@@ -83,13 +91,18 @@
                     </div>
 
                     <div>
+                        <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Email Anda (Opsional)</label>
+                        <input type="email" wire:model="email" placeholder="emailanda@gmail.com..." class="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:ring-2 focus:ring-sky-500">
+                    </div>
+
+                    <div>
                         <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Pesan Anda</label>
                         <textarea wire:model="messageText" rows="4" placeholder="Tuliskan pertanyaan atau rencana perjalanan Anda..." class="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:ring-2 focus:ring-sky-500"></textarea>
                         @error('messageText') <span class="text-xs text-rose-500 block">{{ $message }}</span> @enderror
                     </div>
 
-                    <button type="submit" class="w-full py-4 bg-sky-600 hover:bg-sky-500 text-white font-bold text-sm rounded-2xl shadow-lg shadow-sky-600/30 flex items-center justify-center gap-2">
-                        📩 Kirim Pesan Langsung ke Admin
+                    <button type="submit" class="w-full py-4 bg-sky-600 hover:bg-sky-500 text-white font-bold text-sm rounded-2xl shadow-lg shadow-sky-600/30 flex items-center justify-center gap-2 transition-transform hover:scale-[1.01]">
+                        ✉️ Kirim Pesan ke tourmice@airlanggatravel.com
                     </button>
                 </form>
             </div>
@@ -99,8 +112,10 @@
 
     <script>
         document.addEventListener('livewire:init', () => {
-            Livewire.on('open-wa-window', (event) => {
-                window.open(event.url, '_blank');
+            Livewire.on('open-gmail-compose', (event) => {
+                if (event.url) {
+                    window.open(event.url, '_blank');
+                }
             });
         });
     </script>

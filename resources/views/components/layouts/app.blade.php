@@ -5,9 +5,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{ $title ?? 'Airlangga Travel & Tour Agency | Wisata, Umrah & Tiket Terpercaya' }}</title>
     <!-- Favicon Tab Icon -->
-    <link rel="icon" type="image/png" href="{{ asset('assets/agt.png') }}">
-    <link rel="shortcut icon" type="image/png" href="{{ asset('assets/agt.png') }}">
-    <link rel="apple-touch-icon" href="{{ asset('assets/agt.png') }}">
+    <link rel="icon" type="image/png" href="{{ asset('assets/travel.png') }}">
+    <link rel="shortcut icon" type="image/png" href="{{ asset('assets/travel.png') }}">
+    <link rel="apple-touch-icon" href="{{ asset('assets/travel.png') }}">
+
+    <!-- Google Fonts for Cursive Signature Styling -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Dancing+Script:wght@700&family=Caveat:wght@700&display=swap" rel="stylesheet">
 
     <!-- Vite Assets -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
@@ -116,15 +121,11 @@
     <!-- Main Navigation Bar -->
     <header class="sticky top-0 z-50 glass-nav border-b border-slate-200/80 transition-all duration-300">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex justify-between items-center h-20">
+            <div class="flex justify-between items-center h-20 lg:h-24 py-1">
 
                 <!-- Brand Logo -->
-                <a href="{{ route('home') }}" class="flex items-center gap-3 group">
-                    <img src="{{ asset('assets/agt.png') }}" alt="Airlangga Travel Logo" class="h-12 w-auto object-contain group-hover:scale-105 transition-transform">
-                    <div class="flex flex-col justify-center">
-                        <span class="text-xl font-extrabold tracking-tight text-sky-950 group-hover:text-sky-600 transition-colors leading-tight">Airlangga Travel</span>
-                        <span class="text-[10px] font-bold tracking-widest text-sky-600 uppercase">Tour & Travel Agency</span>
-                    </div>
+                <a href="{{ route('home') }}" class="flex items-center gap-3 group py-1">
+                    <img src="{{ asset('assets/agt.png') }}" alt="Airlangga Travel Logo" class="h-14 sm:h-16 lg:h-20 w-auto object-contain group-hover:scale-105 transition-transform">
                 </a>
 
                 <!-- Desktop Navigation Links -->
@@ -193,17 +194,6 @@
                                     <div class="text-[11px] text-slate-500 font-normal">Paspor Kilat 3 Hari & Visa</div>
                                 </div>
                             </a>
-
-                            <a href="https://tiket.airlanggatravel.com" target="_blank" rel="noopener" class="flex items-center gap-3 px-3.5 py-2.5 rounded-xl hover:bg-sky-50 group transition-colors">
-                                <span class="w-8 h-8 rounded-lg bg-sky-100 text-sky-600 flex items-center justify-center text-sm font-bold shrink-0">🎫</span>
-                                <div>
-                                    <div class="font-bold text-slate-800 text-xs group-hover:text-sky-600 flex items-center gap-1">
-                                        <span>System Ticketing</span>
-                                        <svg class="w-3 h-3 text-sky-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
-                                    </div>
-                                    <div class="text-[11px] text-slate-500 font-normal">tiket.airlanggatravel.com</div>
-                                </div>
-                            </a>
                         </div>
                     </div>
 
@@ -270,10 +260,6 @@
                     <a href="{{ route('services.tickets') }}" class="block px-3 py-2 rounded-lg text-xs font-semibold text-amber-700 hover:bg-amber-50">🎟️ Tiket Wisata</a>
                     <a href="{{ route('services.transport') }}" class="block px-3 py-2 rounded-lg text-xs font-semibold text-blue-700 hover:bg-blue-50">🚐 Sewa Transportasi</a>
                     <a href="{{ route('services.passport-visa') }}" class="block px-3 py-2 rounded-lg text-xs font-semibold text-purple-700 hover:bg-purple-50">🛂 E-Passport & Visa</a>
-                    <a href="https://tiket.airlanggatravel.com" target="_blank" rel="noopener" class="block px-3 py-2 rounded-lg text-xs font-semibold text-sky-700 hover:bg-sky-50 flex items-center justify-between">
-                        <span>🎫 Ticketing System</span>
-                        <svg class="w-3 h-3 text-sky-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
-                    </a>
                 </div>
             </div>
             <a href="https://tiket.airlanggatravel.com" target="_blank" rel="noopener" class="block px-4 py-2.5 rounded-xl font-semibold text-sky-700 hover:bg-sky-50 flex items-center justify-between">
@@ -336,11 +322,7 @@
                 <!-- Column 1: Company Profile -->
                 <div class="space-y-4">
                     <a href="{{ route('home') }}" class="inline-flex items-center gap-3 group">
-                        <img src="{{ asset('assets/agt.png') }}" alt="Airlangga Travel Logo" class="h-11 w-auto object-contain bg-white p-1.5 rounded-xl">
-                        <div class="flex flex-col justify-center">
-                            <span class="text-xl font-extrabold tracking-tight text-white group-hover:text-sky-400 transition-colors leading-tight">Airlangga Travel</span>
-                            <span class="text-[10px] font-bold tracking-widest text-sky-400 uppercase">Tour & Travel Agency</span>
-                        </div>
+                        <img src="{{ asset('assets/agt.png') }}" alt="Airlangga Travel Logo" class="h-14 sm:h-16 w-auto object-contain bg-white p-2 rounded-xl">
                     </a>
 
                     <div class="text-xs font-semibold text-slate-300">
@@ -355,11 +337,11 @@
                 <!-- Column 2: Social Media & Legality -->
                 <div class="space-y-4">
                     <h4 class="text-white font-bold text-sm tracking-wide">Media Sosial & Legalitas</h4>
-                    
+
                     <div class="space-y-3">
                         <div>
-                            <a href="https://www.instagram.com/airlanggatravel_/" 
-                               target="_blank" 
+                            <a href="https://www.instagram.com/airlanggatravel_/"
+                               target="_blank"
                                rel="noopener"
                                class="inline-flex items-center gap-2 px-3.5 py-2 rounded-xl bg-gradient-to-r from-purple-600 via-pink-600 to-amber-500 text-white font-bold text-xs shadow-md hover:opacity-90 transition-opacity">
                                 <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>

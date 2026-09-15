@@ -30,7 +30,7 @@
             </div>
 
             <div class="relative bg-white rounded-3xl p-8 shadow-2xl border border-slate-200/80 flex items-center justify-center h-96">
-                <img src="{{ asset('assets/agt.png') }}"
+                <img src="{{ asset('assets/travel.png') }}"
                      alt="Airlangga Travel Official Logo"
                      class="max-h-56 w-auto object-contain transition-transform hover:scale-105">
 

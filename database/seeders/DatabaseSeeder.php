@@ -35,7 +35,7 @@ class DatabaseSeeder extends Seeder
             'site_tagline' => 'Solusi Perjalanan Wisata, Umrah & Tiket Terpercaya #1',
             'whatsapp_number' => '6281234567890',
             'phone' => '(031) 8945-1234',
-            'email' => 'info@airlanggatravel.com',
+            'email' => 'tourmice@airlanggatravel.com',
             'address' => 'Jl. Raya Airlangga No. 45, Gubeng, Surabaya, Jawa Timur 60286',
             'years_experience' => '15+',
             'happy_customers' => '25.000+',

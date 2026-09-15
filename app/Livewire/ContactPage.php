@@ -4,6 +4,7 @@ namespace App\Livewire;
 
 use App\Models\InquiryLog;
 use App\Models\SiteSetting;
+use Illuminate\Support\Facades\Mail;
 use Livewire\Component;
 
 class ContactPage extends Component
@@ -22,18 +23,52 @@ class ContactPage extends Component
             'messageText' => 'required',
         ]);
 
+        $targetEmail = 'tourmice@airlanggatravel.com';
+        $senderEmail = $this->email ?: 'noreply@airlanggatravel.com';
+
+        $body = "Halo Tim Airlangga Travel,\n\n"
+              . "Pesan baru telah dikirimkan via Website Resmi Airlangga Travel:\n\n"
+              . "--------------------------------------------------\n"
+              . "DATA PENGIRIM:\n"
+              . "- Nama Lengkap  : {$this->name}\n"
+              . "- Nomor WhatsApp: {$this->phone}\n"
+              . "- Email Pengirim: {$senderEmail}\n"
+              . "- Subjek        : {$this->subject}\n\n"
+              . "ISI PESAN / PERTANYAAN:\n"
+              . "{$this->messageText}\n"
+              . "--------------------------------------------------\n\n"
+              . "Pesan ini terkirim otomatis dari Formulir Kontak Website.";
+
+        // 1. Store in Database InquiryLog
         InquiryLog::create([
             'customer_name' => $this->name,
             'customer_phone' => $this->phone,
-            'service_type' => 'Kontak Website: ' . $this->subject,
+            'service_type' => 'Email Direct: ' . $this->subject,
             'details' => [
-                'email' => $this->email,
+                'email' => $this->email ?: $targetEmail,
                 'message' => $this->messageText,
             ],
             'status' => 'pending',
         ]);
 
-        session()->flash('message', 'Pesan Anda telah berhasil dikirim ke Database Admin Airlangga Travel! Tim kami akan segera menghubungi Anda.');
+        // 2. Send Direct Email via Backend Mailer to tourmice@airlanggatravel.com
+        try {
+            Mail::raw($body, function ($message) use ($targetEmail) {
+                $message->to($targetEmail)
+                        ->subject('Pesan Baru Website: ' . $this->subject);
+            });
+        } catch (\Throwable $e) {
+            logger()->error('Direct Mail Send Error: ' . $e->getMessage());
+        }
+
+        // 3. Dispatch Gmail Web Compose URL for instant browser opening & direct sending
+        $gmailUrl = "https://mail.google.com/mail/?view=cm&fs=1&to=" . rawurlencode($targetEmail) 
+                  . "&su=" . rawurlencode("Pesan Baru Website: " . $this->subject) 
+                  . "&body=" . rawurlencode($body);
+
+        $this->dispatch('open-gmail-compose', url: $gmailUrl);
+
+        session()->flash('message', 'Pesan Anda telah berhasil dikirimkan ke ' . $targetEmail . '! Jendela Email Compose juga telah terbuka.');
         $this->reset(['name', 'phone', 'email', 'messageText']);
     }
 
@@ -41,7 +76,7 @@ class ContactPage extends Component
     {
         $address = SiteSetting::get('address');
         $phone = SiteSetting::get('phone');
-        $email = SiteSetting::get('email');
+        $email = 'tourmice@airlanggatravel.com';
         $waNumber = SiteSetting::get('whatsapp_number');
 
         return view('livewire.contact-page', [
