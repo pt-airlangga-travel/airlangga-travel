@@ -193,8 +193,24 @@
                                     <div class="text-[11px] text-slate-500 font-normal">Paspor Kilat 3 Hari & Visa</div>
                                 </div>
                             </a>
+
+                            <a href="https://tiket.airlanggatravel.com" target="_blank" rel="noopener" class="flex items-center gap-3 px-3.5 py-2.5 rounded-xl hover:bg-sky-50 group transition-colors">
+                                <span class="w-8 h-8 rounded-lg bg-sky-100 text-sky-600 flex items-center justify-center text-sm font-bold shrink-0">🎫</span>
+                                <div>
+                                    <div class="font-bold text-slate-800 text-xs group-hover:text-sky-600 flex items-center gap-1">
+                                        <span>System Ticketing</span>
+                                        <svg class="w-3 h-3 text-sky-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
+                                    </div>
+                                    <div class="text-[11px] text-slate-500 font-normal">tiket.airlanggatravel.com</div>
+                                </div>
+                            </a>
                         </div>
                     </div>
+
+                    <a href="https://tiket.airlanggatravel.com" target="_blank" rel="noopener" class="px-3.5 py-2 rounded-xl transition-colors hover:text-sky-600 hover:bg-sky-50/80 font-semibold text-sky-700 flex items-center gap-1">
+                        <span>Ticketing</span>
+                        <svg class="w-3.5 h-3.5 text-sky-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
+                    </a>
 
                     <a href="{{ route('about') }}" class="px-3.5 py-2 rounded-xl transition-colors hover:text-sky-600 hover:bg-sky-50/80 {{ request()->routeIs('about') ? 'text-sky-600 font-bold bg-sky-50' : '' }}">
                         Tentang Kami
@@ -254,8 +270,16 @@
                     <a href="{{ route('services.tickets') }}" class="block px-3 py-2 rounded-lg text-xs font-semibold text-amber-700 hover:bg-amber-50">🎟️ Tiket Wisata</a>
                     <a href="{{ route('services.transport') }}" class="block px-3 py-2 rounded-lg text-xs font-semibold text-blue-700 hover:bg-blue-50">🚐 Sewa Transportasi</a>
                     <a href="{{ route('services.passport-visa') }}" class="block px-3 py-2 rounded-lg text-xs font-semibold text-purple-700 hover:bg-purple-50">🛂 E-Passport & Visa</a>
+                    <a href="https://tiket.airlanggatravel.com" target="_blank" rel="noopener" class="block px-3 py-2 rounded-lg text-xs font-semibold text-sky-700 hover:bg-sky-50 flex items-center justify-between">
+                        <span>🎫 Ticketing System</span>
+                        <svg class="w-3 h-3 text-sky-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
+                    </a>
                 </div>
             </div>
+            <a href="https://tiket.airlanggatravel.com" target="_blank" rel="noopener" class="block px-4 py-2.5 rounded-xl font-semibold text-sky-700 hover:bg-sky-50 flex items-center justify-between">
+                <span>Ticketing</span>
+                <svg class="w-4 h-4 text-sky-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
+            </a>
             <a href="{{ route('about') }}" class="block px-4 py-2.5 rounded-xl font-medium text-slate-700 hover:bg-sky-50 hover:text-sky-600">Tentang Kami</a>
             <a href="{{ route('articles.index') }}" class="block px-4 py-2.5 rounded-xl font-medium text-slate-700 hover:bg-sky-50 hover:text-sky-600">Blog</a>
             <a href="{{ route('contact') }}" class="block px-4 py-2.5 rounded-xl font-medium text-slate-700 hover:bg-sky-50 hover:text-sky-600">Kontak</a>
