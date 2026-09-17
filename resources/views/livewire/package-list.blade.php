@@ -83,16 +83,18 @@
                                         {{ $pkg->badge }}
                                     </div>
                                 @endif
-
-                                <div class="absolute bottom-4 right-4 bg-slate-900/80 backdrop-blur-md text-white font-bold text-xs px-3 py-1.5 rounded-xl">
-                                    ⏳ {{ $pkg->duration_days }} Hari {{ $pkg->duration_nights }} Malam
-                                </div>
                             </div>
 
                             <div class="p-6 space-y-3">
-                                <div class="flex items-center gap-2 text-xs font-semibold text-sky-600">
-                                    <svg class="w-4 h-4 text-sky-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
-                                    {{ $pkg->destination }}
+                                <div class="flex items-center gap-2 text-xs font-semibold text-sky-600 line-clamp-1">
+                                    <svg class="w-4 h-4 text-sky-500 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
+                                    <span>
+                                        @if(!empty($pkg->sub_destinations))
+                                            {{ implode(', ', array_column($pkg->sub_destinations, 'name')) }}
+                                        @else
+                                            {{ $pkg->destination }}
+                                        @endif
+                                    </span>
                                 </div>
 
                                 <h3 class="text-lg font-bold text-slate-900 line-clamp-2 hover:text-sky-600 transition-colors">
@@ -102,41 +104,6 @@
                                 <p class="text-xs text-slate-500 line-clamp-2 leading-relaxed">
                                     {{ $pkg->description }}
                                 </p>
-
-                                <!-- Labeled Sub-destinations Grid (From Screenshot 1) -->
-                                @if(!empty($pkg->sub_destinations))
-                                    <div class="pt-2 grid grid-cols-3 gap-2">
-                                        @foreach($pkg->sub_destinations as $sub)
-                                            <div class="relative rounded-xl overflow-hidden group/sub border border-slate-100 shadow-sm">
-                                                <img src="{{ $sub['image'] }}" alt="{{ $sub['name'] }}" class="w-full h-16 object-cover group-hover/sub:scale-110 transition-transform">
-                                                <div class="absolute inset-x-0 bottom-0 bg-amber-400 text-slate-950 text-[10px] font-extrabold text-center py-0.5 truncate">
-                                                    {{ $sub['name'] }}
-                                                </div>
-                                            </div>
-                                        @endforeach
-                                    </div>
-                                @endif
-
-                                <!-- Pax Pricing Tier Table (From Screenshot 2) -->
-                                @if(!empty($pkg->pricing_tiers))
-                                    <div class="pt-2">
-                                        <div class="bg-sky-900 text-white rounded-xl p-2 text-[11px] space-y-1">
-                                            <div class="font-extrabold text-amber-300 text-center border-b border-sky-700 pb-1">Tabel Harga Rombongan Pax</div>
-                                            <div class="grid grid-cols-3 font-bold text-slate-200 text-center">
-                                                <span>Jumlah</span>
-                                                <span>Harga</span>
-                                                <span>Keterangan</span>
-                                            </div>
-                                            @foreach(array_slice($pkg->pricing_tiers, 0, 3) as $tier)
-                                                <div class="grid grid-cols-3 text-center border-t border-sky-800/60 py-0.5">
-                                                    <span class="font-bold text-amber-300">{{ $tier['pax'] }}</span>
-                                                    <span>Rp {{ number_format($tier['price'], 0, ',', '.') }}</span>
-                                                    <span class="text-slate-300 text-[10px]">{{ $tier['note'] }}</span>
-                                                </div>
-                                            @endforeach
-                                        </div>
-                                    </div>
-                                @endif
 
                                 <div class="pt-3 border-t border-slate-100 flex items-baseline justify-between">
                                     <div>

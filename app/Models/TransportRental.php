@@ -17,6 +17,7 @@ class TransportRental extends Model
         'fleet_items',
         'cover_image',
         'detail_images',
+        'drive_link',
         'description',
         'is_featured',
         'is_active',

@@ -82,7 +82,7 @@
         <div class="text-center max-w-2xl mx-auto mb-10 space-y-2">
             <span class="text-sky-600 font-extrabold text-xs tracking-widest uppercase">Galeri & Dokumentasi</span>
             <h2 class="text-3xl font-extrabold text-slate-900">Dokumentasi Perjalanan</h2>
-            <p class="text-slate-500 text-xs sm:text-sm">Kumpulan foto dokumentasi tour & ibadah Umrah Airlangga Travel.</p>
+            <p class="text-slate-500 text-xs sm:text-sm">Kumpulan foto dokumentasi Airlangga Travel.</p>
         </div>
 
         @if($galleries->isNotEmpty())

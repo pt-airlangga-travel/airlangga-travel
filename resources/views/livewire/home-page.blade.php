@@ -147,17 +147,19 @@
                                     {{ $pkg->badge }}
                                 </div>
                             @endif
-
-                            <div class="absolute bottom-4 right-4 bg-slate-900/80 backdrop-blur-md text-white font-bold text-xs px-3 py-1.5 rounded-xl">
-                                ⏳ {{ $pkg->duration_days }} Hari {{ $pkg->duration_nights }} Malam
-                            </div>
                         </div>
 
                         <!-- Content -->
                         <div class="p-6 space-y-3">
-                            <div class="flex items-center gap-2 text-xs font-semibold text-sky-600">
-                                <svg class="w-4 h-4 text-sky-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
-                                {{ $pkg->destination }}
+                            <div class="flex items-center gap-2 text-xs font-semibold text-sky-600 line-clamp-1">
+                                <svg class="w-4 h-4 text-sky-500 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
+                                <span>
+                                    @if(!empty($pkg->sub_destinations))
+                                        {{ implode(', ', array_column($pkg->sub_destinations, 'name')) }}
+                                    @else
+                                        {{ $pkg->destination }}
+                                    @endif
+                                </span>
                             </div>
 
                             <h3 class="text-lg font-bold text-slate-900 line-clamp-2 hover:text-sky-600 transition-colors">

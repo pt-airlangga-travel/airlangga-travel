@@ -2,22 +2,26 @@
 
 use App\Livewire\AboutPage;
 use App\Livewire\Admin\AdminDashboard;
+use App\Livewire\Admin\AdminGalleries;
 use App\Livewire\Admin\AdminInquiries;
 use App\Livewire\Admin\AdminLogin;
 use App\Livewire\Admin\AdminPackages;
-use App\Livewire\Admin\AdminSettings;
-use App\Livewire\Admin\AdminTransports;
+use App\Livewire\Admin\AdminPartners;
 use App\Livewire\Admin\AdminPassportVisa;
+use App\Livewire\Admin\AdminSettings;
+use App\Livewire\Admin\AdminTestimonials;
+use App\Livewire\Admin\AdminTickets;
+use App\Livewire\Admin\AdminTransports;
 use App\Livewire\ArticleDetail;
 use App\Livewire\ArticleList;
 use App\Livewire\ContactPage;
 use App\Livewire\HomePage;
 use App\Livewire\PackageDetail;
 use App\Livewire\PackageList;
+use App\Livewire\PassportVisaPage;
 use App\Livewire\TicketBooking;
 use App\Livewire\TicketsWisataPage;
 use App\Livewire\TransportRentalPage;
-use App\Livewire\PassportVisaPage;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -49,11 +53,12 @@ Route::prefix('admin')->name('admin.')->group(function () {
     Route::middleware('auth')->group(function () {
         Route::get('/', AdminDashboard::class)->name('dashboard');
         Route::get('/packages', AdminPackages::class)->name('packages');
+        Route::get('/tickets', AdminTickets::class)->name('tickets');
         Route::get('/transports', AdminTransports::class)->name('transports');
         Route::get('/passport-visa', AdminPassportVisa::class)->name('passport-visa');
-        Route::get('/testimonials', \App\Livewire\Admin\AdminTestimonials::class)->name('testimonials');
-        Route::get('/galleries', \App\Livewire\Admin\AdminGalleries::class)->name('galleries');
-        Route::get('/partners', \App\Livewire\Admin\AdminPartners::class)->name('partners');
+        Route::get('/testimonials', AdminTestimonials::class)->name('testimonials');
+        Route::get('/galleries', AdminGalleries::class)->name('galleries');
+        Route::get('/partners', AdminPartners::class)->name('partners');
         Route::get('/inquiries', AdminInquiries::class)->name('inquiries');
         Route::get('/settings', AdminSettings::class)->name('settings');
 
@@ -61,6 +66,7 @@ Route::prefix('admin')->name('admin.')->group(function () {
             Auth::logout();
             request()->session()->invalidate();
             request()->session()->regenerateToken();
+
             return redirect()->route('admin.login');
         })->name('logout');
     });

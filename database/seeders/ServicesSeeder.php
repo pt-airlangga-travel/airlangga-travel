@@ -3,11 +3,10 @@
 namespace Database\Seeders;
 
 use App\Models\Category;
+use App\Models\PassportVisaService;
 use App\Models\TourPackage;
 use App\Models\TransportRental;
-use App\Models\PassportVisaService;
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Str;
 
 class ServicesSeeder extends Seeder
 {
@@ -35,21 +34,21 @@ class ServicesSeeder extends Seeder
                 'gallery' => [
                     'https://images.unsplash.com/photo-1570784428784-2840de469335?auto=format&fit=crop&w=1200&q=80',
                     'https://images.unsplash.com/photo-1537996194471-e657df975ab4?auto=format&fit=crop&w=1200&q=80',
-                    'https://images.unsplash.com/photo-1518548419970-58e3b4079ab2?auto=format&fit=crop&w=1200&q=80'
+                    'https://images.unsplash.com/photo-1518548419970-58e3b4079ab2?auto=format&fit=crop&w=1200&q=80',
                 ],
                 'sub_destinations' => [
                     [
                         'name' => 'Sasak Ende',
-                        'image' => 'https://images.unsplash.com/photo-1537996194471-e657df975ab4?auto=format&fit=crop&w=800&q=80'
+                        'image' => 'https://images.unsplash.com/photo-1537996194471-e657df975ab4?auto=format&fit=crop&w=800&q=80',
                     ],
                     [
                         'name' => 'Gili Trawangan',
-                        'image' => 'https://images.unsplash.com/photo-1570784428784-2840de469335?auto=format&fit=crop&w=800&q=80'
+                        'image' => 'https://images.unsplash.com/photo-1570784428784-2840de469335?auto=format&fit=crop&w=800&q=80',
                     ],
                     [
                         'name' => 'Bukit Seger',
-                        'image' => 'https://images.unsplash.com/photo-1518548419970-58e3b4079ab2?auto=format&fit=crop&w=800&q=80'
-                    ]
+                        'image' => 'https://images.unsplash.com/photo-1518548419970-58e3b4079ab2?auto=format&fit=crop&w=800&q=80',
+                    ],
                 ],
                 'inclusions' => [
                     'Transportasi Lokal',
@@ -58,7 +57,7 @@ class ServicesSeeder extends Seeder
                     'Tiket Wisata (Bukit Merese, Pantai Kuta Mandalika, Desa Sukarare)',
                     'Makan sesuai program',
                     'Guide profesional',
-                    'Boat penyeberangan Gili'
+                    'Boat penyeberangan Gili',
                 ],
                 'badge' => 'Terpopuler Lombok',
                 'is_featured' => true,
@@ -81,21 +80,21 @@ class ServicesSeeder extends Seeder
                 'gallery' => [
                     'https://images.unsplash.com/photo-1537996194471-e657df975ab4?auto=format&fit=crop&w=1200&q=80',
                     'https://images.unsplash.com/photo-1518548419970-58e3b4079ab2?auto=format&fit=crop&w=1200&q=80',
-                    'https://images.unsplash.com/photo-1544644181-1484b3fdfc62?auto=format&fit=crop&w=1200&q=80'
+                    'https://images.unsplash.com/photo-1544644181-1484b3fdfc62?auto=format&fit=crop&w=1200&q=80',
                 ],
                 'sub_destinations' => [
                     [
                         'name' => 'Panglipuran',
-                        'image' => 'https://images.unsplash.com/photo-1544644181-1484b3fdfc62?auto=format&fit=crop&w=800&q=80'
+                        'image' => 'https://images.unsplash.com/photo-1544644181-1484b3fdfc62?auto=format&fit=crop&w=800&q=80',
                     ],
                     [
                         'name' => 'Water Sport',
-                        'image' => 'https://images.unsplash.com/photo-1518548419970-58e3b4079ab2?auto=format&fit=crop&w=800&q=80'
+                        'image' => 'https://images.unsplash.com/photo-1518548419970-58e3b4079ab2?auto=format&fit=crop&w=800&q=80',
                     ],
                     [
                         'name' => 'Kintamani',
-                        'image' => 'https://images.unsplash.com/photo-1537996194471-e657df975ab4?auto=format&fit=crop&w=800&q=80'
-                    ]
+                        'image' => 'https://images.unsplash.com/photo-1537996194471-e657df975ab4?auto=format&fit=crop&w=800&q=80',
+                    ],
                 ],
                 'inclusions' => [
                     'Transportasi Lokal',
@@ -103,7 +102,7 @@ class ServicesSeeder extends Seeder
                     'Snack & Air Mineral',
                     'Wisata (Kintamani, GWK, Banana boat, Panglipuran, Melasti)',
                     'Makan & Snack',
-                    'Banner rombongan'
+                    'Banner rombongan',
                 ],
                 'badge' => 'Best Seller Bali',
                 'is_featured' => true,
@@ -126,7 +125,7 @@ class ServicesSeeder extends Seeder
                 'cover_image' => 'https://images.unsplash.com/photo-1564769625905-50e93615e769?auto=format&fit=crop&w=1200&q=80',
                 'gallery' => [
                     'https://images.unsplash.com/photo-1564769625905-50e93615e769?auto=format&fit=crop&w=1200&q=80',
-                    'https://images.unsplash.com/photo-1591604466107-ec97de577aff?auto=format&fit=crop&w=1200&q=80'
+                    'https://images.unsplash.com/photo-1591604466107-ec97de577aff?auto=format&fit=crop&w=1200&q=80',
                 ],
                 'pricing_tiers' => [
                     ['pax' => '40 Pax', 'price' => 345000, 'note' => '2x Makan'],
@@ -144,7 +143,7 @@ class ServicesSeeder extends Seeder
                     'Makan sesuai paket',
                     'Tour Leader berpengalaman',
                     'Banner & Dokumentasi',
-                    'Asuransi Perjalanan'
+                    'Asuransi Perjalanan',
                 ],
                 'badge' => 'Paket Ziarah Rombongan',
                 'is_featured' => true,
@@ -160,19 +159,21 @@ class ServicesSeeder extends Seeder
                 'category' => 'Surabaya Area & Antar Kota',
                 'inclusions' => ['BBM', 'Unit Armada Clean', 'Driver Profesional'],
                 'fleet_items' => [
-                    ['unit' => 'Innova Reborn', 'seat' => '7 pax', 'price_per_day' => 916000],
-                    ['unit' => 'All New Avanza', 'seat' => '7 pax', 'price_per_day' => 855000],
-                    ['unit' => 'Zenix', 'seat' => '7 pax', 'price_per_day' => 1588000],
-                    ['unit' => 'HiAce Premio / Commuter', 'seat' => '10-12 pax', 'price_per_day' => 1465000],
-                    ['unit' => 'Medium Bus', 'seat' => '30-35 pax', 'price_per_day' => 2442000],
-                    ['unit' => 'Big Bus VIP', 'seat' => '50-59 pax', 'price_per_day' => 3358000],
+                    ['unit' => 'Innova Reborn', 'seat' => '7 pax', 'price_per_day' => 916000, 'image' => 'https://images.unsplash.com/photo-1549317661-bd32c8ce0db2?auto=format&fit=crop&w=1200&q=80', 'link' => 'https://drive.google.com/drive/folders/123456789_innova'],
+                    ['unit' => 'All New Avanza', 'seat' => '7 pax', 'price_per_day' => 855000, 'image' => 'https://images.unsplash.com/photo-1552519507-da3b142c6e3d?auto=format&fit=crop&w=1200&q=80', 'link' => 'https://drive.google.com/drive/folders/123456789_avanza'],
+                    ['unit' => 'Zenix', 'seat' => '7 pax', 'price_per_day' => 1588000, 'image' => 'https://images.unsplash.com/photo-1550355291-bbee04a92027?auto=format&fit=crop&w=1200&q=80', 'link' => 'https://drive.google.com/drive/folders/123456789_zenix'],
+                    ['unit' => 'HiAce Premio / Commuter', 'seat' => '10-12 pax', 'price_per_day' => 1465000, 'image' => 'https://images.unsplash.com/photo-1549399542-7e3f8b79c341?auto=format&fit=crop&w=1200&q=80', 'link' => 'https://drive.google.com/drive/folders/123456789_hiace'],
+                    ['unit' => 'Medium Bus', 'seat' => '30-35 pax', 'price_per_day' => 2442000, 'image' => 'https://images.unsplash.com/photo-1570125909232-eb263c188f7e?auto=format&fit=crop&w=1200&q=80', 'link' => 'https://drive.google.com/drive/folders/123456789_medium_bus'],
+                    ['unit' => 'Big Bus VIP', 'seat' => '50-59 pax', 'price_per_day' => 3358000, 'image' => 'https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?auto=format&fit=crop&w=1200&q=80', 'link' => 'https://drive.google.com/drive/folders/123456789_big_bus'],
                 ],
                 'cover_image' => 'https://images.unsplash.com/photo-1549317661-bd32c8ce0db2?auto=format&fit=crop&w=1200&q=80',
                 'detail_images' => [
                     'https://images.unsplash.com/photo-1549317661-bd32c8ce0db2?auto=format&fit=crop&w=1200&q=80',
-                    'https://images.unsplash.com/photo-1559297434-fae8a1916a79?auto=format&fit=crop&w=1200&q=80',
-                    'https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=1200&q=80'
+                    'https://images.unsplash.com/photo-1549399542-7e3f8b79c341?auto=format&fit=crop&w=1200&q=80',
+                    'https://images.unsplash.com/photo-1570125909232-eb263c188f7e?auto=format&fit=crop&w=1200&q=80',
+                    'https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?auto=format&fit=crop&w=1200&q=80',
                 ],
+                'drive_link' => 'https://drive.google.com/drive/folders/123456789_airlangga_travel_armada',
                 'description' => 'Layanan sewa armada kendaraan paling lengkap di Surabaya untuk keperluan perjalanan dinas, wisata keluarga, ziarah, dan city tour antar kota.',
                 'is_featured' => true,
                 'is_active' => true,
@@ -188,7 +189,7 @@ class ServicesSeeder extends Seeder
                 'benefits' => [
                     'Tanpa antri kuota foto imigrasi',
                     'Datang langsung tinggal foto',
-                    'Paspor jadi 3 hari kerja setelah foto (sabtu, minggu & tanggal merah tidak terhitung)'
+                    'Paspor jadi 3 hari kerja setelah foto (sabtu, minggu & tanggal merah tidak terhitung)',
                 ],
                 'pricing_options' => [
                     ['item' => 'Epaspor 5 tahun', 'price' => 1400000, 'note' => 'Berlaku 5 Tahun'],
@@ -202,7 +203,7 @@ class ServicesSeeder extends Seeder
                 'cover_image' => 'https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?auto=format&fit=crop&w=1200&q=80',
                 'detail_images' => [
                     'https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?auto=format&fit=crop&w=1200&q=80',
-                    'https://images.unsplash.com/photo-1436491865332-7a61a109cc05?auto=format&fit=crop&w=1200&q=80'
+                    'https://images.unsplash.com/photo-1436491865332-7a61a109cc05?auto=format&fit=crop&w=1200&q=80',
                 ],
                 'description' => 'Jasa pengurusan E-Paspor resmi kilat 3 hari serta pengajuan dokumen Visa turis/bisnis ke berbagai negara tujuan favorit dunia.',
                 'is_featured' => true,

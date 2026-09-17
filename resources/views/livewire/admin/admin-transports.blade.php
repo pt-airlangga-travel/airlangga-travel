@@ -81,26 +81,55 @@
                         <input type="file" wire:model="detailImageFiles" multiple class="w-full text-xs text-slate-500">
                     </div>
 
+                    <!-- Google Drive Link -->
+                    <div>
+                        <label class="font-bold text-slate-700 block mb-1">Link Google Drive Dokumentasi / Foto Armada</label>
+                        <div class="flex gap-2">
+                            <input type="url" wire:model="drive_link" placeholder="https://drive.google.com/drive/folders/..." class="w-full px-4 py-2 bg-slate-50 border rounded-xl font-semibold text-xs sm:text-sm">
+                            @if(!empty($drive_link))
+                                <a href="{{ $drive_link }}" target="_blank" rel="noopener noreferrer" class="px-3 py-2 bg-sky-600 hover:bg-sky-500 text-white font-bold text-xs rounded-xl shrink-0 flex items-center gap-1 shadow-sm">
+                                    Buka Drive ↗
+                                </a>
+                            @endif
+                        </div>
+                    </div>
+
                     <!-- Fleet Items Builder -->
                     <div class="border border-slate-200 rounded-2xl p-4 bg-slate-50 space-y-3">
-                        <div class="flex justify-between items-center">
+                        <div class="flex justify-between items-center mb-1">
                             <span class="font-bold text-slate-800">Item Unit Armada & Harga</span>
                             <button type="button" wire:click="addFleetItem" class="px-3 py-1 bg-sky-600 text-white rounded-lg text-xs font-bold">+ Tambah Unit</button>
                         </div>
 
+                        <!-- Column Labels -->
+                        <div class="grid grid-cols-12 gap-2 text-[11px] font-bold text-slate-500 uppercase px-1">
+                            <div class="col-span-3">Nama Unit</div>
+                            <div class="col-span-2">Pax / Seat</div>
+                            <div class="col-span-2">Harga / Hari</div>
+                            <div class="col-span-2">URL Foto</div>
+                            <div class="col-span-2">Link Foto (Drive)</div>
+                            <div class="col-span-1 text-center">Hapus</div>
+                        </div>
+
                         @foreach($fleet_items as $index => $item)
                             <div class="grid grid-cols-12 gap-2 items-center">
-                                <div class="col-span-5">
-                                    <input type="text" wire:model="fleet_items.{{ $index }}.unit" placeholder="Nama Unit (misal: HiAce)" class="w-full px-3 py-1.5 bg-white border rounded-lg">
-                                </div>
                                 <div class="col-span-3">
-                                    <input type="text" wire:model="fleet_items.{{ $index }}.seat" placeholder="Seat (misal: 10-12 pax)" class="w-full px-3 py-1.5 bg-white border rounded-lg">
+                                    <input type="text" wire:model="fleet_items.{{ $index }}.unit" placeholder="Innova Reborn" class="w-full px-3 py-1.5 bg-white border rounded-lg text-xs">
                                 </div>
-                                <div class="col-span-3">
-                                    <input type="number" wire:model="fleet_items.{{ $index }}.price_per_day" placeholder="Harga/Hari" class="w-full px-3 py-1.5 bg-white border rounded-lg">
+                                <div class="col-span-2">
+                                    <input type="text" wire:model="fleet_items.{{ $index }}.seat" placeholder="7 pax" class="w-full px-3 py-1.5 bg-white border rounded-lg text-xs">
                                 </div>
-                                <div class="col-span-1 text-right">
-                                    <button type="button" wire:click="removeFleetItem({{ $index }})" class="text-red-500 font-bold text-lg">✕</button>
+                                <div class="col-span-2">
+                                    <input type="number" wire:model="fleet_items.{{ $index }}.price_per_day" placeholder="916000" class="w-full px-3 py-1.5 bg-white border rounded-lg text-xs">
+                                </div>
+                                <div class="col-span-2">
+                                    <input type="text" wire:model="fleet_items.{{ $index }}.image" placeholder="URL Display Foto" class="w-full px-3 py-1.5 bg-white border rounded-lg text-xs">
+                                </div>
+                                <div class="col-span-2">
+                                    <input type="text" wire:model="fleet_items.{{ $index }}.link" placeholder="Link Drive / External" class="w-full px-3 py-1.5 bg-white border rounded-lg text-xs">
+                                </div>
+                                <div class="col-span-1 text-center">
+                                    <button type="button" wire:click="removeFleetItem({{ $index }})" class="text-red-500 font-bold text-lg hover:text-red-700">✕</button>
                                 </div>
                             </div>
                         @endforeach
