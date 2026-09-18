@@ -3,20 +3,30 @@
 namespace App\Livewire;
 
 use App\Models\InquiryLog;
+use App\Models\SiteSetting;
 use App\Models\TicketService;
 use Livewire\Component;
 
 class TicketBooking extends Component
 {
     public string $ticketType = 'pesawat'; // pesawat, kereta, bus, mobil
+
     public string $origin = 'Surabaya (SUB)';
+
     public string $destination = 'Jakarta (CGK)';
+
     public string $departureDate = '';
+
     public string $returnDate = '';
+
     public int $passengers = 1;
+
     public string $seatClass = 'Eksekutif';
+
     public string $customerName = '';
+
     public string $customerPhone = '';
+
     public string $notes = '';
 
     public function submitTicketInquiry()
@@ -56,27 +66,33 @@ class TicketBooking extends Component
         ]);
 
         // 2. Format WA message
-        $msg = "Halo Airlangga Travel, saya ingin reservasi *{$serviceLabel}*:\n\n" .
-               "📍 *Rute Asal*: {$this->origin}\n" .
-               "🏁 *Rute Tujuan*: {$this->destination}\n" .
+        $msg = "Halo Airlangga Travel, saya ingin reservasi *{$serviceLabel}*:\n\n".
+               "📍 *Rute Asal*: {$this->origin}\n".
+               "🏁 *Rute Tujuan*: {$this->destination}\n".
                "📅 *Tgl Berangkat*: {$this->departureDate}\n";
 
-        if (!empty($this->returnDate)) {
+        if (! empty($this->returnDate)) {
             $msg .= "🔄 *Tgl Pulang*: {$this->returnDate}\n";
         }
 
-        $msg .= "👥 *Jumlah Penumpang*: {$this->passengers} Orang\n" .
-                "💺 *Kelas/Tipe*: {$this->seatClass}\n" .
-                "👤 *Nama Pemesan*: {$this->customerName}\n" .
+        $msg .= "👥 *Jumlah Penumpang*: {$this->passengers} Orang\n".
+                "💺 *Kelas/Tipe*: {$this->seatClass}\n".
+                "👤 *Nama Pemesan*: {$this->customerName}\n".
                 "📞 *No. WA*: {$this->customerPhone}\n";
 
-        if (!empty($this->notes)) {
+        if (! empty($this->notes)) {
             $msg .= "📝 *Catatan*: {$this->notes}\n";
         }
 
         $msg .= "\nMohon info ketersediaan tiket & harga promo terbaik. Terima kasih!";
 
-        $waUrl = "https://wa.me/6281234567890?text=" . urlencode($msg);
+        $waNumber = SiteSetting::get('whatsapp_number') ?: '6281233020117';
+        $cleanWa = preg_replace('/[^0-9]/', '', $waNumber);
+        if (str_starts_with($cleanWa, '0')) {
+            $cleanWa = '62'.substr($cleanWa, 1);
+        }
+
+        $waUrl = "https://wa.me/{$cleanWa}?text=".urlencode($msg);
 
         $this->dispatch('open-wa-window', url: $waUrl);
     }

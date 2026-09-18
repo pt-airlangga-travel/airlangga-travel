@@ -4,6 +4,8 @@ namespace Database\Seeders;
 
 use App\Models\Article;
 use App\Models\Category;
+use App\Models\Gallery;
+use App\Models\Partner;
 use App\Models\SiteSetting;
 use App\Models\Testimonial;
 use App\Models\TicketService;
@@ -33,8 +35,8 @@ class DatabaseSeeder extends Seeder
         $settings = [
             'site_name' => 'Airlangga Travel & Tour Agency',
             'site_tagline' => 'Solusi Perjalanan Wisata, Umrah & Tiket Terpercaya #1',
-            'whatsapp_number' => '6281234567890',
-            'phone' => '(031) 8945-1234',
+            'whatsapp_number' => '6281233020117',
+            'phone' => '+62 812 33020117',
             'email' => 'tourmice@airlanggatravel.com',
             'address' => 'Jl. Raya Airlangga No. 45, Gubeng, Surabaya, Jawa Timur 60286',
             'years_experience' => '15+',
@@ -350,35 +352,35 @@ class DatabaseSeeder extends Seeder
         ]);
 
         // 8. Documentation Photo Gallery
-        \App\Models\Gallery::create([
+        Gallery::create([
             'title' => 'Keberangkatan Jamaah Umrah Executive Makkah',
             'image_url' => 'https://images.unsplash.com/photo-1565552645632-d725f8bfc19a?q=80&w=1200',
             'sort_order' => 1,
             'is_active' => true,
         ]);
 
-        \App\Models\Gallery::create([
+        Gallery::create([
             'title' => 'Gathering Perusahaan Tour Bali & Nusa Penida',
             'image_url' => 'https://images.unsplash.com/photo-1537996194471-e657df975ab4?q=80&w=1200',
             'sort_order' => 2,
             'is_active' => true,
         ]);
 
-        \App\Models\Gallery::create([
+        Gallery::create([
             'title' => 'Sailing Phinisi Trip Labuan Bajo Komodo',
             'image_url' => 'https://images.unsplash.com/photo-1518548419970-58e3b4079ab2?q=80&w=1200',
             'sort_order' => 3,
             'is_active' => true,
         ]);
 
-        \App\Models\Gallery::create([
+        Gallery::create([
             'title' => 'Dokumentasi Tour Musim Semi Japan Sakura Golden Route',
             'image_url' => 'https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e?q=80&w=1200',
             'sort_order' => 4,
             'is_active' => true,
         ]);
 
-        \App\Models\Gallery::create([
+        Gallery::create([
             'title' => 'Ziarah Masjid Nabawi Madinah Munawwarah',
             'image_url' => 'https://images.unsplash.com/photo-1591604466107-ec97de577aff?q=80&w=1200',
             'sort_order' => 5,
@@ -396,7 +398,7 @@ class DatabaseSeeder extends Seeder
         ];
 
         foreach ($partners as $idx => $p) {
-            \App\Models\Partner::create([
+            Partner::create([
                 'name' => $p['name'],
                 'logo_url' => $p['logo_url'],
                 'sort_order' => $idx + 1,

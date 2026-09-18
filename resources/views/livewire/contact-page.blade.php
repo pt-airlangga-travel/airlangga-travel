@@ -39,7 +39,7 @@
                         <div class="w-10 h-10 rounded-xl bg-purple-100 text-purple-600 flex items-center justify-center font-bold text-lg shrink-0">✉️</div>
                         <div>
                             <h4 class="font-bold text-slate-900">Email Resmi</h4>
-                            <a href="mailto:tourmice@airlanggatravel.com" class="text-xs text-sky-600 hover:underline font-bold mt-0.5 block">tourmice@airlanggatravel.com</a>
+                            <a href="mailto:{{ $email }}" class="text-xs text-sky-600 hover:underline font-bold mt-0.5 block">{{ $email }}</a>
                         </div>
                     </div>
                 </div>
@@ -55,17 +55,43 @@
             <div class="bg-white p-8 sm:p-10 rounded-3xl border border-slate-200 shadow-xl space-y-6">
                 <div>
                     <h3 class="text-2xl font-bold text-slate-900">Kirim Email Langsung</h3>
-                    <p class="text-xs text-slate-500 mt-1">Isi formulir di bawah ini untuk mengirimkan pesan langsung ke <strong class="text-sky-600">tourmice@airlanggatravel.com</strong>.</p>
+                    <p class="text-xs text-slate-500 mt-1">Isi formulir di bawah ini untuk mengirimkan pesan langsung ke <strong class="text-sky-600">{{ $email }}</strong>.</p>
                 </div>
 
-                @if(session()->has('message'))
-                    <div class="p-4 bg-emerald-50 border border-emerald-200 text-emerald-800 rounded-2xl font-bold text-xs sm:text-sm flex items-center gap-3 shadow-sm">
-                        <span class="text-2xl">✅</span>
-                        <span>{{ session('message') }}</span>
-                    </div>
-                @endif
+                <form wire:submit.prevent="sendMessage" 
+                      x-data="{
+                          submitForm() {
+                              const nameInput = $el.querySelector('[wire\\:model=\'name\']');
+                              const phoneInput = $el.querySelector('[wire\\:model=\'phone\']');
+                              const emailInput = $el.querySelector('[wire\\:model=\'email\']');
+                              const subjectInput = $el.querySelector('[wire\\:model=\'subject\']');
+                              const messageInput = $el.querySelector('[wire\\:model=\'messageText\']');
 
-                <form wire:submit.prevent="sendMessage" class="space-y-4">
+                              const name = nameInput ? nameInput.value.trim() : '';
+                              const phone = phoneInput ? phoneInput.value.trim() : '';
+                              const senderEmail = emailInput && emailInput.value.trim() ? emailInput.value.trim() : '-';
+                              const subject = subjectInput ? subjectInput.value : 'Tanya Paket Tour';
+                              const messageText = messageInput ? messageInput.value.trim() : '';
+
+                              if (name.length >= 3 && phone.length >= 8 && messageText.length > 0) {
+                                  const targetEmail = '{{ $email }}';
+                                  const adminWaPhone = '{{ $waNumber }}';
+
+                                  const emailBody = `Halo Tim Airlangga Travel,\n\nPesan baru telah dikirimkan via Website Resmi Airlangga Travel:\n\n--------------------------------------------------\nDATA PENGIRIM:\n- Nama Lengkap  : ${name}\n- Nomor WhatsApp: ${phone}\n- Email Pengirim: ${senderEmail}\n- Subjek        : ${subject}\n\nISI PESAN / PERTANYAAN:\n${messageText}\n--------------------------------------------------\n\nPesan ini terkirim otomatis dari Formulir Kontak Website.`;
+
+                                  const gmailUrl = `https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(targetEmail)}&su=${encodeURIComponent('Pesan Baru Website: ' + subject)}&body=${encodeURIComponent(emailBody)}`;
+
+                                  const waText = `Halo Tim Airlangga Travel,\n\nSaya ingin konsultasi / menanyakan informasi via Website:\n- Nama: ${name}\n- No WA: ${phone}\n- Email: ${senderEmail}\n- Subjek: ${subject}\n\nPesan:\n"${messageText}"`;
+
+                                  const waUrl = `https://api.whatsapp.com/send?phone=${encodeURIComponent(adminWaPhone)}&text=${encodeURIComponent(waText)}`;
+
+                                  window.open(gmailUrl, '_blank');
+                                  window.location.href = waUrl;
+                              }
+                          }
+                      }" 
+                      @submit="submitForm()" 
+                      class="space-y-4">
                     <div>
                         <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Nama Lengkap</label>
                         <input type="text" wire:model="name" placeholder="Nama Anda..." class="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:ring-2 focus:ring-sky-500">
@@ -101,9 +127,19 @@
                         @error('messageText') <span class="text-xs text-rose-500 block">{{ $message }}</span> @enderror
                     </div>
 
-                    <button type="submit" class="w-full py-4 bg-sky-600 hover:bg-sky-500 text-white font-bold text-sm rounded-2xl shadow-lg shadow-sky-600/30 flex items-center justify-center gap-2 transition-transform hover:scale-[1.01]">
-                        ✉️ Kirim Pesan ke tourmice@airlanggatravel.com
-                    </button>
+                    <div class="space-y-2 pt-2">
+                        <button type="submit"
+                                style="background-color: #0284c7; color: #ffffff;"
+                                class="w-full py-4 bg-sky-600 hover:bg-sky-500 text-white font-extrabold text-sm sm:text-base rounded-2xl shadow-lg shadow-sky-600/30 flex items-center justify-center gap-2 transition-all hover:scale-[1.01] cursor-pointer">
+                            <span class="text-white font-extrabold flex items-center gap-2">
+                                <span>✉️</span>
+                                <span>Kirim ke Email & WhatsApp</span>
+                            </span>
+                        </button>
+                        <p class="text-[11px] text-slate-400 text-center font-medium">
+                            *Otomatis membuka Gmail Compose ke <strong class="text-sky-600">{{ $email }}</strong> & WhatsApp ke <strong class="text-emerald-600">{{ $phone }}</strong>.
+                        </p>
+                    </div>
                 </form>
             </div>
 
@@ -113,8 +149,11 @@
     <script>
         document.addEventListener('livewire:init', () => {
             Livewire.on('open-gmail-compose', (event) => {
-                if (event.url) {
-                    window.open(event.url, '_blank');
+                if (event.gmailUrl) {
+                    window.open(event.gmailUrl, '_blank');
+                }
+                if (event.waUrl) {
+                    window.location.href = event.waUrl;
                 }
             });
         });

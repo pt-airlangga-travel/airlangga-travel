@@ -9,18 +9,25 @@ use Livewire\WithPagination;
 
 class AdminTestimonials extends Component
 {
-    use WithPagination;
     use WithFileUploads;
+    use WithPagination;
 
     public bool $modalOpen = false;
+
     public ?int $editingId = null;
 
     public string $client_name = '';
+
     public string $client_title = '';
+
     public int $rating = 5;
+
     public string $comment = '';
+
     public string $package_name = '';
+
     public string $avatar = '';
+
     public $avatarFile;
 
     public function openCreateModal()
@@ -56,7 +63,7 @@ class AdminTestimonials extends Component
         $avatarUrl = $this->avatar;
         if ($this->avatarFile) {
             $path = $this->avatarFile->store('testimonials', 'public');
-            $avatarUrl = asset('storage/' . $path);
+            $avatarUrl = asset('storage/'.$path);
         }
 
         $data = [

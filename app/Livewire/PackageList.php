@@ -12,7 +12,9 @@ class PackageList extends Component
     use WithPagination;
 
     public string $search = '';
+
     public string $category = '';
+
     public string $sort = 'latest'; // latest, price_asc, price_desc
 
     protected $queryString = ['search', 'category', 'sort'];
@@ -31,15 +33,15 @@ class PackageList extends Component
     {
         $query = TourPackage::query()->where('is_active', true);
 
-        if (!empty($this->search)) {
+        if (! empty($this->search)) {
             $query->where(function ($q) {
-                $q->where('title', 'like', '%' . $this->search . '%')
-                  ->orWhere('destination', 'like', '%' . $this->search . '%')
-                  ->orWhere('description', 'like', '%' . $this->search . '%');
+                $q->where('title', 'like', '%'.$this->search.'%')
+                    ->orWhere('destination', 'like', '%'.$this->search.'%')
+                    ->orWhere('description', 'like', '%'.$this->search.'%');
             });
         }
 
-        if (!empty($this->category)) {
+        if (! empty($this->category)) {
             $query->whereHas('category', function ($q) {
                 $q->where('slug', $this->category);
             });

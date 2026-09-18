@@ -8,22 +8,30 @@ use Livewire\Component;
 class AdminSettings extends Component
 {
     public string $siteName = '';
+
     public string $siteTagline = '';
+
     public string $whatsappNumber = '';
+
     public string $phone = '';
+
     public string $email = '';
+
     public string $address = '';
+
     public string $aboutCompany = '';
+
     public string $vision = '';
+
     public string $mission = '';
 
     public function mount()
     {
         $this->siteName = SiteSetting::get('site_name', 'Airlangga Travel');
         $this->siteTagline = SiteSetting::get('site_tagline', '');
-        $this->whatsappNumber = SiteSetting::get('whatsapp_number', '6281234567890');
-        $this->phone = SiteSetting::get('phone', '');
-        $this->email = SiteSetting::get('email', '');
+        $this->whatsappNumber = SiteSetting::get('whatsapp_number', '6281233020117');
+        $this->phone = SiteSetting::get('phone', '+62 812 33020117');
+        $this->email = SiteSetting::get('email', 'tourmice@airlanggatravel.com');
         $this->address = SiteSetting::get('address', '');
         $this->aboutCompany = SiteSetting::get('about_company', '');
         $this->vision = SiteSetting::get('vision', '');

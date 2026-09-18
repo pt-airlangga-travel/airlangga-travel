@@ -13,9 +13,9 @@ class ArticleList extends Component
     {
         $query = Article::query()->where('is_published', true);
 
-        if (!empty($this->search)) {
-            $query->where('title', 'like', '%' . $this->search . '%')
-                  ->orWhere('excerpt', 'like', '%' . $this->search . '%');
+        if (! empty($this->search)) {
+            $query->where('title', 'like', '%'.$this->search.'%')
+                ->orWhere('excerpt', 'like', '%'.$this->search.'%');
         }
 
         $articles = $query->latest()->paginate(6);

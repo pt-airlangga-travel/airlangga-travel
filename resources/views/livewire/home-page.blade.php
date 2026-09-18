@@ -1,9 +1,9 @@
 <div>
     <!-- Traveloka Light Gradient Hero Section with NAVY Text -->
-    <section class="relative bg-gradient-to-br from-sky-100 via-blue-50 to-cyan-100/80 hero-pattern pt-12 pb-36 px-4 overflow-hidden border-b border-sky-100">
-        <div class="max-w-7xl mx-auto text-center relative z-10 space-y-6">
+    <section class="relative bg-gradient-to-br from-sky-100 via-blue-50 to-cyan-100/80 hero-pattern pt-24 sm:pt-28 lg:pt-32 pb-24 px-4 overflow-hidden border-b border-sky-100">
+        <div class="max-w-7xl mx-auto text-center relative z-10 space-y-4">
             <div>
-                <span class="inline-block px-4 py-2 rounded-full bg-sky-600/10 text-sky-900 border border-sky-300/60 text-xs sm:text-sm font-bold tracking-wide shadow-sm">
+                <span class="inline-block px-5 py-2.5 rounded-full bg-sky-600/10 text-sky-950 border border-sky-300/80 text-xs sm:text-sm font-extrabold tracking-wide shadow-sm">
                     ✈️ #1 Travel & Tour Agency Terpercaya di Indonesia
                 </span>
             </div>
@@ -12,7 +12,7 @@
             <div class="my-4 flex justify-center">
                 <img src="{{ asset('assets/ytpbg.png') }}" 
                      alt="your travelling partner" 
-                     class="h-32 sm:h-48 lg:h-60 max-h-[240px] sm:max-h-[360px] lg:max-h-[480px] w-auto max-w-full object-contain drop-shadow-md transition-transform hover:scale-105">
+                     class="h-48 sm:h-64 lg:h-80 xl:h-96 max-h-[320px] sm:max-h-[480px] lg:max-h-[640px] w-auto max-w-full object-contain drop-shadow-lg transition-transform hover:scale-[1.03]">
             </div>
 
             <p class="text-slate-600 text-xs sm:text-sm max-w-2xl mx-auto font-medium leading-relaxed pt-2">
@@ -191,7 +191,7 @@
                         <a href="{{ route('packages.show', $pkg->slug) }}" class="py-2.5 px-3 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-xs text-center transition-colors">
                             Detail Paket
                         </a>
-                        <a href="https://wa.me/6281234567890?text={{ urlencode('Halo Airlangga Travel, saya berminat dengan Paket: ' . $pkg->title) }}" 
+                        <a href="https://wa.me/6281233020117?text={{ urlencode('Halo Airlangga Travel, saya berminat dengan Paket: ' . $pkg->title) }}" 
                            target="_blank" 
                            class="py-2.5 px-3 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs text-center transition-colors flex items-center justify-center gap-1 shadow-sm shadow-emerald-600/20">
                             Pesan WA
@@ -238,7 +238,7 @@
                         <a href="{{ route('packages.index', ['category' => 'umrah-hajj']) }}" class="px-6 py-3.5 rounded-2xl bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold text-sm transition-all shadow-lg shadow-emerald-500/20">
                             Lihat Jadwal Umrah
                         </a>
-                        <a href="https://wa.me/6281234567890?text=Halo%20Airlangga%20Travel,%20saya%20tanya%20konsultasi%20Umrah" target="_blank" class="px-6 py-3.5 rounded-2xl bg-white/10 hover:bg-white/20 text-white font-bold text-sm transition-all border border-white/20">
+                        <a href="https://wa.me/6281233020117?text=Halo%20Airlangga%20Travel,%20saya%20tanya%20konsultasi%20Umrah" target="_blank" class="px-6 py-3.5 rounded-2xl bg-white/10 hover:bg-white/20 text-white font-bold text-sm transition-all border border-white/20">
                             Konsultasi WA
                         </a>
                     </div>

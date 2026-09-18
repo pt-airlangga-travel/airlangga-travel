@@ -5,9 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{ $title ?? 'Airlangga Travel & Tour Agency | Wisata, Umrah & Tiket Terpercaya' }}</title>
     <!-- Favicon Tab Icon -->
-    <link rel="icon" type="image/png" href="{{ asset('assets/travel.png') }}">
-    <link rel="shortcut icon" type="image/png" href="{{ asset('assets/travel.png') }}">
-    <link rel="apple-touch-icon" href="{{ asset('assets/travel.png') }}">
+    <link rel="icon" type="image/png" href="{{ asset('assets/agt.png') }}">
+    <link rel="shortcut icon" type="image/png" href="{{ asset('assets/agt.png') }}">
+    <link rel="apple-touch-icon" href="{{ asset('assets/agt.png') }}">
 
     <!-- Google Fonts for Cursive Signature Styling -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -215,7 +215,7 @@
 
                 <!-- Right Action Buttons -->
                 <div class="hidden lg:flex items-center gap-3">
-                    <a href="https://wa.me/6281234567890?text=Halo%20Airlangga%20Travel,%20saya%20ingin%20tanya%20paket%20wisata"
+                    <a href="https://wa.me/6281233020117?text=Halo%20Airlangga%20Travel,%20saya%20ingin%20tanya%20paket%20wisata"
                        target="_blank"
                        class="inline-flex items-center gap-2 px-4 py-2.5 rounded-full bg-emerald-600 text-white font-semibold text-xs tracking-wide hover:bg-emerald-500 shadow-md shadow-emerald-500/20 transition-all hover:scale-105 pulse-wa">
                         <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-0.999 3.648 3.742-0.981z"/></svg>
@@ -287,7 +287,7 @@
             </div>
 
             <div class="pt-2">
-                <a href="https://wa.me/6281234567890?text=Halo%20Airlangga%20Travel"
+                <a href="https://wa.me/6281233020117?text=Halo%20Airlangga%20Travel"
                    target="_blank"
                    class="w-full flex items-center justify-center gap-2 px-4 py-3 rounded-xl bg-emerald-600 text-white font-bold text-sm shadow-md">
                     Hubungi via WhatsApp
@@ -306,7 +306,7 @@
         <div class="hidden sm:block bg-white text-slate-800 text-xs font-semibold px-3 py-2 rounded-xl shadow-xl border border-slate-100 group-hover:scale-105 transition-all">
             Butuh Bantuan Booking? <span class="text-emerald-600 font-bold">Chat Kami!</span>
         </div>
-        <a href="https://wa.me/6281234567890?text=Halo%20Airlangga%20Travel,%20saya%20ingin%20konsultasi%20paket%20wisata"
+        <a href="https://wa.me/6281233020117?text=Halo%20Airlangga%20Travel,%20saya%20ingin%20konsultasi%20paket%20wisata"
            target="_blank"
            aria-label="Chat via WhatsApp"
            class="w-14 h-14 rounded-full bg-emerald-500 text-white flex items-center justify-center shadow-2xl shadow-emerald-600/40 hover:bg-emerald-600 transition-transform hover:scale-110 pulse-wa">
@@ -370,7 +370,7 @@
                         </li>
                         <li class="flex items-center gap-2.5">
                             <svg class="w-4 h-4 text-emerald-400 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"></path></svg>
-                            <span class="text-emerald-400 font-semibold">+62 812-3456-7890</span>
+                            <span class="text-emerald-400 font-semibold">+62 895-8053-15185</span>
                         </li>
                     </ul>
                 </div>

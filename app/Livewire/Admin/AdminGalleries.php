@@ -9,10 +9,11 @@ use Livewire\WithPagination;
 
 class AdminGalleries extends Component
 {
-    use WithPagination;
     use WithFileUploads;
+    use WithPagination;
 
     public bool $modalOpen = false;
+
     public $imageFile;
 
     public function openCreateModal()
@@ -28,7 +29,7 @@ class AdminGalleries extends Component
         ]);
 
         $path = $this->imageFile->store('galleries', 'public');
-        $imageUrl = asset('storage/' . $path);
+        $imageUrl = asset('storage/'.$path);
 
         $maxSort = Gallery::max('sort_order') ?? 0;
 

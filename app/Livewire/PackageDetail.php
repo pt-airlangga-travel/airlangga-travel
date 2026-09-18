@@ -3,17 +3,24 @@
 namespace App\Livewire;
 
 use App\Models\InquiryLog;
+use App\Models\SiteSetting;
 use App\Models\TourPackage;
 use Livewire\Component;
 
 class PackageDetail extends Component
 {
     public TourPackage $package;
+
     public string $customerName = '';
+
     public string $customerPhone = '';
+
     public string $departureDate = '';
+
     public int $paxCount = 2;
+
     public string $notes = '';
+
     public bool $bookingModalOpen = false;
 
     public function mount(string $slug)
@@ -55,24 +62,30 @@ class PackageDetail extends Component
 
         // 2. Build Formatted WA Link
         $price = $this->package->discount_price ?? $this->package->price;
-        $totalPrice = 'Rp ' . number_format($price * $this->paxCount, 0, ',', '.');
+        $totalPrice = 'Rp '.number_format($price * $this->paxCount, 0, ',', '.');
 
-        $message = "Halo Airlangga Travel, saya ingin pesan Paket Wisata:\n\n" .
-                   "📌 *Paket*: {$this->package->title}\n" .
-                   "📍 *Destinasi*: {$this->package->destination}\n" .
-                   "📅 *Rencana Berangkat*: {$this->departureDate}\n" .
-                   "👥 *Jumlah Pax*: {$this->paxCount} Orang\n" .
-                   "👤 *Nama Pemesan*: {$this->customerName}\n" .
-                   "📞 *No. WA*: {$this->customerPhone}\n" .
+        $message = "Halo Airlangga Travel, saya ingin pesan Paket Wisata:\n\n".
+                   "📌 *Paket*: {$this->package->title}\n".
+                   "📍 *Destinasi*: {$this->package->destination}\n".
+                   "📅 *Rencana Berangkat*: {$this->departureDate}\n".
+                   "👥 *Jumlah Pax*: {$this->paxCount} Orang\n".
+                   "👤 *Nama Pemesan*: {$this->customerName}\n".
+                   "📞 *No. WA*: {$this->customerPhone}\n".
                    "💰 *Estimasi Total*: {$totalPrice}\n";
 
-        if (!empty($this->notes)) {
+        if (! empty($this->notes)) {
             $message .= "📝 *Catatan*: {$this->notes}\n";
         }
 
         $message .= "\nMohon konfirmasi ketersediaan slot. Terima kasih!";
 
-        $waUrl = "https://wa.me/6281234567890?text=" . urlencode($message);
+        $waNumber = SiteSetting::get('whatsapp_number') ?: '6281233020117';
+        $cleanWa = preg_replace('/[^0-9]/', '', $waNumber);
+        if (str_starts_with($cleanWa, '0')) {
+            $cleanWa = '62'.substr($cleanWa, 1);
+        }
+
+        $waUrl = "https://wa.me/{$cleanWa}?text=".urlencode($message);
 
         $this->dispatch('open-wa-window', url: $waUrl);
         $this->reset(['customerName', 'customerPhone', 'notes']);
@@ -88,6 +101,6 @@ class PackageDetail extends Component
 
         return view('livewire.package-detail', [
             'relatedPackages' => $relatedPackages,
-        ])->layout('components.layouts.app', ['title' => $this->package->title . ' | Airlangga Travel']);
+        ])->layout('components.layouts.app', ['title' => $this->package->title.' | Airlangga Travel']);
     }
 }

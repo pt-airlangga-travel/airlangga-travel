@@ -9,11 +9,13 @@ use Livewire\WithPagination;
 
 class AdminPartners extends Component
 {
-    use WithPagination;
     use WithFileUploads;
+    use WithPagination;
 
     public bool $modalOpen = false;
+
     public string $name = '';
+
     public $logoFile;
 
     public function openCreateModal()
@@ -30,7 +32,7 @@ class AdminPartners extends Component
         ]);
 
         $path = $this->logoFile->store('partners', 'public');
-        $logoUrl = asset('storage/' . $path);
+        $logoUrl = asset('storage/'.$path);
 
         $maxSort = Partner::max('sort_order') ?? 0;
 

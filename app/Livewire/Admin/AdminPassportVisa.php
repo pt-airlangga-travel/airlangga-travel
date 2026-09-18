@@ -10,24 +10,31 @@ use Livewire\WithPagination;
 
 class AdminPassportVisa extends Component
 {
-    use WithPagination;
     use WithFileUploads;
+    use WithPagination;
 
     public bool $modalOpen = false;
+
     public ?int $editingId = null;
 
     public string $title = '';
+
     public string $type = 'passport';
+
     public string $cover_image = '';
+
     public $coverImageFile;
+
     public $detailImageFiles = [];
+
     public array $detail_images = [];
+
     public string $description = '';
 
     public array $benefits = [
         'Tanpa antri kuota foto',
         'Datang tinggal foto',
-        'Paspor jadi 3 hari setelah foto (sabtu, minggu dan tanggal merah libur tidak terhitung)'
+        'Paspor jadi 3 hari setelah foto (sabtu, minggu dan tanggal merah libur tidak terhitung)',
     ];
 
     public array $pricing_options = [
@@ -85,14 +92,14 @@ class AdminPassportVisa extends Component
         $coverUrl = $this->cover_image;
         if ($this->coverImageFile) {
             $path = $this->coverImageFile->store('passport_visa', 'public');
-            $coverUrl = asset('storage/' . $path);
+            $coverUrl = asset('storage/'.$path);
         }
 
         $detailUrls = $this->detail_images;
-        if (!empty($this->detailImageFiles)) {
+        if (! empty($this->detailImageFiles)) {
             foreach ($this->detailImageFiles as $file) {
                 $path = $file->store('passport_visa/gallery', 'public');
-                $detailUrls[] = asset('storage/' . $path);
+                $detailUrls[] = asset('storage/'.$path);
             }
         }
 

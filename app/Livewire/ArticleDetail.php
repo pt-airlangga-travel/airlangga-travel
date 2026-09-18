@@ -27,6 +27,6 @@ class ArticleDetail extends Component
 
         return view('livewire.article-detail', [
             'relatedArticles' => $relatedArticles,
-        ])->layout('components.layouts.app', ['title' => $this->article->title . ' | Airlangga Travel']);
+        ])->layout('components.layouts.app', ['title' => $this->article->title.' | Airlangga Travel']);
     }
 }

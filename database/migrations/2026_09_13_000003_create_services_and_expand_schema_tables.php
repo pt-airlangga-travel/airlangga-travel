@@ -13,13 +13,13 @@ return new class extends Migration
     {
         // Expand tour_packages with pricing_tiers, meeting_point, sub_destinations
         Schema::table('tour_packages', function (Blueprint $table) {
-            if (!Schema::hasColumn('tour_packages', 'pricing_tiers')) {
+            if (! Schema::hasColumn('tour_packages', 'pricing_tiers')) {
                 $table->json('pricing_tiers')->nullable()->after('price');
             }
-            if (!Schema::hasColumn('tour_packages', 'meeting_point')) {
+            if (! Schema::hasColumn('tour_packages', 'meeting_point')) {
                 $table->string('meeting_point')->nullable()->after('destination');
             }
-            if (!Schema::hasColumn('tour_packages', 'sub_destinations')) {
+            if (! Schema::hasColumn('tour_packages', 'sub_destinations')) {
                 $table->json('sub_destinations')->nullable()->after('gallery');
             }
         });

@@ -29,7 +29,7 @@
                         </p>
                     </div>
 
-                    <a href="https://wa.me/6281234567890?text={{ urlencode($ticket->wa_template_message ?? 'Halo Airlangga Travel, saya ingin pesan tiket wisata') }}" 
+                    <a href="https://wa.me/6281233020117?text={{ urlencode($ticket->wa_template_message ?? 'Halo Airlangga Travel, saya ingin pesan tiket wisata') }}" 
                        target="_blank" 
                        class="w-full py-3.5 px-4 rounded-2xl bg-emerald-600 hover:bg-emerald-500 text-white font-extrabold text-xs uppercase tracking-wider shadow-md flex items-center justify-center gap-2 transition-transform hover:scale-105">
                         Pesan Tiket via WA

@@ -5,9 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{ $title ?? 'Admin Dashboard | Airlangga Travel' }}</title>
     <!-- Favicon Tab Icon -->
-    <link rel="icon" type="image/png" href="{{ asset('assets/travel.png') }}">
-    <link rel="shortcut icon" type="image/png" href="{{ asset('assets/travel.png') }}">
-    <link rel="apple-touch-icon" href="{{ asset('assets/travel.png') }}">
+    <link rel="icon" type="image/png" href="{{ asset('assets/agt.png') }}">
+    <link rel="shortcut icon" type="image/png" href="{{ asset('assets/agt.png') }}">
+    <link rel="apple-touch-icon" href="{{ asset('assets/agt.png') }}">
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     @livewireStyles
 </head>
@@ -17,7 +17,7 @@
     <aside class="w-64 bg-slate-950 border-r border-slate-800 flex flex-col justify-between shrink-0 min-h-screen">
         <div class="p-6 space-y-8">
             <div class="flex items-center gap-3">
-                <img src="{{ asset('assets/travel.png') }}" alt="Airlangga Travel Icon" class="h-10 w-auto object-contain bg-white/10 p-1.5 rounded-xl border border-white/20">
+                <img src="{{ asset('assets/agt.png') }}" alt="Airlangga Travel Icon" class="h-10 w-auto object-contain bg-white/10 p-1.5 rounded-xl border border-white/20">
                 <div>
                     <span class="font-extrabold text-white text-base tracking-wide block">AIRLANGGA</span>
                     <span class="text-[10px] text-sky-400 font-bold block uppercase tracking-widest">Admin Control</span>

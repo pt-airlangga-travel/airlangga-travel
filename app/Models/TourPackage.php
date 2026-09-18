@@ -53,14 +53,15 @@ class TourPackage extends Model
 
     public function getFormattedPriceAttribute(): string
     {
-        return 'Rp ' . number_format($this->price, 0, ',', '.');
+        return 'Rp '.number_format($this->price, 0, ',', '.');
     }
 
     public function getFormattedDiscountPriceAttribute(): ?string
     {
-        if (!$this->discount_price) {
+        if (! $this->discount_price) {
             return null;
         }
-        return 'Rp ' . number_format($this->discount_price, 0, ',', '.');
+
+        return 'Rp '.number_format($this->discount_price, 0, ',', '.');
     }
 }

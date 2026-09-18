@@ -11,29 +11,47 @@ use Livewire\WithPagination;
 
 class AdminPackages extends Component
 {
-    use WithPagination;
     use WithFileUploads;
+    use WithPagination;
 
     public bool $modalOpen = false;
+
     public ?int $editingId = null;
 
     public string $title = '';
+
     public string $destination = '';
+
     public string $meeting_point = '';
+
     public ?int $category_id = null;
+
     public float $price = 0;
+
     public ?float $discount_price = null;
+
     public int $duration_days = 3;
+
     public int $duration_nights = 2;
+
     public string $description = '';
+
     public string $cover_image = '';
+
     public $coverImageFile;
+
     public $galleryImageFiles = [];
+
     public array $gallery = [];
+
     public array $pricing_tiers = [];
+
     public array $sub_destinations = [];
+
     public string $badge = '';
+
     public bool $is_featured = true;
+
     public bool $is_active = true;
 
     public function openCreateModal()
@@ -50,8 +68,8 @@ class AdminPackages extends Component
         $this->destination = $pkg->destination;
         $this->meeting_point = $pkg->meeting_point ?? '';
         $this->category_id = $pkg->category_id;
-        $this->price = (float)$pkg->price;
-        $this->discount_price = $pkg->discount_price ? (float)$pkg->discount_price : null;
+        $this->price = (float) $pkg->price;
+        $this->discount_price = $pkg->discount_price ? (float) $pkg->discount_price : null;
         $this->duration_days = $pkg->duration_days;
         $this->duration_nights = $pkg->duration_nights;
         $this->description = $pkg->description;
@@ -105,14 +123,14 @@ class AdminPackages extends Component
 
         if ($this->coverImageFile) {
             $path = $this->coverImageFile->store('packages', 'public');
-            $coverUrl = asset('storage/' . $path);
+            $coverUrl = asset('storage/'.$path);
         }
 
         $galleryUrls = $this->gallery;
-        if (!empty($this->galleryImageFiles)) {
+        if (! empty($this->galleryImageFiles)) {
             foreach ($this->galleryImageFiles as $file) {
                 $path = $file->store('packages/gallery', 'public');
-                $galleryUrls[] = asset('storage/' . $path);
+                $galleryUrls[] = asset('storage/'.$path);
             }
         }
 

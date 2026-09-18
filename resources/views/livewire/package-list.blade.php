@@ -124,7 +124,7 @@
                             <a href="{{ route('packages.show', $pkg->slug) }}" class="py-2.5 px-3 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-xs text-center transition-colors">
                                 Detail Paket
                             </a>
-                            <a href="https://wa.me/6281234567890?text={{ urlencode('Halo Airlangga Travel, saya berminat dengan Paket: ' . $pkg->title) }}" 
+                            <a href="https://wa.me/6281233020117?text={{ urlencode('Halo Airlangga Travel, saya berminat dengan Paket: ' . $pkg->title) }}" 
                                target="_blank" 
                                class="py-2.5 px-3 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs text-center transition-colors flex items-center justify-center gap-1 shadow-sm shadow-emerald-600/20">
                                 Pesan WA

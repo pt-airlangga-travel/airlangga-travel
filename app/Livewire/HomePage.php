@@ -11,9 +11,13 @@ use Livewire\Component;
 class HomePage extends Component
 {
     public string $activeTab = 'tour'; // tour, umrah, ticket, transport
+
     public string $searchDestination = '';
+
     public string $searchCategory = '';
+
     public string $travelDate = '';
+
     public int $paxCount = 2;
 
     public function searchPackages()

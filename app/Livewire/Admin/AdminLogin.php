@@ -8,7 +8,9 @@ use Livewire\Component;
 class AdminLogin extends Component
 {
     public string $email = 'admin@airlanggatravel.com';
+
     public string $password = 'password123';
+
     public string $errorMessage = '';
 
     public function login()
@@ -20,6 +22,7 @@ class AdminLogin extends Component
 
         if (Auth::attempt(['email' => $this->email, 'password' => $this->password])) {
             session()->regenerate();
+
             return redirect()->route('admin.dashboard');
         }
 
