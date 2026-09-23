@@ -33,13 +33,29 @@ jobs:
         run: npm run build
 
       - name: 📂 Sync files
-        uses: appleboy/scp-action@v1.0.0
+        uses: SamKirkland/FTP-Deploy-Action@v4.4.0
         with:
-          host: ${{ secrets.SSH_HOST }}
-          port: ${{ secrets.SSH_PORT }}
-          username: ${{ secrets.SSH_USERNAME }}
-          key: ${{ secrets.SSH_PRIVATE_KEY }}
-          source: ".,!.git**,!node_modules**,!public/index.php,!DOCKER**,!docker**,!Docker**,!output.log,!.agents,!tests,!skills-lock.json,!README.md,!LICENSE,!.prettierrc,!.editorconfig"
-          target: "/home/${{ secrets.SSH_USERNAME }}/domains/airlanggatravel.com/airlangga-travel"
-          overwrite: true
-          strip_components: 0
+          server: ${{ secrets.FTP_SERVER }}
+          username: ${{ secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          local-dir: ./
+          server-dir: ${{ secrets.FTP_PATH }}
+          exclude: |
+            **/.git*
+            **/.git*/**
+            **/node_modules/**
+            **/public/index.php
+            **/DOCKER*
+            **/DOCKER*/**
+            **/docker*
+            **/docker*/**
+            **/Docker*
+            **/Docker*/**
+            **/output.log
+            **/.agents/**
+            **/tests/**
+            **/skills-lock.json
+            **/README.md
+            **/LICENSE
+            **/.prettierrc
+            **/.editorconfig
