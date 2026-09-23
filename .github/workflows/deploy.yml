@@ -59,4 +59,3 @@ jobs:
             **/LICENSE
             **/.prettierrc
             **/.editorconfig
-            **/vendor/**
