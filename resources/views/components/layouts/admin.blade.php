@@ -47,6 +47,9 @@
                 <a href="{{ route('admin.galleries') }}" class="flex items-center gap-3 px-4 py-3 rounded-xl transition-colors {{ request()->routeIs('admin.galleries') ? 'bg-sky-600 text-white font-bold' : 'text-slate-400 hover:bg-slate-800 hover:text-white' }}">
                     Dokumentasi Foto
                 </a>
+                <a href="{{ route('admin.articles') }}" class="flex items-center gap-3 px-4 py-3 rounded-xl transition-colors {{ request()->routeIs('admin.articles') ? 'bg-sky-600 text-white font-bold' : 'text-slate-400 hover:bg-slate-800 hover:text-white' }}">
+                    Kelola Blog & Artikel
+                </a>
                 <a href="{{ route('admin.partners') }}" class="flex items-center gap-3 px-4 py-3 rounded-xl transition-colors {{ request()->routeIs('admin.partners') ? 'bg-sky-600 text-white font-bold' : 'text-slate-400 hover:bg-slate-800 hover:text-white' }}">
                     Mitra / Trusted By
                 </a>

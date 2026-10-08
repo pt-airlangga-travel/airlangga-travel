@@ -1,6 +1,7 @@
 <?php
 
 use App\Livewire\AboutPage;
+use App\Livewire\Admin\AdminArticles;
 use App\Livewire\Admin\AdminDashboard;
 use App\Livewire\Admin\AdminGalleries;
 use App\Livewire\Admin\AdminInquiries;
@@ -58,6 +59,7 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::get('/passport-visa', AdminPassportVisa::class)->name('passport-visa');
         Route::get('/testimonials', AdminTestimonials::class)->name('testimonials');
         Route::get('/galleries', AdminGalleries::class)->name('galleries');
+        Route::get('/articles', AdminArticles::class)->name('articles');
         Route::get('/partners', AdminPartners::class)->name('partners');
         Route::get('/inquiries', AdminInquiries::class)->name('inquiries');
         Route::get('/settings', AdminSettings::class)->name('settings');
