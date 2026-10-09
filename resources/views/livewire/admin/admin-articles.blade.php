@@ -139,7 +139,7 @@
                                wire:model="title" 
                                placeholder="Contoh: 7 Tips Memilih Paket Umrah Resmi Kemenag..." 
                                class="w-full px-4 py-3 bg-slate-950 border border-slate-800 rounded-xl text-white focus:ring-2 focus:ring-sky-500">
-                        @error('title') <span class="text-rose-400 mt-1 block">{{ $message }}</span> @error('title')
+                        @error('title') <span class="text-rose-400 mt-1 block">{{ $message }}</span> @enderror
                     </div>
 
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
