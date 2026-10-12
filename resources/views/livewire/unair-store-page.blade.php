@@ -75,45 +75,66 @@
         @else
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                 @foreach($items as $item)
+                    @php
+                        $photoCount = count(array_values(array_unique(array_filter(array_merge([$item->cover_image], $item->detail_images ?? [])))));
+                        $stockClass = match($item->stock_status) {
+                            'Tersedia' => 'bg-emerald-600 text-white',
+                            'Pre-Order' => 'bg-sky-600 text-white',
+                            'Stok Terbatas' => 'bg-amber-500 text-slate-950',
+                            default => 'bg-slate-800 text-white',
+                        };
+                    @endphp
                     <div wire:key="store-item-{{ $item->id }}"
-                         class="bg-white rounded-3xl overflow-hidden border border-slate-100 shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col justify-between group">
+                         class="bg-white rounded-3xl overflow-hidden border border-slate-200/80 hover:border-sky-300 shadow-md shadow-slate-200/50 hover:shadow-2xl hover:shadow-sky-950/10 hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between group">
                         <div>
-                            <!-- Product Image with Badges -->
+                            <!-- Product Image with Badges & Bottom Overlay -->
                             <div class="relative h-64 overflow-hidden bg-slate-100 cursor-pointer"
                                  wire:click="openDetailModal({{ $item->id }})">
                                 <img src="{{ $item->cover_image }}"
                                      alt="{{ $item->title }}"
                                      class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
 
+                                <!-- Subtle Bottom Gradient for Category & Photo Pill -->
+                                <div class="absolute inset-x-0 bottom-0 h-20 bg-gradient-to-t from-slate-950/70 via-slate-950/25 to-transparent pointer-events-none"></div>
+
                                 @if(!empty($item->badge))
-                                    <div class="absolute top-4 left-4 bg-amber-500 text-slate-950 font-extrabold text-xs px-3 py-1 rounded-full shadow-md">
-                                        {{ $item->badge }}
+                                    <div class="absolute top-4 left-4 bg-amber-400 text-slate-950 font-extrabold text-xs px-3.5 py-1 rounded-full shadow-md border border-amber-300/60">
+                                        ★ {{ $item->badge }}
                                     </div>
                                 @endif
 
                                 <div class="absolute top-4 right-4">
-                                    @php
-                                        $stockClass = match($item->stock_status) {
-                                            'Tersedia' => 'bg-emerald-600 text-white',
-                                            'Pre-Order' => 'bg-sky-600 text-white',
-                                            'Stok Terbatas' => 'bg-amber-500 text-slate-950',
-                                            default => 'bg-slate-800 text-white',
-                                        };
-                                    @endphp
                                     <span class="px-3 py-1 rounded-full text-[11px] font-bold shadow-md {{ $stockClass }}">
                                         {{ $item->stock_status }}
+                                    </span>
+                                </div>
+
+                                <!-- Bottom Image Bar: Category Pill + Photo Count -->
+                                <div class="absolute bottom-3 left-4 right-4 flex items-center justify-between gap-2">
+                                    <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/95 backdrop-blur-md text-sky-900 font-extrabold text-[11px] shadow-sm">
+                                        <span>🏷️</span>
+                                        <span class="truncate max-w-[170px]">{{ $item->category }}</span>
+                                    </span>
+
+                                    <span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-slate-900/80 backdrop-blur-md text-white font-bold text-[10px] border border-white/15">
+                                        <span>📷</span>
+                                        <span>{{ $photoCount }} Foto</span>
                                     </span>
                                 </div>
                             </div>
 
                             <!-- Product Info -->
-                            <div class="p-6 space-y-3">
-                                <div class="flex items-center gap-2 text-xs font-bold text-sky-600">
-                                    <span>🏷️</span>
-                                    <span>{{ $item->category }}</span>
+                            <div class="p-6 pb-4 space-y-3.5">
+                                <!-- Official Merch Micro-Tag -->
+                                <div class="flex items-center justify-between text-[11px] font-bold">
+                                    <span class="inline-flex items-center gap-1 text-sky-600 uppercase tracking-wider">
+                                        <svg class="w-3.5 h-3.5 text-sky-500 shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg>
+                                        Official UNAIR Merch
+                                    </span>
+                                    <span class="text-slate-400 font-semibold">Kualitas Premium</span>
                                 </div>
 
-                                <h3 class="text-lg font-extrabold text-slate-900 line-clamp-2 group-hover:text-sky-600 transition-colors cursor-pointer"
+                                <h3 class="text-lg font-extrabold text-slate-900 line-clamp-2 group-hover:text-sky-600 transition-colors cursor-pointer leading-snug"
                                     wire:click="openDetailModal({{ $item->id }})">
                                     {{ $item->title }}
                                 </h3>
@@ -122,37 +143,65 @@
                                     {{ $item->description }}
                                 </p>
 
+                                <!-- Feature Chips -->
+                                <div class="flex flex-wrap items-center gap-1.5 pt-0.5">
+                                    <span class="px-2.5 py-1 rounded-lg bg-slate-100 text-slate-600 font-semibold text-[10px]">
+                                        ✓ Original Merchandise
+                                    </span>
+                                    <span class="px-2.5 py-1 rounded-lg bg-sky-50 text-sky-700 font-semibold text-[10px]">
+                                        ✓ Satuan &amp; Partai Besar
+                                    </span>
+                                </div>
+
+                                <!-- Bottom Highlight Slot: Shows Price if set, or Styled Catalog Info Card if no price -->
                                 @if($item->formatted_price || $item->formatted_discount_price)
-                                    <!-- Price Section (Only shown when price is filled) -->
-                                    <div class="pt-3 border-t border-slate-100 flex items-baseline justify-between">
+                                    <div class="p-3.5 rounded-2xl bg-gradient-to-r from-sky-50/90 via-blue-50/50 to-slate-50 border border-sky-100 flex items-center justify-between">
                                         <div>
-                                            <span class="text-[10px] text-slate-400 block font-semibold">Harga Resmi</span>
-                                            @if($item->formatted_discount_price)
-                                                @if($item->formatted_price)
-                                                    <span class="text-xs text-slate-400 line-through mr-1.5">{{ $item->formatted_price }}</span>
+                                            <span class="text-[10px] text-slate-400 block font-bold uppercase tracking-wider">Harga Resmi</span>
+                                            <div class="flex items-baseline gap-1.5 mt-0.5">
+                                                @if($item->formatted_discount_price)
+                                                    @if($item->formatted_price)
+                                                        <span class="text-xs text-slate-400 line-through">{{ $item->formatted_price }}</span>
+                                                    @endif
+                                                    <span class="text-xl font-black text-sky-600">{{ $item->formatted_discount_price }}</span>
+                                                @else
+                                                    <span class="text-xl font-black text-sky-600">{{ $item->formatted_price }}</span>
                                                 @endif
-                                                <span class="text-xl font-extrabold text-sky-600">{{ $item->formatted_discount_price }}</span>
-                                            @else
-                                                <span class="text-xl font-extrabold text-sky-600">{{ $item->formatted_price }}</span>
-                                            @endif
+                                            </div>
                                         </div>
-                                        <span class="text-xs text-slate-400 font-medium">/ item</span>
+                                        <span class="px-2.5 py-1 rounded-xl bg-white text-slate-500 border border-slate-200/80 text-[11px] font-bold">
+                                            / item
+                                        </span>
+                                    </div>
+                                @else
+                                    <div class="p-3.5 rounded-2xl bg-gradient-to-r from-sky-50 via-indigo-50/40 to-amber-50/50 border border-sky-200/70 flex items-center justify-between gap-2">
+                                        <div class="min-w-0">
+                                            <span class="text-[10px] text-sky-600 block font-extrabold uppercase tracking-wider">Info &amp; Pemesanan</span>
+                                            <span class="text-xs font-extrabold text-slate-800 truncate block mt-0.5">
+                                                ✨ Tersedia Eceran &amp; Custom
+                                            </span>
+                                        </div>
+                                        <span class="px-2.5 py-1 rounded-xl bg-white text-sky-700 border border-sky-200 text-[10px] font-extrabold shadow-2xs shrink-0">
+                                            💬 Tanya Admin
+                                        </span>
                                     </div>
                                 @endif
                             </div>
                         </div>
 
                         <!-- Action Footer -->
-                        <div class="px-6 pb-6 pt-2 grid grid-cols-2 gap-3">
+                        <div class="px-6 pb-6 pt-1 grid grid-cols-2 gap-3">
                             <button type="button"
                                     wire:click="openDetailModal({{ $item->id }})"
-                                    class="py-2.5 px-3 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-xs text-center transition-colors">
-                                Detail Produk
+                                    class="py-2.5 px-3 rounded-xl bg-slate-100 hover:bg-sky-50 hover:text-sky-700 hover:border-sky-200 border border-slate-200/80 text-slate-700 font-extrabold text-xs text-center transition-all flex items-center justify-center gap-1.5">
+                                <span>🔎</span>
+                                <span>Detail Produk</span>
                             </button>
                             <a href="https://wa.me/{{ $storeWaNumber }}?text={{ urlencode($item->getResolvedWaMessage($pageSettings['store_whatsapp_order_prefix'] ?? null)) }}"
                                target="_blank"
-                               class="py-2.5 px-3 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs text-center transition-colors flex items-center justify-center gap-1 shadow-sm shadow-emerald-600/20">
-                                Pesan via WA
+                               class="py-2.5 px-3 rounded-xl bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white font-extrabold text-xs text-center transition-all flex items-center justify-center gap-1.5 shadow-md shadow-emerald-600/20">
+                                <span>💬</span>
+                                <span>Pesan via WA</span>
                             </a>
                         </div>
                     </div>
@@ -274,7 +323,7 @@
                         </h3>
 
                         @if($activeModalItem->formatted_price || $activeModalItem->formatted_discount_price)
-                            <div class="p-3.5 sm:p-4 rounded-2xl bg-slate-50 border border-slate-200/80">
+                            <div class="p-3.5 sm:p-4 rounded-2xl bg-sky-50/70 border border-sky-100">
                                 <span class="text-[11px] text-slate-400 font-bold uppercase block">Harga Produk</span>
                                 @if($activeModalItem->formatted_discount_price)
                                     @if($activeModalItem->formatted_price)
@@ -284,6 +333,16 @@
                                 @else
                                     <span class="text-xl sm:text-2xl font-black text-sky-600">{{ $activeModalItem->formatted_price }}</span>
                                 @endif
+                            </div>
+                        @else
+                            <div class="p-3.5 rounded-2xl bg-gradient-to-r from-sky-50 via-indigo-50/40 to-amber-50/50 border border-sky-200/70 flex items-center justify-between gap-3">
+                                <div>
+                                    <span class="text-[10px] text-sky-600 font-extrabold uppercase tracking-wider block">Official Merchandise UNAIR</span>
+                                    <span class="text-xs sm:text-sm font-extrabold text-slate-800 block mt-0.5">✨ Tersedia Pemesanan Satuan &amp; Custom</span>
+                                </div>
+                                <span class="px-2.5 py-1 rounded-xl bg-white text-emerald-700 border border-emerald-200 text-[11px] font-extrabold shrink-0">
+                                    Ready via WA
+                                </span>
                             </div>
                         @endif
 
