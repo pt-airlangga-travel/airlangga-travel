@@ -52,12 +52,12 @@ class ArticleList extends Component
             });
         }
 
-        if ($this->sort === 'popular') {
-            $query->orderByDesc('views')->latest();
-        } elseif ($this->sort === 'oldest') {
+        if ($this->sort === 'oldest') {
             $query->oldest();
         } elseif ($this->sort === 'title_asc') {
-            $query->orderBy('title');
+            $query->orderBy('title', 'asc');
+        } elseif ($this->sort === 'title_desc') {
+            $query->orderBy('title', 'desc');
         } else {
             $query->latest();
         }

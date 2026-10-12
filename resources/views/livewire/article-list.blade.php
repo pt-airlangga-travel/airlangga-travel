@@ -39,9 +39,9 @@
                     <select wire:model.live="sort"
                             class="w-full pl-10 pr-10 py-3 bg-slate-50 border border-slate-200/90 rounded-2xl text-xs sm:text-sm font-semibold text-slate-700 appearance-none focus:outline-none focus:ring-2 focus:ring-sky-500 focus:bg-white transition-all cursor-pointer">
                         <option value="latest">Urutkan: Terbaru</option>
-                        <option value="popular">Urutkan: Terpopuler</option>
                         <option value="oldest">Urutkan: Terlama</option>
                         <option value="title_asc">Urutkan: Judul (A-Z)</option>
+                        <option value="title_desc">Urutkan: Judul (Z-A)</option>
                     </select>
                     <div class="absolute inset-y-0 right-0 pr-3.5 flex items-center pointer-events-none text-slate-400">
                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
@@ -88,9 +88,14 @@
                                 <img src="{{ $art->cover_image }}" alt="{{ $art->title }}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
                             </div>
                             <div class="p-5 sm:p-6 space-y-3">
-                                <span class="inline-block text-[10px] font-bold uppercase tracking-wider text-sky-600 bg-sky-50 px-2.5 py-1 rounded-md">
-                                    {{ $art->category }}
-                                </span>
+                                <div class="flex items-center justify-between gap-2">
+                                    <span class="inline-block text-[10px] font-bold uppercase tracking-wider text-sky-600 bg-sky-50 px-2.5 py-1 rounded-md">
+                                        {{ $art->category }}
+                                    </span>
+                                    <span class="text-[11px] text-slate-400 font-medium">
+                                        {{ $art->created_at?->format('d M Y') }}
+                                    </span>
+                                </div>
                                 <h3 class="font-bold text-slate-900 text-base sm:text-lg line-clamp-2 hover:text-sky-600 transition-colors">
                                     <a href="{{ route('articles.show', $art->slug) }}">{{ $art->title }}</a>
                                 </h3>
