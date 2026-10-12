@@ -8,7 +8,7 @@
                 </span>
                 <h2 class="text-xl font-extrabold text-white">Kelola Master Data UNAIR Store</h2>
                 <p class="text-xs text-slate-400">
-                    Pusat pengelolaan lengkap untuk katalog produk, nomor WhatsApp, pesan otomatis, konten halaman/banner, serta kategori produk UNAIR Store.
+                    Pusat pengelolaan lengkap katalog produk, deskripsi detail produk, nomor WhatsApp, konten halaman, serta kategori produk UNAIR Store.
                 </p>
             </div>
 
@@ -141,7 +141,7 @@
                                         <div class="font-bold text-white text-sm">{{ $item->title }}</div>
                                         @if(!empty($item->badge))
                                             <span class="inline-block mt-1 px-2 py-0.5 rounded-md bg-amber-500/20 text-amber-300 border border-amber-500/30 text-[10px] font-bold">
-                                                {{ $item->badge }}
+                                                ★ {{ $item->badge }}
                                             </span>
                                         @endif
                                     </td>
@@ -209,8 +209,8 @@
                     <span class="px-2.5 py-0.5 rounded-full bg-emerald-500/20 text-emerald-400 text-[10px] font-extrabold uppercase tracking-wider">
                         WhatsApp UNAIR Store
                     </span>
-                    <h3 class="text-base sm:text-lg font-extrabold text-white mt-1">Pengaturan Nomor WhatsApp &amp; Template Pesan Order</h3>
-                    <p class="text-xs text-slate-400">Nomor dan template pesan di bawah ini digunakan khusus untuk seluruh tombol pemesanan &amp; konsultasi di halaman UNAIR Store.</p>
+                    <h3 class="text-base sm:text-lg font-extrabold text-white mt-1">Pengaturan Nomor WhatsApp &amp; Template Pesan</h3>
+                    <p class="text-xs text-slate-400">Nomor dan template pesan di bawah ini digunakan untuk tombol tanya ketersediaan produk &amp; konsultasi di halaman UNAIR Store.</p>
                 </div>
 
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-5 text-xs sm:text-sm">
@@ -225,21 +225,21 @@
                     </div>
 
                     <div>
-                        <label class="font-bold text-slate-300 block mb-1.5 uppercase tracking-wider text-xs">Template Pesan WA — Order Produk</label>
+                        <label class="font-bold text-slate-300 block mb-1.5 uppercase tracking-wider text-xs">Template Pesan WA — Tanya Ketersediaan Produk</label>
                         <textarea wire:model="store_whatsapp_order_prefix"
                                   rows="3"
-                                  placeholder="Halo Airlangga Travel / UNAIR Store, saya ingin memesan produk:"
+                                  placeholder="Halo Admin UNAIR Store, saya ingin menanyakan ketersediaan produk:"
                                   class="w-full px-4 py-2.5 bg-slate-900 border border-slate-800 rounded-xl text-white focus:ring-2 focus:ring-sky-500 focus:outline-none"></textarea>
-                        <span class="text-[11px] text-slate-500 mt-1 block">Nama produk akan otomatis ditambahkan di akhir kalimat ini saat pengunjung klik "Pesan via WA".</span>
+                        <span class="text-[11px] text-slate-500 mt-1 block">Nama produk akan otomatis ditambahkan di belakang pesan ini saat pengunjung klik tombol WhatsApp di detail produk.</span>
                     </div>
 
                     <div>
-                        <label class="font-bold text-slate-300 block mb-1.5 uppercase tracking-wider text-xs">Template Pesan WA — Konsultasi Custom Order</label>
+                        <label class="font-bold text-slate-300 block mb-1.5 uppercase tracking-wider text-xs">Template Pesan WA — Banner Bawah</label>
                         <textarea wire:model="store_whatsapp_custom_message"
                                   rows="3"
                                   placeholder="Halo UNAIR Store / Airlangga Travel, saya ingin konsultasi pemesanan custom merchandise / souvenir:"
                                   class="w-full px-4 py-2.5 bg-slate-900 border border-slate-800 rounded-xl text-white focus:ring-2 focus:ring-sky-500 focus:outline-none"></textarea>
-                        <span class="text-[11px] text-slate-500 mt-1 block">Digunakan saat pengunjung menekan tombol Konsultasi Custom Order di bagian bawah halaman.</span>
+                        <span class="text-[11px] text-slate-500 mt-1 block">Digunakan saat pengunjung menekan tombol di banner bagian bawah halaman.</span>
                     </div>
                 </div>
             </div>
@@ -297,15 +297,15 @@
                 </div>
             </div>
 
-            <!-- Section C: Bottom Custom Order / Bulk Order Banner -->
+            <!-- Section C: Bottom Banner -->
             <div class="bg-slate-950 p-6 sm:p-8 rounded-3xl border border-slate-800 space-y-5 shadow-xl">
                 <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-slate-800 pb-4">
                     <div>
                         <span class="px-2.5 py-0.5 rounded-full bg-amber-500/20 text-amber-300 text-[10px] font-extrabold uppercase tracking-wider">
-                            Banner Custom Order
+                            Banner Bagian Bawah
                         </span>
-                        <h3 class="text-base sm:text-lg font-extrabold text-white mt-1">Konten Banner Custom Order &amp; Souvenir (Bagian Bawah)</h3>
-                        <p class="text-xs text-slate-400">Atur teks ajakan pemesanan partai besar (seminar kit, jaket angkatan, souvenir wisuda) di bagian bawah katalog.</p>
+                        <h3 class="text-base sm:text-lg font-extrabold text-white mt-1">Konten Banner Informasi / Custom Souvenir (Bagian Bawah)</h3>
+                        <p class="text-xs text-slate-400">Atur teks banner di bagian bawah katalog (atau matikan centang jika tidak ingin ditampilkan).</p>
                     </div>
 
                     <label class="inline-flex items-center gap-2.5 cursor-pointer bg-slate-900 px-4 py-2.5 rounded-xl border border-slate-800 shrink-0">
@@ -316,7 +316,7 @@
 
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-5 text-xs sm:text-sm">
                     <div>
-                        <label class="font-bold text-slate-300 block mb-1.5 uppercase tracking-wider text-xs">Badge Banner Custom Order</label>
+                        <label class="font-bold text-slate-300 block mb-1.5 uppercase tracking-wider text-xs">Badge Banner</label>
                         <input type="text"
                                wire:model="store_banner_badge"
                                placeholder="✨ Custom Order & Souvenir Kampus / Instansi"
@@ -332,7 +332,7 @@
                     </div>
 
                     <div class="md:col-span-2">
-                        <label class="font-bold text-slate-300 block mb-1.5 uppercase tracking-wider text-xs">Judul Banner Custom Order</label>
+                        <label class="font-bold text-slate-300 block mb-1.5 uppercase tracking-wider text-xs">Judul Banner</label>
                         <input type="text"
                                wire:model="store_banner_title"
                                placeholder="Butuh Souvenir Seminar, Wisuda, atau Gathering Fakultas?"
@@ -340,7 +340,7 @@
                     </div>
 
                     <div class="md:col-span-2">
-                        <label class="font-bold text-slate-300 block mb-1.5 uppercase tracking-wider text-xs">Deskripsi Banner Custom Order</label>
+                        <label class="font-bold text-slate-300 block mb-1.5 uppercase tracking-wider text-xs">Deskripsi Banner</label>
                         <textarea wire:model="store_banner_description"
                                   rows="3"
                                   class="w-full px-4 py-2.5 bg-slate-900 border border-slate-800 rounded-xl text-white focus:ring-2 focus:ring-sky-500 focus:outline-none"></textarea>
@@ -439,12 +439,12 @@
                 <div class="flex justify-between items-center border-b border-slate-800 pb-4">
                     <div>
                         <h3 class="text-lg font-bold text-white">{{ $editingId ? 'Edit Produk UNAIR Store' : 'Tambah Produk UNAIR Store' }}</h3>
-                        <p class="text-xs text-slate-400">Lengkapi informasi produk merchandise atau souvenir.</p>
+                        <p class="text-xs text-slate-400">Lengkapi informasi produk, foto galeri, dan deskripsi produk yang akan ditampilkan di halaman detail.</p>
                     </div>
                     <button type="button" wire:click="$set('modalOpen', false)" class="text-slate-400 hover:text-white font-bold text-xl">✕</button>
                 </div>
 
-                <form wire:submit.prevent="saveItem" class="space-y-4 text-xs sm:text-sm">
+                <form wire:submit.prevent="saveItem" class="space-y-5 text-xs sm:text-sm">
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                         <div class="sm:col-span-2">
                             <label class="font-bold text-slate-300 block mb-1 uppercase tracking-wider text-xs">Nama Produk</label>
@@ -491,12 +491,12 @@
                         </div>
 
                         <div class="sm:col-span-2">
-                            <label class="font-bold text-slate-300 block mb-1 uppercase tracking-wider text-xs">Label / Badge Produk (Opsional)</label>
+                            <label class="font-bold text-slate-300 block mb-1 uppercase tracking-wider text-xs">Label / Edisi Produk (Opsional)</label>
                             <input type="text" wire:model="badge" placeholder="Contoh: Best Seller, Official Merch, Limited Edition" class="w-full px-4 py-2.5 bg-slate-950 border border-slate-800 rounded-xl text-white focus:ring-2 focus:ring-sky-500 focus:outline-none font-semibold">
                         </div>
                     </div>
 
-                    <!-- Upload Foto Utama & Gambar Lainnya (Styled Box with Live Previews) -->
+                    <!-- Upload Foto Utama & Gambar Lainnya -->
                     <div class="space-y-2">
                         <div class="flex items-center justify-between">
                             <label class="font-bold text-slate-300 block uppercase tracking-wider text-xs">Upload Foto Utama &amp; Gambar Lainnya</label>
@@ -504,7 +504,6 @@
                         </div>
 
                         <div class="p-4 bg-slate-950 border border-slate-800 rounded-2xl space-y-4">
-                            <!-- Styled File Input Box -->
                             <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
                                 <input type="file"
                                        wire:model="coverImageFile"
@@ -525,7 +524,6 @@
                                 <span>⏳ Mengunggah &amp; memproses gambar...</span>
                             </div>
 
-                            <!-- Preview Grid of Uploaded Images Inside the Box -->
                             @if(!empty($cover_image) || !empty($detail_images))
                                 <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-1">
                                     @if(!empty($cover_image))
@@ -560,7 +558,6 @@
                                         </div>
                                     @endforeach
 
-                                    <!-- Quick Add More Tile right inside preview grid -->
                                     <label class="rounded-xl border-2 border-dashed border-slate-700 hover:border-sky-500 bg-slate-900/50 hover:bg-slate-900 h-28 flex flex-col items-center justify-center gap-1 text-slate-400 hover:text-sky-400 cursor-pointer transition-colors">
                                         <span class="text-xl font-bold">＋</span>
                                         <span class="text-[10px] font-bold text-center px-2">Tambah Gambar</span>
@@ -575,9 +572,10 @@
                         </div>
                     </div>
 
+                    <!-- Bagian 4: Deskripsi & Custom WA -->
                     <div>
                         <label class="font-bold text-slate-300 block mb-1 uppercase tracking-wider text-xs">Deskripsi Produk</label>
-                        <textarea wire:model="description" rows="4" placeholder="Tuliskan bahan, ukuran tersedia, dan keunggulan produk..." class="w-full px-4 py-3 bg-slate-950 border border-slate-800 rounded-2xl text-sm text-white focus:ring-2 focus:ring-sky-500 focus:outline-none"></textarea>
+                        <textarea wire:model="description" rows="4" placeholder="Tuliskan detail bahan, panduan ukuran, dan keunggulan produk..." class="w-full px-4 py-3 bg-slate-950 border border-slate-800 rounded-2xl text-sm text-white focus:ring-2 focus:ring-sky-500 focus:outline-none"></textarea>
                         @error('description') <span class="text-xs text-rose-400 mt-1 block">{{ $message }}</span> @enderror
                     </div>
 

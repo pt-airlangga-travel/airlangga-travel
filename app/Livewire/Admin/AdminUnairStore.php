@@ -384,7 +384,7 @@ class AdminUnairStore extends Component
             'price' => $normalizedPrice,
             'discount_price' => $normalizedDiscountPrice,
             'stock_status' => $this->stock_status,
-            'badge' => $this->badge ?: null,
+            'badge' => trim($this->badge) !== '' ? trim($this->badge) : null,
             'description' => $this->description,
             'cover_image' => $coverUrl ?: 'https://images.unsplash.com/photo-1551028719-00167b16eac5?auto=format&fit=crop&w=1000&q=80',
             'detail_images' => array_values($detailUrls),

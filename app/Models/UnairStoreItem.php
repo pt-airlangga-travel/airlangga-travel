@@ -62,7 +62,7 @@ class UnairStoreItem extends Model
             return $this->wa_template_message;
         }
 
-        $effectivePrefix = trim((string) ($prefix ?: 'Halo Airlangga Travel / UNAIR Store, saya ingin memesan produk:'));
+        $effectivePrefix = trim((string) ($prefix ?: 'Halo Admin UNAIR Store, saya ingin menanyakan ketersediaan produk:'));
 
         return $effectivePrefix.' '.$this->title;
     }
@@ -104,12 +104,12 @@ class UnairStoreItem extends Model
     {
         $defaults = [
             'store_whatsapp_number' => '6281233020117',
-            'store_whatsapp_order_prefix' => 'Halo Airlangga Travel / UNAIR Store, saya ingin memesan produk:',
+            'store_whatsapp_order_prefix' => 'Halo Admin UNAIR Store, saya ingin menanyakan ketersediaan produk:',
             'store_whatsapp_custom_message' => 'Halo UNAIR Store / Airlangga Travel, saya ingin konsultasi pemesanan custom merchandise / souvenir:',
             'store_hero_badge' => '🛍️ Official Merchandise & Travel Store',
             'store_hero_title' => 'UNAIR Store',
             'store_hero_highlight' => '& Official Merch',
-            'store_hero_description' => 'Koleksi merchandise resmi Universitas Airlangga, apparel eksklusif Ksatria Airlangga, souvenir kampus, serta perlengkapan traveling pilihan Airlangga Travel dengan pemesanan cepat via WhatsApp.',
+            'store_hero_description' => 'Koleksi merchandise resmi Universitas Airlangga, apparel eksklusif Ksatria Airlangga, souvenir kampus, serta perlengkapan traveling pilihan Airlangga Travel.',
             'store_search_placeholder' => 'Cari produk UNAIR Store...',
             'store_banner_enabled' => '1',
             'store_banner_badge' => '✨ Custom Order & Souvenir Kampus / Instansi',
