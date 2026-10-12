@@ -124,8 +124,8 @@
             <div class="flex justify-between items-center h-20 lg:h-24 py-1">
 
                 <!-- Brand Logo -->
-                <a href="{{ route('home') }}" class="flex items-center gap-3 group py-1">
-                    <img src="{{ asset('assets/agt.png') }}" alt="Airlangga Travel Logo" class="h-14 sm:h-16 lg:h-20 w-auto object-contain group-hover:scale-105 transition-transform">
+                <a href="{{ route('home') }}" class="flex items-center gap-3 group">
+                    <img src="{{ asset('assets/agt.png') }}" alt="Airlangga Travel Logo" class="h-16 sm:h-20 lg:h-24 w-auto object-contain group-hover:scale-105 transition-transform">
                 </a>
 
                 <!-- Desktop Navigation Links -->
@@ -321,8 +321,13 @@
 
                 <!-- Column 1: Company Profile -->
                 <div class="space-y-4">
-                    <a href="{{ route('home') }}" class="inline-flex items-center gap-3 group">
-                        <img src="{{ asset('assets/agt.png') }}" alt="Airlangga Travel Logo" class="h-14 sm:h-16 w-auto object-contain bg-white p-2 rounded-xl">
+                    <a href="{{ route('home') }}" class="inline-flex items-center gap-3.5 group">
+                        <div class="w-12 h-12 rounded-2xl bg-slate-800 border border-slate-700 p-2 flex items-center justify-center shrink-0 shadow-md group-hover:scale-105 transition-transform">
+                            <img src="{{ asset('assets/travel.png') }}" alt="Airlangga Travel Logo" class="w-full h-full object-contain">
+                        </div>
+                        <span class="text-white font-extrabold text-base tracking-wide leading-tight group-hover:text-sky-400 transition-colors">
+                            PT. Airlangga Global Traveling
+                        </span>
                     </a>
 
                     <div class="text-xs font-semibold text-slate-300">
@@ -379,7 +384,7 @@
 
             <!-- Bottom Copyright & Admin Link -->
             <div class="mt-10 pt-6 border-t border-slate-800 flex flex-col sm:flex-row justify-between items-center gap-3 text-xs text-slate-500">
-                <p>&copy; {{ date('Y') }} PT Airlangga Wisata Nusantara. Part of <a href="https://dpacorp.id" target="_blank" rel="noopener" class="text-sky-400 hover:text-amber-300 font-bold underline transition-colors">PT Dharma Putra Airlangga</a>. Hak Cipta Dilindungi.</p>
+                <p>&copy; {{ date('Y') }} PT. Airlangga Global Traveling. Part of <a href="https://dpacorp.id" target="_blank" rel="noopener" class="text-sky-400 hover:text-amber-300 font-bold underline transition-colors">PT Dharma Putra Airlangga</a>. Hak Cipta Dilindungi.</p>
                 <div>
                     <a href="{{ route('admin.dashboard') }}" class="hover:text-sky-400 transition-colors">Admin Login</a>
                 </div>

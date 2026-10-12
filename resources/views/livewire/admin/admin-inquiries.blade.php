@@ -1,8 +1,10 @@
 <div class="space-y-6">
     
-    <div class="flex justify-between items-center">
-        <h2 class="text-lg font-bold text-white">Log WhatsApp Inquiries & Pemesanan</h2>
-        <span class="text-xs text-slate-400">Tercatat Otomatis Saat Pemesan Klik WA</span>
+    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-slate-950 p-6 rounded-3xl border border-slate-800">
+        <div>
+            <h2 class="text-xl font-extrabold text-white">Log WhatsApp Inquiries & Pemesanan</h2>
+            <p class="text-xs text-slate-400">Tercatat otomatis saat pemesan klik tombol WhatsApp di website.</p>
+        </div>
     </div>
 
     @if(session()->has('message'))

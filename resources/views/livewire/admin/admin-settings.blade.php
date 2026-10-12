@@ -1,7 +1,7 @@
 <div class="max-w-4xl mx-auto space-y-6">
     
     <div class="flex justify-between items-center">
-        <h2 class="text-lg font-bold text-white">Pengaturan Umum & Nomor Admin WhatsApp</h2>
+        <h2 class="text-lg font-bold text-slate-900">Pengaturan Umum & Nomor Admin WhatsApp</h2>
     </div>
 
     @if(session()->has('message'))

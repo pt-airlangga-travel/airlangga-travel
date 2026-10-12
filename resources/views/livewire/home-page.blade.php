@@ -1,7 +1,7 @@
 <div>
     <!-- Traveloka Light Gradient Hero Section with NAVY Text -->
-    <section class="relative bg-gradient-to-br from-sky-100 via-blue-50 to-cyan-100/80 hero-pattern pt-24 sm:pt-28 lg:pt-32 pb-24 px-4 overflow-hidden border-b border-sky-100">
-        <div class="max-w-7xl mx-auto text-center relative z-10 space-y-4">
+    <section class="relative bg-gradient-to-br from-sky-100 via-blue-50 to-cyan-100/80 hero-pattern pt-6 sm:pt-7 lg:pt-8 pb-20 sm:pb-24 px-4 overflow-hidden border-b border-sky-100">
+        <div class="max-w-7xl mx-auto text-center relative z-10 space-y-2">
             <div>
                 <span class="inline-block px-5 py-2.5 rounded-full bg-sky-600/10 text-sky-950 border border-sky-300/80 text-xs sm:text-sm font-extrabold tracking-wide shadow-sm">
                     ✈️ #1 Travel & Tour Agency Terpercaya di Indonesia
@@ -9,15 +9,33 @@
             </div>
             
             <!-- Hero Banner Image (ytpbg.png) -->
-            <div class="my-4 flex justify-center">
+            <div class="-my-2 sm:-my-3 flex justify-center">
                 <img src="{{ asset('assets/ytpbg.png') }}" 
                      alt="your travelling partner" 
-                     class="h-48 sm:h-64 lg:h-80 xl:h-96 max-h-[320px] sm:max-h-[480px] lg:max-h-[640px] w-auto max-w-full object-contain drop-shadow-lg transition-transform hover:scale-[1.03]">
+                     class="h-44 sm:h-56 lg:h-72 w-auto max-w-full object-contain drop-shadow-lg transition-transform hover:scale-[1.03]">
             </div>
 
-            <p class="text-slate-600 text-xs sm:text-sm max-w-2xl mx-auto font-medium leading-relaxed pt-2">
-                Nikmati kemudahan booking paket wisata bali, labuan bajo, umrah bintang 5, serta tiket pesawat & sewa armada transportasi fast response via WhatsApp.
-            </p>
+            <div class="max-w-3xl mx-auto space-y-3 pt-1">
+                <p class="text-slate-600 text-xs sm:text-sm md:text-base font-medium leading-relaxed">
+                    Nikmati kemudahan booking <span class="font-bold text-sky-900">Paket Wisata Bali & Labuan Bajo</span>, <span class="font-bold text-emerald-700">Umrah Bintang 5</span>, serta <span class="font-bold text-sky-900">Tiket Pesawat & Sewa Armada</span> dengan layanan <span class="inline-flex items-center gap-1 font-extrabold text-emerald-700 bg-emerald-500/15 border border-emerald-500/30 px-2.5 py-0.5 rounded-full text-xs">⚡ Fast Response via WhatsApp</span>
+                </p>
+
+                <!-- Quick Feature Pills -->
+                <div class="flex flex-wrap items-center justify-center gap-2 pt-1">
+                    <a href="{{ route('services.tours') }}" class="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-white/80 hover:bg-white text-sky-900 border border-sky-200/80 shadow-sm text-[11px] sm:text-xs font-bold transition-all hover:scale-105 hover:shadow">
+                        <span>🏝️</span> Paket Tour Favorit
+                    </a>
+                    <a href="{{ route('services.umrah') }}" class="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-white/80 hover:bg-white text-emerald-800 border border-emerald-200/80 shadow-sm text-[11px] sm:text-xs font-bold transition-all hover:scale-105 hover:shadow">
+                        <span>🕋</span> Umrah & Hajj Resmi
+                    </a>
+                    <a href="{{ route('services.tickets') }}" class="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-white/80 hover:bg-white text-amber-800 border border-amber-200/80 shadow-sm text-[11px] sm:text-xs font-bold transition-all hover:scale-105 hover:shadow">
+                        <span>🎟️</span> Tiket Pesawat & Wisata
+                    </a>
+                    <a href="{{ route('services.transport') }}" class="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-white/80 hover:bg-white text-blue-900 border border-blue-200/80 shadow-sm text-[11px] sm:text-xs font-bold transition-all hover:scale-105 hover:shadow">
+                        <span>🚐</span> Sewa HiAce & Bus VIP
+                    </a>
+                </div>
+            </div>
         </div>
 
         <!-- Floating Decorative Glow -->

@@ -1,6 +1,6 @@
 <div class="space-y-6">
     <div class="flex justify-between items-center">
-        <h2 class="text-lg font-bold text-white">Kelola Mitra & Client Perusahaan (Trusted By)</h2>
+        <h2 class="text-lg font-bold text-slate-900">Kelola Mitra & Client Perusahaan (Trusted By)</h2>
         <button wire:click="openCreateModal" class="px-4 py-2.5 rounded-xl bg-sky-600 hover:bg-sky-500 text-white font-bold text-xs shadow-md">
             + Tambah Mitra Perusahaan
         </button>

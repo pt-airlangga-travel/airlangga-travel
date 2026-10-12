@@ -51,10 +51,10 @@
         </div>
 
         <!-- 2-Column Responsive Grid -->
-        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-start">
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start">
 
-            <!-- LEFT COLUMN (Spans 8 Cols): Gallery, Overview, Inclusions, Itinerary -->
-            <div class="lg:col-span-8 space-y-8">
+            <!-- LEFT COLUMN (Spans 7 Cols): Gallery, Overview, Inclusions, Itinerary -->
+            <div class="lg:col-span-7 space-y-8">
                 
                 <!-- 1. Interactive Image Gallery & Sub-Destinations Slider -->
                 @if(!empty($package->sub_destinations))
@@ -151,8 +151,8 @@
 
             </div>
 
-            <!-- RIGHT COLUMN (Spans 4 Cols): Sticky Booking & Pax Pricing Card Sidebar -->
-            <div class="lg:col-span-4 space-y-6 sticky top-28">
+            <!-- RIGHT COLUMN (Spans 5 Cols): Sticky Booking & Pax Pricing Card Sidebar -->
+            <div class="lg:col-span-5 space-y-6 lg:sticky lg:top-24 lg:max-h-[calc(100vh-7rem)] lg:overflow-y-auto lg:pb-4">
                 
                 <!-- 1. Pax Pricing Table Card (High Contrast Navy Styling) -->
                 @if(!empty($package->pricing_tiers))

@@ -13,8 +13,8 @@
     <!-- Top Action & Filter Header -->
     <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-8">
         <div>
-            <h2 class="text-xl font-extrabold text-white tracking-wide">Daftar Blog & Panduan Travel</h2>
-            <p class="text-xs text-slate-400 mt-1">Kelola artikel berita, tips wisata, dan panduan umrah untuk pengunjung website.</p>
+            <h2 class="text-xl font-extrabold text-slate-900 tracking-wide">Daftar Blog & Panduan Travel</h2>
+            <p class="text-xs text-slate-500 mt-1">Kelola artikel berita, tips wisata, dan panduan umrah untuk pengunjung website.</p>
         </div>
 
         <button wire:click="openCreateModal" class="px-5 py-3 rounded-xl bg-sky-600 hover:bg-sky-500 text-white font-bold text-xs tracking-wide shadow-lg shadow-sky-600/30 transition-all flex items-center gap-2">

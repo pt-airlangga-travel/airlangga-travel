@@ -17,7 +17,7 @@
     <aside class="w-64 bg-slate-950 border-r border-slate-800 flex flex-col justify-between shrink-0 min-h-screen">
         <div class="p-6 space-y-8">
             <div class="flex items-center gap-3">
-                <img src="{{ asset('assets/agt.png') }}" alt="Airlangga Travel Icon" class="h-10 w-auto object-contain bg-white/10 p-1.5 rounded-xl border border-white/20">
+                <img src="{{ asset('assets/travel.png') }}" alt="Airlangga Travel Icon" class="h-10 w-10 object-contain bg-white/10 p-1.5 rounded-xl border border-white/20 shrink-0">
                 <div>
                     <span class="font-extrabold text-white text-base tracking-wide block">AIRLANGGA</span>
                     <span class="text-[10px] text-sky-400 font-bold block uppercase tracking-widest">Admin Control</span>
@@ -86,8 +86,8 @@
     <!-- Main Admin Content Area -->
     <main class="flex-grow p-8 overflow-y-auto">
         <!-- Top bar -->
-        <div class="flex justify-between items-center mb-8 border-b border-slate-800 pb-4">
-            <h1 class="text-2xl font-bold text-white">{{ $title ?? 'Admin Dashboard' }}</h1>
+        <div class="flex justify-between items-center mb-8 border-b border-slate-200 pb-4">
+            <h1 class="text-2xl font-extrabold text-slate-900 tracking-tight">{{ $title ?? 'Admin Dashboard' }}</h1>
             <a href="{{ route('home') }}" target="_blank" class="px-4 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-xs font-bold text-sky-400 transition-colors flex items-center gap-2">
                 <span>🌐 Lihat Website Utama</span>
             </a>
