@@ -125,7 +125,7 @@
 
                 <!-- Brand Logo -->
                 <a href="{{ route('home') }}" class="flex items-center gap-3 group">
-                    <img src="{{ asset('assets/agt.png') }}" alt="Airlangga Travel Logo" class="h-16 sm:h-20 lg:h-24 w-auto object-contain group-hover:scale-105 transition-transform">
+                    <img src="{{ asset('assets/agt.png') }}" alt="Airlangga Travel Logo" style="max-height: 88px; width: auto;" class="h-16 sm:h-20 lg:h-24 w-auto object-contain group-hover:scale-105 transition-transform">
                 </a>
 
                 <!-- Desktop Navigation Links -->
@@ -321,10 +321,8 @@
 
                 <!-- Column 1: Company Profile -->
                 <div class="space-y-4">
-                    <a href="{{ route('home') }}" class="inline-flex items-center gap-3.5 group">
-                        <div class="w-12 h-12 rounded-2xl bg-slate-800 border border-slate-700 p-2 flex items-center justify-center shrink-0 shadow-md group-hover:scale-105 transition-transform">
-                            <img src="{{ asset('assets/travel.png') }}" alt="Airlangga Travel Logo" class="w-full h-full object-contain">
-                        </div>
+                    <a href="{{ route('home') }}" class="inline-flex items-center gap-4 group" style="gap: 14px;">
+                        <img src="{{ asset('assets/travel.png') }}" alt="Airlangga Travel Logo" style="width: 44px; height: 44px;" class="w-11 h-11 object-contain shrink-0 group-hover:scale-105 transition-transform">
                         <span class="text-white font-extrabold text-base tracking-wide leading-tight group-hover:text-sky-400 transition-colors">
                             PT. Airlangga Global Traveling
                         </span>

@@ -12,6 +12,7 @@
             <div class="-my-2 sm:-my-3 flex justify-center">
                 <img src="{{ asset('assets/ytpbg.png') }}" 
                      alt="your travelling partner" 
+                     style="max-height: 270px; width: auto;"
                      class="h-44 sm:h-56 lg:h-72 w-auto max-w-full object-contain drop-shadow-lg transition-transform hover:scale-[1.03]">
             </div>
 

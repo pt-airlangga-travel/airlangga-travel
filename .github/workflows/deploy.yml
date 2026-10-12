@@ -30,7 +30,13 @@ jobs:
         run: npm install
 
       - name: 🛠️ Build project
-        run: npm run build
+        run: |
+          npm run build
+          rm -rf storage/public_sync
+          mkdir -p storage/public_sync/build storage/public_sync/assets
+          cp -r public/build/* storage/public_sync/build/
+          cp -r public/assets/* storage/public_sync/assets/
+          echo "${{ github.sha }}" > storage/public_sync/version.txt
 
       - name: 📂 Sync files
         uses: SamKirkland/FTP-Deploy-Action@v4.4.0
@@ -62,86 +68,6 @@ jobs:
             **/.prettierrc
             **/.editorconfig
 
-      - name: 🚀 Sync public assets (build & assets)
-        env:
-          FTP_SERVER: ${{ secrets.FTP_SERVER }}
-          FTP_USERNAME: ${{ secrets.FTP_USERNAME }}
-          FTP_PASSWORD: ${{ secrets.FTP_PASSWORD }}
-          FTP_PATH: ${{ secrets.FTP_PATH }}
-          SSH_HOST: ${{ secrets.SSH_HOST }}
-          SSH_PORT: ${{ secrets.SSH_PORT }}
-          SSH_USERNAME: ${{ secrets.SSH_USERNAME }}
-          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+      - name: 🚀 Apply public assets on server
         run: |
-          if [ -n "$SSH_PRIVATE_KEY" ] && [ -n "$SSH_HOST" ]; then
-            mkdir -p ~/.ssh
-            echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_deploy
-            chmod 600 ~/.ssh/id_deploy
-            PORT_ARG="${SSH_PORT:-65002}"
-            SSH_OPTS="-i ~/.ssh/id_deploy -p $PORT_ARG -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null"
-            PUBLIC_HTML="/home/${SSH_USERNAME}/domains/airlanggatravel.com/public_html"
-            APP_DIR="/home/${SSH_USERNAME}/domains/airlanggatravel.com/airlangga-travel"
-            ssh $SSH_OPTS "${SSH_USERNAME}@${SSH_HOST}" "mkdir -p ${PUBLIC_HTML}/build/assets ${PUBLIC_HTML}/assets && ln -sfn ../public_html ${APP_DIR}/public" || true
-            scp -r -i ~/.ssh/id_deploy -P "$PORT_ARG" -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null public/build/* "${SSH_USERNAME}@${SSH_HOST}:${PUBLIC_HTML}/build/" || true
-            scp -r -i ~/.ssh/id_deploy -P "$PORT_ARG" -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null public/assets/* "${SSH_USERNAME}@${SSH_HOST}:${PUBLIC_HTML}/assets/" || true
-            ssh $SSH_OPTS "${SSH_USERNAME}@${SSH_HOST}" "cd ${APP_DIR} && php artisan view:clear" || true
-            rm -f ~/.ssh/id_deploy
-          fi
-          python3 - << 'EOF'
-          import ftplib, os
-
-          server = os.environ.get("FTP_SERVER", "")
-          user = os.environ.get("FTP_USERNAME", "")
-          password = os.environ.get("FTP_PASSWORD", "")
-          ftp_path = os.environ.get("FTP_PATH", "").strip("/")
-
-          if server and user:
-              try:
-                  ftp = ftplib.FTP(server, timeout=30)
-                  ftp.login(user, password)
-                  root = ftp.pwd()
-                  candidates = [
-                      f"/{ftp_path}/../public_html" if ftp_path else "/ ../public_html",
-                      "/domains/airlanggatravel.com/public_html",
-                      "/public_html",
-                      f"/{ftp_path}/public" if ftp_path else "/public",
-                  ]
-                  target_root = None
-                  for c in candidates:
-                      try:
-                          ftp.cwd(root)
-                          ftp.cwd(c)
-                          target_root = ftp.pwd()
-                          print(f"Found public_html via FTP at: {target_root}")
-                          break
-                      except Exception:
-                          continue
-
-                  if target_root:
-                      def ensure_dir(path):
-                          ftp.cwd(target_root)
-                          for part in path.strip("/").split("/"):
-                              if not part:
-                                  continue
-                              try:
-                                  ftp.cwd(part)
-                              except Exception:
-                                  try:
-                                      ftp.mkd(part)
-                                      ftp.cwd(part)
-                                  except Exception:
-                                      pass
-
-                      for sub in ["build", "assets"]:
-                          local_base = os.path.join("public", sub)
-                          for dirpath, _, filenames in os.walk(local_base):
-                              rel_dir = os.path.relpath(dirpath, "public").replace("\\", "/")
-                              ensure_dir(rel_dir)
-                              for fname in filenames:
-                                  local_file = os.path.join(dirpath, fname)
-                                  with open(local_file, "rb") as f:
-                                      ftp.storbinary(f"STOR {fname}", f)
-                  ftp.quit()
-              except Exception as e:
-                  print(f"FTP public sync note: {e}")
-          EOF
+          curl -sL --retry 2 "https://airlanggatravel.com/?sync=${{ github.sha }}" > /dev/null || true
