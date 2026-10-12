@@ -25,6 +25,11 @@ class ArticleList extends Component
         $this->resetPage();
     }
 
+    public function updatingSelectedCategory(): void
+    {
+        $this->resetPage();
+    }
+
     public function render()
     {
         $query = Article::query()->where('is_published', true);
