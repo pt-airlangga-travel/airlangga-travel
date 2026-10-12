@@ -32,6 +32,24 @@ jobs:
       - name: 🛠️ Build project
         run: npm run build
 
+      - name: 📁 Ensure build directory exists on server
+        env:
+          FTP_SERVER: ${{ secrets.FTP_SERVER }}
+          FTP_USERNAME: ${{ secrets.FTP_USERNAME }}
+          FTP_PASSWORD: ${{ secrets.FTP_PASSWORD }}
+          FTP_PATH: ${{ secrets.FTP_PATH }}
+        run: |
+          touch public/build/assets/.keep
+          CLEAN_PATH="${FTP_PATH#./}"
+          CLEAN_PATH="${CLEAN_PATH#/}"
+          CLEAN_PATH="${CLEAN_PATH%/}"
+          if [ -n "$CLEAN_PATH" ] && [ "$CLEAN_PATH" != "." ]; then
+            TARGET_URL="ftp://${FTP_SERVER}/${CLEAN_PATH}/public/build/assets/.keep"
+          else
+            TARGET_URL="ftp://${FTP_SERVER}/public/build/assets/.keep"
+          fi
+          curl -s -S --ftp-create-dirs --user "${FTP_USERNAME}:${FTP_PASSWORD}" -T public/build/assets/.keep "$TARGET_URL"
+
       - name: 📂 Sync files
         uses: SamKirkland/FTP-Deploy-Action@v4.4.0
         with:
