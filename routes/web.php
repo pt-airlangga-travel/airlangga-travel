@@ -2,6 +2,7 @@
 
 use App\Livewire\AboutPage;
 use App\Livewire\Admin\AdminArticles;
+use App\Livewire\Admin\AdminCategories;
 use App\Livewire\Admin\AdminDashboard;
 use App\Livewire\Admin\AdminGalleries;
 use App\Livewire\Admin\AdminInquiries;
@@ -13,6 +14,7 @@ use App\Livewire\Admin\AdminSettings;
 use App\Livewire\Admin\AdminTestimonials;
 use App\Livewire\Admin\AdminTickets;
 use App\Livewire\Admin\AdminTransports;
+use App\Livewire\Admin\AdminUnairStore;
 use App\Livewire\ArticleDetail;
 use App\Livewire\ArticleList;
 use App\Livewire\ContactPage;
@@ -23,6 +25,7 @@ use App\Livewire\PassportVisaPage;
 use App\Livewire\TicketBooking;
 use App\Livewire\TicketsWisataPage;
 use App\Livewire\TransportRentalPage;
+use App\Livewire\UnairStorePage;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -37,6 +40,7 @@ Route::get('/layanan/umrah-hajj', function () {
 Route::get('/layanan/tiket-wisata', TicketsWisataPage::class)->name('services.tickets');
 Route::get('/layanan/sewa-transportasi', TransportRentalPage::class)->name('services.transport');
 Route::get('/layanan/passport-visa', PassportVisaPage::class)->name('services.passport-visa');
+Route::get('/layanan/unair-store', UnairStorePage::class)->name('services.unair-store');
 
 // Legacy & Direct Routes
 Route::get('/paket-wisata', PackageList::class)->name('packages.index');
@@ -57,6 +61,8 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::get('/tickets', AdminTickets::class)->name('tickets');
         Route::get('/transports', AdminTransports::class)->name('transports');
         Route::get('/passport-visa', AdminPassportVisa::class)->name('passport-visa');
+        Route::get('/unair-store', AdminUnairStore::class)->name('unair-store');
+        Route::get('/categories', AdminCategories::class)->name('categories');
         Route::get('/testimonials', AdminTestimonials::class)->name('testimonials');
         Route::get('/galleries', AdminGalleries::class)->name('galleries');
         Route::get('/articles', AdminArticles::class)->name('articles');

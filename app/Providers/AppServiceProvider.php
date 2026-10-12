@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\ServiceProvider;
 
@@ -45,8 +46,78 @@ class AppServiceProvider extends ServiceProvider
                     }
                 }
 
+                if (is_dir(storage_path('framework/views'))) {
+                    foreach (glob(storage_path('framework/views/*.php')) ?: [] as $compiledView) {
+                        @unlink($compiledView);
+                    }
+                }
+
                 @file_put_contents($appliedFile, $version);
             }
+        }
+
+        $this->ensureDatabaseAutoIncrement();
+    }
+
+    /**
+     * Repair tables imported from partial SQL dumps that are missing PRIMARY KEY / AUTO_INCREMENT on `id`.
+     */
+    protected function ensureDatabaseAutoIncrement(): void
+    {
+        $flagFile = storage_path('framework/db_autoincrement_v1_'.md5((string) config('database.connections.mysql.database')).'.flag');
+        if (is_file($flagFile)) {
+            return;
+        }
+
+        try {
+            if (DB::getDriverName() !== 'mysql') {
+                return;
+            }
+
+            $tables = [
+                'articles',
+                'categories',
+                'galleries',
+                'inquiry_logs',
+                'partners',
+                'passport_visa_services',
+                'site_settings',
+                'testimonials',
+                'ticket_services',
+                'tour_packages',
+                'transport_rentals',
+                'unair_store_items',
+                'users',
+            ];
+
+            $allSucceeded = true;
+
+            foreach ($tables as $table) {
+                try {
+                    $cols = DB::select("SHOW COLUMNS FROM `{$table}` WHERE Field = 'id'");
+                    if (empty($cols)) {
+                        continue;
+                    }
+
+                    $col = $cols[0];
+                    $hasPrimary = strtoupper((string) $col->Key) === 'PRI';
+                    $hasAutoIncrement = stripos((string) $col->Extra, 'auto_increment') !== false;
+
+                    if (! $hasPrimary) {
+                        DB::statement("ALTER TABLE `{$table}` ADD PRIMARY KEY (`id`), MODIFY `id` BIGINT UNSIGNED NOT NULL AUTO_INCREMENT");
+                    } elseif (! $hasAutoIncrement) {
+                        DB::statement("ALTER TABLE `{$table}` MODIFY `id` BIGINT UNSIGNED NOT NULL AUTO_INCREMENT");
+                    }
+                } catch (\Throwable $tableError) {
+                    $allSucceeded = false;
+                }
+            }
+
+            if ($allSucceeded) {
+                @file_put_contents($flagFile, date('c'));
+            }
+        } catch (\Throwable $e) {
+            // Ignore when DB is not yet reachable
         }
     }
 }

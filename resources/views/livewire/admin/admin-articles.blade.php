@@ -14,12 +14,17 @@
     <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-8">
         <div>
             <h2 class="text-xl font-extrabold text-slate-900 tracking-wide">Daftar Blog & Panduan Travel</h2>
-            <p class="text-xs text-slate-500 mt-1">Kelola artikel berita, tips wisata, dan panduan umrah untuk pengunjung website.</p>
+            <p class="text-xs text-slate-500 mt-1">Kelola artikel berita, tips wisata, UNAIR Store, dan panduan umrah untuk pengunjung website.</p>
         </div>
 
-        <button wire:click="openCreateModal" class="px-5 py-3 rounded-xl bg-sky-600 hover:bg-sky-500 text-white font-bold text-xs tracking-wide shadow-lg shadow-sky-600/30 transition-all flex items-center gap-2">
-            <span>📝 Tambah Artikel Baru</span>
-        </button>
+        <div class="flex flex-wrap items-center gap-3">
+            <button wire:click="openCategoryModal" class="px-4 py-3 rounded-xl bg-slate-900 hover:bg-slate-800 text-amber-400 border border-slate-800 font-bold text-xs tracking-wide shadow-md transition-all flex items-center gap-2">
+                <span>🏷️ Kelola Kategori</span>
+            </button>
+            <button wire:click="openCreateModal" class="px-5 py-3 rounded-xl bg-sky-600 hover:bg-sky-500 text-white font-bold text-xs tracking-wide shadow-lg shadow-sky-600/30 transition-all flex items-center gap-2">
+                <span>📝 Tambah Artikel Baru</span>
+            </button>
+        </div>
     </div>
 
     <!-- Filter & Search Bar -->
@@ -144,12 +149,16 @@
 
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                         <div>
-                            <label class="block font-bold text-slate-300 uppercase mb-1">Kategori</label>
+                            <div class="flex items-center justify-between mb-1">
+                                <label class="block font-bold text-slate-300 uppercase">Kategori</label>
+                                <button type="button" wire:click="openCategoryModal" class="text-[11px] font-bold text-sky-400 hover:text-sky-300 underline">
+                                    + Kelola Kategori
+                                </button>
+                            </div>
                             <select wire:model="category" class="w-full px-4 py-3 bg-slate-950 border border-slate-800 rounded-xl text-white focus:ring-2 focus:ring-sky-500">
-                                <option value="Tips Wisata">Tips Wisata</option>
-                                <option value="Panduan Umrah">Panduan Umrah</option>
-                                <option value="Berita Travel">Berita Travel</option>
-                                <option value="Promosi & Event">Promosi & Event</option>
+                                @foreach($categories as $cat)
+                                    <option value="{{ $cat }}">{{ $cat }}</option>
+                                @endforeach
                             </select>
                             @error('category') <span class="text-rose-400 mt-1 block">{{ $message }}</span> @enderror
                         </div>
@@ -206,6 +215,56 @@
                         </button>
                     </div>
                 </form>
+            </div>
+        </div>
+    @endif
+
+    <!-- Kelola Kategori Blog Modal -->
+    @if($categoryModalOpen)
+        <div class="fixed inset-0 z-[60] flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-sm">
+            <div class="bg-slate-900 border border-slate-800 rounded-3xl max-w-lg w-full p-6 sm:p-8 space-y-5 shadow-2xl">
+                <div class="flex justify-between items-center border-b border-slate-800 pb-4">
+                    <div>
+                        <h3 class="text-lg font-bold text-white">🏷️ Kelola Kategori Blog & Artikel</h3>
+                        <p class="text-xs text-slate-400">Tambah atau hapus pilihan kategori untuk artikel blog.</p>
+                    </div>
+                    <button wire:click="$set('categoryModalOpen', false)" class="text-slate-400 hover:text-white font-bold text-xl">&times;</button>
+                </div>
+
+                <!-- Add New Category Form -->
+                <form wire:submit.prevent="addCategory" class="flex gap-2">
+                    <input type="text"
+                           wire:model="newCategoryName"
+                           placeholder="Nama kategori baru (misal: Info Beasiswa, UNAIR Store)..."
+                           class="flex-1 px-4 py-2.5 bg-slate-950 border border-slate-800 rounded-xl text-xs text-white focus:outline-none focus:ring-2 focus:ring-sky-500">
+                    <button type="submit" class="px-4 py-2.5 rounded-xl bg-sky-600 hover:bg-sky-500 text-white font-bold text-xs shrink-0 shadow-md">
+                        + Tambah
+                    </button>
+                </form>
+
+                <!-- Categories List -->
+                <div class="space-y-2 max-h-64 overflow-y-auto pr-1">
+                    @foreach($categories as $catName)
+                        <div wire:key="blog-cat-{{ $loop->index }}" class="flex items-center justify-between px-4 py-2.5 rounded-xl bg-slate-950 border border-slate-800">
+                            <span class="text-xs font-bold text-slate-200">{{ $catName }}</span>
+                            <button type="button"
+                                    wire:click="deleteCategory('{{ addslashes($catName) }}')"
+                                    wire:confirm="Hapus kategori '{{ $catName }}'?"
+                                    class="px-2.5 py-1 rounded-lg bg-rose-500/10 hover:bg-rose-500/20 text-rose-400 border border-rose-500/20 text-[11px] font-bold transition-colors">
+                                🗑️ Hapus
+                            </button>
+                        </div>
+                    @endforeach
+                </div>
+
+                <div class="pt-3 border-t border-slate-800 flex justify-between items-center">
+                    <a href="{{ route('admin.categories') }}" class="text-xs font-bold text-sky-400 hover:underline">
+                        Buka Menu Kelola Semua Kategori →
+                    </a>
+                    <button type="button" wire:click="$set('categoryModalOpen', false)" class="px-5 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-white font-bold text-xs">
+                        Selesai
+                    </button>
+                </div>
             </div>
         </div>
     @endif

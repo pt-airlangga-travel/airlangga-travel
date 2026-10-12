@@ -11,11 +11,11 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     @livewireStyles
 </head>
-<body class="bg-slate-900 text-slate-100 min-h-screen flex" x-data="{ sidebarOpen: true }">
+<body class="bg-slate-900 text-slate-100 h-screen overflow-hidden flex" x-data="{ sidebarOpen: true }">
 
-    <!-- Admin Sidebar -->
-    <aside class="w-64 bg-slate-950 border-r border-slate-800 flex flex-col justify-between shrink-0 min-h-screen">
-        <div class="p-6 space-y-8">
+    <!-- Admin Sidebar (Fixed in position while main content scrolls) -->
+    <aside class="w-64 h-screen bg-slate-950 border-r border-slate-800 flex flex-col shrink-0 overflow-y-auto">
+        <div class="p-6 pb-3 space-y-6">
             <div class="flex items-center gap-3">
                 <img src="{{ asset('assets/travel.png') }}" alt="Airlangga Travel Icon" class="h-10 w-10 object-contain bg-white/10 p-1.5 rounded-xl border border-white/20 shrink-0">
                 <div>
@@ -26,44 +26,65 @@
 
             <!-- Navigation Links -->
             <nav class="space-y-1 text-sm font-semibold">
-                <a href="{{ route('admin.dashboard') }}" class="flex items-center gap-3 px-4 py-3 rounded-xl transition-colors {{ request()->routeIs('admin.dashboard') ? 'bg-sky-600 text-white font-bold' : 'text-slate-400 hover:bg-slate-800 hover:text-white' }}">
+                <a href="{{ route('admin.dashboard') }}" class="flex items-center gap-3 px-4 py-2.5 rounded-xl transition-colors {{ request()->routeIs('admin.dashboard') ? 'bg-sky-600 text-white font-bold' : 'text-slate-400 hover:bg-slate-800 hover:text-white' }}">
                     Overview Dashboard
                 </a>
-                <a href="{{ route('admin.packages') }}" class="flex items-center gap-3 px-4 py-3 rounded-xl transition-colors {{ request()->routeIs('admin.packages') ? 'bg-sky-600 text-white font-bold' : 'text-slate-400 hover:bg-slate-800 hover:text-white' }}">
+
+                <div class="pt-3 pb-1 px-4 text-[10px] font-extrabold uppercase tracking-widest text-slate-500">
+                    Master Data Layanan
+                </div>
+
+                <a href="{{ route('admin.packages') }}" class="flex items-center gap-3 px-4 py-2.5 rounded-xl transition-colors {{ request()->routeIs('admin.packages') ? 'bg-sky-600 text-white font-bold' : 'text-slate-400 hover:bg-slate-800 hover:text-white' }}">
                     Kelola Paket Tour
                 </a>
-                <a href="{{ route('admin.tickets') }}" class="flex items-center gap-3 px-4 py-3 rounded-xl transition-colors {{ request()->routeIs('admin.tickets') ? 'bg-sky-600 text-white font-bold' : 'text-slate-400 hover:bg-slate-800 hover:text-white' }}">
+                <a href="{{ route('admin.tickets') }}" class="flex items-center gap-3 px-4 py-2.5 rounded-xl transition-colors {{ request()->routeIs('admin.tickets') ? 'bg-sky-600 text-white font-bold' : 'text-slate-400 hover:bg-slate-800 hover:text-white' }}">
                     Kelola Tiket Wisata
                 </a>
-                <a href="{{ route('admin.transports') }}" class="flex items-center gap-3 px-4 py-3 rounded-xl transition-colors {{ request()->routeIs('admin.transports') ? 'bg-sky-600 text-white font-bold' : 'text-slate-400 hover:bg-slate-800 hover:text-white' }}">
+                <a href="{{ route('admin.transports') }}" class="flex items-center gap-3 px-4 py-2.5 rounded-xl transition-colors {{ request()->routeIs('admin.transports') ? 'bg-sky-600 text-white font-bold' : 'text-slate-400 hover:bg-slate-800 hover:text-white' }}">
                     Kelola Sewa Armada
                 </a>
-                <a href="{{ route('admin.passport-visa') }}" class="flex items-center gap-3 px-4 py-3 rounded-xl transition-colors {{ request()->routeIs('admin.passport-visa') ? 'bg-sky-600 text-white font-bold' : 'text-slate-400 hover:bg-slate-800 hover:text-white' }}">
+                <a href="{{ route('admin.passport-visa') }}" class="flex items-center gap-3 px-4 py-2.5 rounded-xl transition-colors {{ request()->routeIs('admin.passport-visa') ? 'bg-sky-600 text-white font-bold' : 'text-slate-400 hover:bg-slate-800 hover:text-white' }}">
                     Kelola E-Paspor & Visa
                 </a>
-                <a href="{{ route('admin.testimonials') }}" class="flex items-center gap-3 px-4 py-3 rounded-xl transition-colors {{ request()->routeIs('admin.testimonials') ? 'bg-sky-600 text-white font-bold' : 'text-slate-400 hover:bg-slate-800 hover:text-white' }}">
+                <a href="{{ route('admin.categories') }}" class="flex items-center gap-3 px-4 py-2.5 rounded-xl transition-colors {{ request()->routeIs('admin.categories') ? 'bg-sky-600 text-white font-bold' : 'text-slate-400 hover:bg-slate-800 hover:text-white' }}">
+                    Kelola Kategori
+                </a>
+
+                <div class="pt-3 pb-1 px-4 text-[10px] font-extrabold uppercase tracking-widest text-sky-400">
+                    Master Data UNAIR Store
+                </div>
+
+                <a href="{{ route('admin.unair-store') }}" class="flex items-center gap-3 px-4 py-2.5 rounded-xl transition-colors {{ request()->routeIs('admin.unair-store') ? 'bg-sky-600 text-white font-bold' : 'text-slate-400 hover:bg-slate-800 hover:text-white' }}">
+                    Kelola UNAIR Store
+                </a>
+
+                <div class="pt-3 pb-1 px-4 text-[10px] font-extrabold uppercase tracking-widest text-slate-500">
+                    Konten & Pengaturan
+                </div>
+
+                <a href="{{ route('admin.testimonials') }}" class="flex items-center gap-3 px-4 py-2.5 rounded-xl transition-colors {{ request()->routeIs('admin.testimonials') ? 'bg-sky-600 text-white font-bold' : 'text-slate-400 hover:bg-slate-800 hover:text-white' }}">
                     Ulasan Wisatawan
                 </a>
-                <a href="{{ route('admin.galleries') }}" class="flex items-center gap-3 px-4 py-3 rounded-xl transition-colors {{ request()->routeIs('admin.galleries') ? 'bg-sky-600 text-white font-bold' : 'text-slate-400 hover:bg-slate-800 hover:text-white' }}">
+                <a href="{{ route('admin.galleries') }}" class="flex items-center gap-3 px-4 py-2.5 rounded-xl transition-colors {{ request()->routeIs('admin.galleries') ? 'bg-sky-600 text-white font-bold' : 'text-slate-400 hover:bg-slate-800 hover:text-white' }}">
                     Dokumentasi Foto
                 </a>
-                <a href="{{ route('admin.articles') }}" class="flex items-center gap-3 px-4 py-3 rounded-xl transition-colors {{ request()->routeIs('admin.articles') ? 'bg-sky-600 text-white font-bold' : 'text-slate-400 hover:bg-slate-800 hover:text-white' }}">
+                <a href="{{ route('admin.articles') }}" class="flex items-center gap-3 px-4 py-2.5 rounded-xl transition-colors {{ request()->routeIs('admin.articles') ? 'bg-sky-600 text-white font-bold' : 'text-slate-400 hover:bg-slate-800 hover:text-white' }}">
                     Kelola Blog & Artikel
                 </a>
-                <a href="{{ route('admin.partners') }}" class="flex items-center gap-3 px-4 py-3 rounded-xl transition-colors {{ request()->routeIs('admin.partners') ? 'bg-sky-600 text-white font-bold' : 'text-slate-400 hover:bg-slate-800 hover:text-white' }}">
+                <a href="{{ route('admin.partners') }}" class="flex items-center gap-3 px-4 py-2.5 rounded-xl transition-colors {{ request()->routeIs('admin.partners') ? 'bg-sky-600 text-white font-bold' : 'text-slate-400 hover:bg-slate-800 hover:text-white' }}">
                     Mitra / Trusted By
                 </a>
-                <a href="{{ route('admin.inquiries') }}" class="flex items-center gap-3 px-4 py-3 rounded-xl transition-colors {{ request()->routeIs('admin.inquiries') ? 'bg-sky-600 text-white font-bold' : 'text-slate-400 hover:bg-slate-800 hover:text-white' }}">
+                <a href="{{ route('admin.inquiries') }}" class="flex items-center gap-3 px-4 py-2.5 rounded-xl transition-colors {{ request()->routeIs('admin.inquiries') ? 'bg-sky-600 text-white font-bold' : 'text-slate-400 hover:bg-slate-800 hover:text-white' }}">
                     Log Booking WA
                 </a>
-                <a href="{{ route('admin.settings') }}" class="flex items-center gap-3 px-4 py-3 rounded-xl transition-colors {{ request()->routeIs('admin.settings') ? 'bg-sky-600 text-white font-bold' : 'text-slate-400 hover:bg-slate-800 hover:text-white' }}">
-                    Pengaturan WA & Profil
+                <a href="{{ route('admin.settings') }}" class="flex items-center gap-3 px-4 py-2.5 rounded-xl transition-colors {{ request()->routeIs('admin.settings') ? 'bg-sky-600 text-white font-bold' : 'text-slate-400 hover:bg-slate-800 hover:text-white' }}">
+                    Pengaturan WA & Footer
                 </a>
             </nav>
         </div>
 
-        <!-- Admin Profile Footer -->
-        <div class="p-6 border-t border-slate-800 flex items-center justify-between">
+        <!-- Admin Profile Footer (Placed directly below navigation without huge vertical gap) -->
+        <div class="mt-2 px-6 py-4 border-t border-slate-800 flex items-center justify-between shrink-0">
             <div class="flex items-center gap-3">
                 <div class="w-8 h-8 rounded-full bg-sky-500 text-white flex items-center justify-center font-bold text-xs">
                     {{ substr(auth()->user()->name ?? 'A', 0, 1) }}
@@ -83,8 +104,8 @@
         </div>
     </aside>
 
-    <!-- Main Admin Content Area -->
-    <main class="flex-grow p-8 overflow-y-auto">
+    <!-- Main Admin Content Area (Independently scrollable) -->
+    <main class="flex-1 h-screen overflow-y-auto p-8">
         <!-- Top bar -->
         <div class="flex justify-between items-center mb-8 border-b border-slate-200 pb-4">
             <h1 class="text-2xl font-extrabold text-slate-900 tracking-tight">{{ $title ?? 'Admin Dashboard' }}</h1>

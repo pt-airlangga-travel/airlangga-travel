@@ -135,9 +135,12 @@
                     </a>
 
                     <!-- Layanan Dropdown Menu -->
-                    <div class="relative" x-data="{ dropdownOpen: false }" @mouseleave="dropdownOpen = false">
-                        <button @click="dropdownOpen = !dropdownOpen"
-                                @mouseenter="dropdownOpen = true"
+                    <div class="relative"
+                         x-data="{ dropdownOpen: false, closeTimer: null }"
+                         @mouseenter="clearTimeout(closeTimer); dropdownOpen = true"
+                         @mouseleave="closeTimer = setTimeout(() => dropdownOpen = false, 200)">
+                        <button type="button"
+                                @click="dropdownOpen = !dropdownOpen"
                                 class="px-3.5 py-2 rounded-xl transition-colors hover:text-sky-600 hover:bg-sky-50/80 flex items-center gap-1.5 {{ request()->routeIs('services.*') || request()->routeIs('packages.*') || request()->routeIs('tickets.*') ? 'text-sky-600 font-bold bg-sky-50' : '' }}">
                             <span>Layanan</span>
                             <svg class="w-4 h-4 transition-transform duration-200" :class="dropdownOpen ? 'rotate-180 text-sky-600' : ''" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -145,55 +148,73 @@
                             </svg>
                         </button>
 
+                        <!-- Hover bridge (pt-2 instead of mt-2 so cursor never leaves hover area) -->
                         <div x-show="dropdownOpen"
                              x-transition:enter="transition ease-out duration-200"
-                             x-transition:enter-start="opacity-0 scale-95 -translate-y-2"
+                             x-transition:enter-start="opacity-0 scale-95 -translate-y-1"
                              x-transition:enter-end="opacity-100 scale-100 translate-y-0"
                              x-transition:leave="transition ease-in duration-150"
                              x-transition:leave-start="opacity-100 scale-100 translate-y-0"
-                             x-transition:leave-end="opacity-0 scale-95 -translate-y-2"
+                             x-transition:leave-end="opacity-0 scale-95 -translate-y-1"
+                             @mouseenter="clearTimeout(closeTimer); dropdownOpen = true"
+                             @mouseleave="closeTimer = setTimeout(() => dropdownOpen = false, 200)"
                              @click.away="dropdownOpen = false"
-                             class="absolute left-0 mt-2 w-64 rounded-2xl bg-white p-2 shadow-2xl border border-slate-100 ring-1 ring-black/5 z-50 space-y-1" style="display: none;">
+                             class="absolute left-0 top-full pt-2 w-72 z-50" style="display: none;">
 
-                            <a href="{{ route('services.tours') }}" class="flex items-center gap-3 px-3.5 py-2.5 rounded-xl hover:bg-sky-50 group transition-colors">
-                                <span class="w-8 h-8 rounded-lg bg-sky-100 text-sky-600 flex items-center justify-center text-sm font-bold shrink-0">✈️</span>
-                                <div>
-                                    <div class="font-bold text-slate-800 text-xs group-hover:text-sky-600">Paket Tour & Wisata</div>
-                                    <div class="text-[11px] text-slate-500 font-normal">Domestik & Internasional</div>
-                                </div>
-                            </a>
+                            <div class="rounded-2xl bg-white p-2 shadow-2xl border border-slate-100 ring-1 ring-black/5 space-y-1">
+                                <a href="{{ route('services.tours') }}" class="flex items-center gap-3 px-3.5 py-2.5 rounded-xl hover:bg-sky-50 group transition-colors {{ request()->routeIs('services.tours') ? 'bg-sky-50/80' : '' }}">
+                                    <span class="w-8 h-8 rounded-lg bg-sky-100 text-sky-600 flex items-center justify-center text-sm font-bold shrink-0">✈️</span>
+                                    <div>
+                                        <div class="font-bold text-slate-800 text-xs group-hover:text-sky-600">Paket Tour & Wisata</div>
+                                        <div class="text-[11px] text-slate-500 font-normal">Domestik & Internasional</div>
+                                    </div>
+                                </a>
 
-                            <a href="{{ route('services.umrah') }}" class="flex items-center gap-3 px-3.5 py-2.5 rounded-xl hover:bg-emerald-50 group transition-colors">
-                                <span class="w-8 h-8 rounded-lg bg-emerald-100 text-emerald-600 flex items-center justify-center text-sm font-bold shrink-0">🕋</span>
-                                <div>
-                                    <div class="font-bold text-slate-800 text-xs group-hover:text-emerald-700">Umroh & Hajj</div>
-                                    <div class="text-[11px] text-slate-500 font-normal">Paket Executive Bintang 5</div>
-                                </div>
-                            </a>
+                                <a href="{{ route('services.umrah') }}" class="flex items-center gap-3 px-3.5 py-2.5 rounded-xl hover:bg-emerald-50 group transition-colors {{ request()->routeIs('services.umrah') ? 'bg-emerald-50/80' : '' }}">
+                                    <span class="w-8 h-8 rounded-lg bg-emerald-100 text-emerald-600 flex items-center justify-center text-sm font-bold shrink-0">🕋</span>
+                                    <div>
+                                        <div class="font-bold text-slate-800 text-xs group-hover:text-emerald-700">Umroh & Hajj</div>
+                                        <div class="text-[11px] text-slate-500 font-normal">Paket Executive Bintang 5</div>
+                                    </div>
+                                </a>
 
-                            <a href="{{ route('services.tickets') }}" class="flex items-center gap-3 px-3.5 py-2.5 rounded-xl hover:bg-amber-50 group transition-colors">
-                                <span class="w-8 h-8 rounded-lg bg-amber-100 text-amber-600 flex items-center justify-center text-sm font-bold shrink-0">🎟️</span>
-                                <div>
-                                    <div class="font-bold text-slate-800 text-xs group-hover:text-amber-700">Tiket Wisata</div>
-                                    <div class="text-[11px] text-slate-500 font-normal">Voucher Destinasi Populer</div>
-                                </div>
-                            </a>
+                                <a href="{{ route('services.tickets') }}" class="flex items-center gap-3 px-3.5 py-2.5 rounded-xl hover:bg-amber-50 group transition-colors {{ request()->routeIs('services.tickets') ? 'bg-amber-50/80' : '' }}">
+                                    <span class="w-8 h-8 rounded-lg bg-amber-100 text-amber-600 flex items-center justify-center text-sm font-bold shrink-0">🎟️</span>
+                                    <div>
+                                        <div class="font-bold text-slate-800 text-xs group-hover:text-amber-700">Tiket Wisata</div>
+                                        <div class="text-[11px] text-slate-500 font-normal">Voucher Destinasi Populer</div>
+                                    </div>
+                                </a>
 
-                            <a href="{{ route('services.transport') }}" class="flex items-center gap-3 px-3.5 py-2.5 rounded-xl hover:bg-blue-50 group transition-colors">
-                                <span class="w-8 h-8 rounded-lg bg-blue-100 text-blue-600 flex items-center justify-center text-sm font-bold shrink-0">🚐</span>
-                                <div>
-                                    <div class="font-bold text-slate-800 text-xs group-hover:text-blue-700">Sewa Transportasi</div>
-                                    <div class="text-[11px] text-slate-500 font-normal">Innova, HiAce & Bus VIP</div>
-                                </div>
-                            </a>
+                                <a href="{{ route('services.transport') }}" class="flex items-center gap-3 px-3.5 py-2.5 rounded-xl hover:bg-blue-50 group transition-colors {{ request()->routeIs('services.transport') ? 'bg-blue-50/80' : '' }}">
+                                    <span class="w-8 h-8 rounded-lg bg-blue-100 text-blue-600 flex items-center justify-center text-sm font-bold shrink-0">🚐</span>
+                                    <div>
+                                        <div class="font-bold text-slate-800 text-xs group-hover:text-blue-700">Sewa Transportasi</div>
+                                        <div class="text-[11px] text-slate-500 font-normal">Innova, HiAce & Bus VIP</div>
+                                    </div>
+                                </a>
 
-                            <a href="{{ route('services.passport-visa') }}" class="flex items-center gap-3 px-3.5 py-2.5 rounded-xl hover:bg-purple-50 group transition-colors">
-                                <span class="w-8 h-8 rounded-lg bg-purple-100 text-purple-600 flex items-center justify-center text-sm font-bold shrink-0">🛂</span>
-                                <div>
-                                    <div class="font-bold text-slate-800 text-xs group-hover:text-purple-700">E-Passport & Visa</div>
-                                    <div class="text-[11px] text-slate-500 font-normal">Paspor Kilat 3 Hari & Visa</div>
-                                </div>
-                            </a>
+                                <a href="{{ route('services.passport-visa') }}" class="flex items-center gap-3 px-3.5 py-2.5 rounded-xl hover:bg-purple-50 group transition-colors {{ request()->routeIs('services.passport-visa') ? 'bg-purple-50/80' : '' }}">
+                                    <span class="w-8 h-8 rounded-lg bg-purple-100 text-purple-600 flex items-center justify-center text-sm font-bold shrink-0">🛂</span>
+                                    <div>
+                                        <div class="font-bold text-slate-800 text-xs group-hover:text-purple-700">E-Passport & Visa</div>
+                                        <div class="text-[11px] text-slate-500 font-normal">Paspor Kilat 3 Hari & Visa</div>
+                                    </div>
+                                </a>
+
+                                <div class="my-1 border-t border-slate-100"></div>
+
+                                <a href="{{ route('services.unair-store') }}" class="flex items-center gap-3 px-3.5 py-2.5 rounded-xl hover:bg-sky-50 group transition-colors {{ request()->routeIs('services.unair-store') ? 'bg-sky-50/80' : '' }}">
+                                    <span class="w-8 h-8 rounded-lg bg-gradient-to-br from-sky-500 to-blue-700 text-white flex items-center justify-center text-sm font-bold shrink-0 shadow-sm">🛍️</span>
+                                    <div class="flex-1">
+                                        <div class="flex items-center justify-between">
+                                            <span class="font-bold text-slate-800 text-xs group-hover:text-sky-600">UNAIR Store</span>
+                                            <span class="px-1.5 py-0.5 rounded-md bg-amber-100 text-amber-700 font-extrabold text-[9px] uppercase tracking-wider">Official</span>
+                                        </div>
+                                        <div class="text-[11px] text-slate-500 font-normal">Merchandise & Travel Gear</div>
+                                    </div>
+                                </a>
+                            </div>
                         </div>
                     </div>
 
@@ -214,8 +235,53 @@
                 </nav>
 
                 <!-- Right Action Buttons -->
+                @php
+                    try {
+                        $waNumber = \App\Models\SiteSetting::get('whatsapp_number', '6281233020117') ?: '6281233020117';
+                        $waMessage = \App\Models\SiteSetting::get('whatsapp_message', 'Halo Airlangga Travel, saya ingin konsultasi paket wisata') ?: 'Halo Airlangga Travel, saya ingin konsultasi paket wisata';
+                        $footerWaDisplay = \App\Models\SiteSetting::get('footer_whatsapp_display', '+62 895-8053-15185') ?: '+62 895-8053-15185';
+                        $footerPhone = \App\Models\SiteSetting::get('phone', '(031) 8945-1234') ?: '(031) 8945-1234';
+                        $footerAddress = \App\Models\SiteSetting::get('address', 'Plaza Unair Kampus C, Mulyorejo, Kec. Mulyorejo, Surabaya, Jawa Timur 60115') ?: 'Plaza Unair Kampus C, Mulyorejo, Kec. Mulyorejo, Surabaya, Jawa Timur 60115';
+                        $googleMapsUrl = \App\Models\SiteSetting::get('google_maps_url', '') ?: ('https://www.google.com/maps/search/?api=1&query=' . urlencode($footerAddress));
+                        $footerCompanyName = \App\Models\SiteSetting::get('footer_company_name', 'PT. Airlangga Global Traveling') ?: 'PT. Airlangga Global Traveling';
+                        $footerParentCompany = \App\Models\SiteSetting::get('footer_parent_company', 'PT Dharma Putra Airlangga') ?: 'PT Dharma Putra Airlangga';
+                        $footerParentUrl = \App\Models\SiteSetting::get('footer_parent_url', 'https://dpacorp.id') ?: 'https://dpacorp.id';
+                        $footerDescription = \App\Models\SiteSetting::get('footer_description', 'Solusi perjalanan tour domestik, internasional, penyelenggara resmi Umrah & Hajj Plus, tiket & sewa armada terpercaya di Indonesia.') ?: 'Solusi perjalanan tour domestik, internasional, penyelenggara resmi Umrah & Hajj Plus, tiket & sewa armada terpercaya di Indonesia.';
+                        $instagramUsername = \App\Models\SiteSetting::get('instagram_username', '@airlanggatravel_') ?: '@airlanggatravel_';
+                        $instagramUrl = \App\Models\SiteSetting::get('instagram_url', 'https://www.instagram.com/airlanggatravel_/') ?: 'https://www.instagram.com/airlanggatravel_/';
+                        $footerLegality1 = \App\Models\SiteSetting::get('footer_legality_1', '✓ Izin PPIU Kemenag No. 420/2021');
+                        $footerLegality2 = \App\Models\SiteSetting::get('footer_legality_2', '✓ Anggota Resmi ASITA');
+                    } catch (\Throwable $e) {
+                        $waNumber = '6281233020117';
+                        $waMessage = 'Halo Airlangga Travel, saya ingin konsultasi paket wisata';
+                        $footerWaDisplay = '+62 895-8053-15185';
+                        $footerPhone = '(031) 8945-1234';
+                        $footerAddress = 'Plaza Unair Kampus C, Mulyorejo, Kec. Mulyorejo, Surabaya, Jawa Timur 60115';
+                        $googleMapsUrl = 'https://www.google.com/maps/search/?api=1&query=' . urlencode($footerAddress);
+                        $footerCompanyName = 'PT. Airlangga Global Traveling';
+                        $footerParentCompany = 'PT Dharma Putra Airlangga';
+                        $footerParentUrl = 'https://dpacorp.id';
+                        $footerDescription = 'Solusi perjalanan tour domestik, internasional, penyelenggara resmi Umrah & Hajj Plus, tiket & sewa armada terpercaya di Indonesia.';
+                        $instagramUsername = '@airlanggatravel_';
+                        $instagramUrl = 'https://www.instagram.com/airlanggatravel_/';
+                        $footerLegality1 = '✓ Izin PPIU Kemenag No. 420/2021';
+                        $footerLegality2 = '✓ Anggota Resmi ASITA';
+                    }
+
+                    $cleanWaNumber = preg_replace('/[^0-9]/', '', $waNumber) ?: '6281233020117';
+                    if (str_starts_with($cleanWaNumber, '0')) {
+                        $cleanWaNumber = '62' . substr($cleanWaNumber, 1);
+                    }
+                    $waUrl = 'https://wa.me/' . $cleanWaNumber . '?text=' . urlencode($waMessage);
+
+                    $cleanFooterWa = preg_replace('/[^0-9]/', '', $footerWaDisplay);
+                    if (str_starts_with($cleanFooterWa, '0')) {
+                        $cleanFooterWa = '62' . substr($cleanFooterWa, 1);
+                    }
+                    $footerWaUrl = 'https://wa.me/' . ($cleanFooterWa ?: $cleanWaNumber) . '?text=' . urlencode($waMessage);
+                @endphp
                 <div class="hidden lg:flex items-center gap-3">
-                    <a href="https://wa.me/6281233020117?text=Halo%20Airlangga%20Travel,%20saya%20ingin%20tanya%20paket%20wisata"
+                    <a href="{{ $waUrl }}"
                        target="_blank"
                        class="inline-flex items-center gap-2 px-4 py-2.5 rounded-full bg-emerald-600 text-white font-semibold text-xs tracking-wide hover:bg-emerald-500 shadow-md shadow-emerald-500/20 transition-all hover:scale-105 pulse-wa">
                         <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-0.999 3.648 3.742-0.981z"/></svg>
@@ -260,6 +326,7 @@
                     <a href="{{ route('services.tickets') }}" class="block px-3 py-2 rounded-lg text-xs font-semibold text-amber-700 hover:bg-amber-50">🎟️ Tiket Wisata</a>
                     <a href="{{ route('services.transport') }}" class="block px-3 py-2 rounded-lg text-xs font-semibold text-blue-700 hover:bg-blue-50">🚐 Sewa Transportasi</a>
                     <a href="{{ route('services.passport-visa') }}" class="block px-3 py-2 rounded-lg text-xs font-semibold text-purple-700 hover:bg-purple-50">🛂 E-Passport & Visa</a>
+                    <a href="{{ route('services.unair-store') }}" class="block px-3 py-2 rounded-lg text-xs font-semibold text-sky-700 hover:bg-sky-50">🛍️ UNAIR Store</a>
                 </div>
             </div>
             <a href="https://tiket.airlanggatravel.com" target="_blank" rel="noopener" class="block px-4 py-2.5 rounded-xl font-semibold text-sky-700 hover:bg-sky-50 flex items-center justify-between">
@@ -287,7 +354,7 @@
             </div>
 
             <div class="pt-2">
-                <a href="https://wa.me/6281233020117?text=Halo%20Airlangga%20Travel"
+                <a href="{{ $waUrl }}"
                    target="_blank"
                    class="w-full flex items-center justify-center gap-2 px-4 py-3 rounded-xl bg-emerald-600 text-white font-bold text-sm shadow-md">
                     Hubungi via WhatsApp
@@ -306,7 +373,7 @@
         <div class="hidden sm:block bg-white text-slate-800 text-xs font-semibold px-3 py-2 rounded-xl shadow-xl border border-slate-100 group-hover:scale-105 transition-all">
             Butuh Bantuan Booking? <span class="text-emerald-600 font-bold">Chat Kami!</span>
         </div>
-        <a href="https://wa.me/6281233020117?text=Halo%20Airlangga%20Travel,%20saya%20ingin%20konsultasi%20paket%20wisata"
+        <a href="{{ $waUrl }}"
            target="_blank"
            aria-label="Chat via WhatsApp"
            class="w-14 h-14 rounded-full bg-emerald-500 text-white flex items-center justify-center shadow-2xl shadow-emerald-600/40 hover:bg-emerald-600 transition-transform hover:scale-110 pulse-wa">
@@ -324,16 +391,18 @@
                     <a href="{{ route('home') }}" class="inline-flex items-center gap-4 group" style="gap: 14px;">
                         <img src="{{ asset('assets/travel.png') }}" alt="Airlangga Travel Logo" style="width: 44px; height: 44px;" class="w-11 h-11 object-contain shrink-0 group-hover:scale-105 transition-transform">
                         <span class="text-white font-extrabold text-base tracking-wide leading-tight group-hover:text-sky-400 transition-colors">
-                            PT. Airlangga Global Traveling
+                            {{ $footerCompanyName }}
                         </span>
                     </a>
 
-                    <div class="text-xs font-semibold text-slate-300">
-                        Part of <a href="https://dpacorp.id" target="_blank" rel="noopener" class="text-sky-400 hover:text-amber-300 font-bold underline transition-colors">PT Dharma Putra Airlangga</a>
-                    </div>
+                    @if(!empty($footerParentCompany))
+                        <div class="text-xs font-semibold text-slate-300">
+                            Part of <a href="{{ $footerParentUrl }}" target="_blank" rel="noopener" class="text-sky-400 hover:text-amber-300 font-bold underline transition-colors">{{ $footerParentCompany }}</a>
+                        </div>
+                    @endif
 
                     <p class="text-slate-400 leading-relaxed text-xs">
-                        Solusi perjalanan tour domestik, internasional, penyelenggara resmi Umrah & Hajj Plus, tiket & sewa armada terpercaya di Indonesia.
+                        {{ $footerDescription }}
                     </p>
                 </div>
 
@@ -342,38 +411,59 @@
                     <h4 class="text-white font-bold text-sm tracking-wide">Media Sosial & Legalitas</h4>
 
                     <div class="space-y-3">
-                        <div>
-                            <a href="https://www.instagram.com/airlanggatravel_/"
-                               target="_blank"
-                               rel="noopener"
-                               class="inline-flex items-center gap-2 px-3.5 py-2 rounded-xl bg-gradient-to-r from-purple-600 via-pink-600 to-amber-500 text-white font-bold text-xs shadow-md hover:opacity-90 transition-opacity">
-                                <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
-                                <span>@airlanggatravel_</span>
-                            </a>
-                        </div>
+                        @if(!empty($instagramUsername))
+                            <div>
+                                <a href="{{ $instagramUrl }}"
+                                   target="_blank"
+                                   rel="noopener"
+                                   class="inline-flex items-center gap-2 px-3.5 py-2 rounded-xl bg-gradient-to-r from-purple-600 via-pink-600 to-amber-500 text-white font-bold text-xs shadow-md hover:opacity-90 transition-opacity">
+                                    <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+                                    <span>{{ $instagramUsername }}</span>
+                                </a>
+                            </div>
+                        @endif
 
                         <div class="flex flex-col gap-2 text-xs">
-                            <span class="inline-block px-3 py-1.5 rounded-lg bg-slate-800 text-emerald-400 border border-slate-700 font-semibold w-max">✓ Izin PPIU Kemenag No. 420/2021</span>
-                            <span class="inline-block px-3 py-1.5 rounded-lg bg-slate-800 text-sky-400 border border-slate-700 font-semibold w-max">✓ Anggota Resmi ASITA</span>
+                            @if(!empty($footerLegality1))
+                                <span class="inline-block px-3 py-1.5 rounded-lg bg-slate-800 text-emerald-400 border border-slate-700 font-semibold w-max">{{ $footerLegality1 }}</span>
+                            @endif
+                            @if(!empty($footerLegality2))
+                                <span class="inline-block px-3 py-1.5 rounded-lg bg-slate-800 text-sky-400 border border-slate-700 font-semibold w-max">{{ $footerLegality2 }}</span>
+                            @endif
                         </div>
                     </div>
                 </div>
 
-                <!-- Column 3: Contact & Office -->
+                <!-- Column 3: Contact & Office (Clickable Google Maps, Tel, and WhatsApp) -->
                 <div class="space-y-4">
                     <h4 class="text-white font-bold text-sm tracking-wide">Kantor Pusat</h4>
                     <ul class="space-y-3 text-xs text-slate-300">
-                        <li class="flex items-start gap-2.5">
-                            <svg class="w-4 h-4 text-sky-400 shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
-                            <span>Plaza Unair Kampus C, Mulyorejo, Kec. Mulyorejo, Surabaya, Jawa Timur 60115</span>
+                        <li>
+                            <a href="{{ $googleMapsUrl }}"
+                               target="_blank"
+                               rel="noopener"
+                               title="Klik untuk buka di Google Maps"
+                               class="flex items-start gap-2.5 hover:text-sky-400 transition-colors group">
+                                <svg class="w-4 h-4 text-sky-400 shrink-0 mt-0.5 group-hover:scale-110 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
+                                <span class="group-hover:underline">{{ $footerAddress }}</span>
+                            </a>
                         </li>
-                        <li class="flex items-center gap-2.5">
-                            <svg class="w-4 h-4 text-sky-400 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"></path></svg>
-                            <span>(031) 8945-1234</span>
+                        <li>
+                            <a href="tel:{{ preg_replace('/[^0-9+]/', '', $footerPhone) }}"
+                               class="flex items-center gap-2.5 hover:text-sky-400 transition-colors">
+                                <svg class="w-4 h-4 text-sky-400 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"></path></svg>
+                                <span>{{ $footerPhone }}</span>
+                            </a>
                         </li>
-                        <li class="flex items-center gap-2.5">
-                            <svg class="w-4 h-4 text-emerald-400 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"></path></svg>
-                            <span class="text-emerald-400 font-semibold">+62 895-8053-15185</span>
+                        <li>
+                            <a href="{{ $footerWaUrl }}"
+                               target="_blank"
+                               rel="noopener"
+                               title="Chat via WhatsApp"
+                               class="flex items-center gap-2.5 hover:opacity-90 transition-opacity group">
+                                <svg class="w-4 h-4 text-emerald-400 shrink-0 group-hover:scale-110 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"></path></svg>
+                                <span class="text-emerald-400 font-semibold group-hover:underline">{{ $footerWaDisplay }}</span>
+                            </a>
                         </li>
                     </ul>
                 </div>
@@ -382,7 +472,7 @@
 
             <!-- Bottom Copyright & Admin Link -->
             <div class="mt-10 pt-6 border-t border-slate-800 flex flex-col sm:flex-row justify-between items-center gap-3 text-xs text-slate-500">
-                <p>&copy; {{ date('Y') }} PT. Airlangga Global Traveling. Part of <a href="https://dpacorp.id" target="_blank" rel="noopener" class="text-sky-400 hover:text-amber-300 font-bold underline transition-colors">PT Dharma Putra Airlangga</a>. Hak Cipta Dilindungi.</p>
+                <p>&copy; {{ date('Y') }} {{ $footerCompanyName }}. @if(!empty($footerParentCompany)) Part of <a href="{{ $footerParentUrl }}" target="_blank" rel="noopener" class="text-sky-400 hover:text-amber-300 font-bold underline transition-colors">{{ $footerParentCompany }}</a>. @endif Hak Cipta Dilindungi.</p>
                 <div>
                     <a href="{{ route('admin.dashboard') }}" class="hover:text-sky-400 transition-colors">Admin Login</a>
                 </div>

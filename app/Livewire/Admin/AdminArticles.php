@@ -15,6 +15,10 @@ class AdminArticles extends Component
 
     public bool $modalOpen = false;
 
+    public bool $categoryModalOpen = false;
+
+    public string $newCategoryName = '';
+
     public ?int $editingId = null;
 
     public string $search = '';
@@ -43,17 +47,60 @@ class AdminArticles extends Component
         'filterCategory' => ['except' => ''],
     ];
 
-    public function updatingSearch()
+    public function updatingSearch(): void
     {
         $this->resetPage();
     }
 
-    public function updatingFilterCategory()
+    public function updatingFilterCategory(): void
     {
         $this->resetPage();
     }
 
-    public function openCreateModal()
+    public function openCategoryModal(): void
+    {
+        $this->newCategoryName = '';
+        $this->categoryModalOpen = true;
+    }
+
+    public function addCategory(): void
+    {
+        $name = trim($this->newCategoryName);
+        if ($name === '') {
+            return;
+        }
+
+        $categories = Article::getCategories();
+        if (! in_array($name, $categories, true)) {
+            $categories[] = $name;
+            Article::saveCategories($categories);
+        }
+
+        $this->category = $name;
+        $this->newCategoryName = '';
+        session()->flash('message', "Kategori '{$name}' berhasil ditambahkan!");
+    }
+
+    public function deleteCategory(string $name): void
+    {
+        $categories = array_values(array_filter(
+            Article::getCategories(),
+            fn (string $cat) => $cat !== $name
+        ));
+
+        Article::saveCategories($categories);
+
+        if ($this->category === $name) {
+            $this->category = $categories[0] ?? 'Tips Wisata';
+        }
+        if ($this->filterCategory === $name) {
+            $this->filterCategory = '';
+        }
+
+        session()->flash('message', "Kategori '{$name}' berhasil dihapus.");
+    }
+
+    public function openCreateModal(): void
     {
         $this->reset([
             'editingId',
@@ -66,13 +113,14 @@ class AdminArticles extends Component
             'author',
             'is_published',
         ]);
-        $this->category = 'Tips Wisata';
+        $categories = Article::getCategories();
+        $this->category = $categories[0] ?? 'Tips Wisata';
         $this->author = 'Tim Redaksi Airlangga Travel';
         $this->is_published = true;
         $this->modalOpen = true;
     }
 
-    public function editArticle(int $id)
+    public function editArticle(int $id): void
     {
         $article = Article::findOrFail($id);
         $this->editingId = $article->id;
@@ -88,7 +136,7 @@ class AdminArticles extends Component
         $this->modalOpen = true;
     }
 
-    public function saveArticle()
+    public function saveArticle(): void
     {
         $this->validate([
             'title' => 'required|min:3',
@@ -97,6 +145,13 @@ class AdminArticles extends Component
             'content' => 'required|min:20',
             'coverFile' => 'nullable|image|max:5120',
         ]);
+
+        // Ensure chosen category is stored in dynamic list
+        $categories = Article::getCategories();
+        if (! in_array($this->category, $categories, true)) {
+            $categories[] = $this->category;
+            Article::saveCategories($categories);
+        }
 
         $coverUrl = $this->cover_image;
         if ($this->coverFile) {
@@ -126,7 +181,7 @@ class AdminArticles extends Component
         $this->modalOpen = false;
     }
 
-    public function togglePublish(int $id)
+    public function togglePublish(int $id): void
     {
         $article = Article::findOrFail($id);
         $article->update([
@@ -136,7 +191,7 @@ class AdminArticles extends Component
         session()->flash('message', 'Status publikasi artikel berhasil diubah.');
     }
 
-    public function deleteArticle(int $id)
+    public function deleteArticle(int $id): void
     {
         Article::destroy($id);
         session()->flash('message', 'Artikel blog berhasil dihapus.');
@@ -147,8 +202,10 @@ class AdminArticles extends Component
         $query = Article::query();
 
         if (! empty($this->search)) {
-            $query->where('title', 'like', '%'.$this->search.'%')
-                ->orWhere('excerpt', 'like', '%'.$this->search.'%');
+            $query->where(function ($q) {
+                $q->where('title', 'like', '%'.$this->search.'%')
+                    ->orWhere('excerpt', 'like', '%'.$this->search.'%');
+            });
         }
 
         if (! empty($this->filterCategory)) {
@@ -156,7 +213,7 @@ class AdminArticles extends Component
         }
 
         $articles = $query->latest()->paginate(10);
-        $categories = Article::select('category')->distinct()->pluck('category');
+        $categories = Article::getCategories();
 
         return view('livewire.admin.admin-articles', [
             'articles' => $articles,
