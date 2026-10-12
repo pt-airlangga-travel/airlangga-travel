@@ -1,6 +1,6 @@
 <div class="space-y-6">
     <!-- Header Controls -->
-    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-slate-950 p-6 rounded-3xl border border-slate-800">
+    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-slate-950 p-4 sm:p-6 rounded-3xl border border-slate-800">
         <div>
             <h2 class="text-xl font-extrabold text-white">Daftar Tiket Wisata</h2>
             <p class="text-xs text-slate-400">Kelola layanan tiket wisata & penerbangan yang terhubung langsung ke WhatsApp.</p>
@@ -20,7 +20,7 @@
     <!-- Data Table -->
     <div class="bg-slate-950 rounded-3xl border border-slate-800 overflow-hidden shadow-xl">
         <div class="overflow-x-auto">
-            <table class="w-full text-left text-xs text-slate-300">
+            <table class="w-full min-w-[560px] text-left text-xs text-slate-300">
                 <thead class="bg-slate-900 text-slate-400 uppercase text-[10px] tracking-wider border-b border-slate-800">
                     <tr>
                         <th class="py-4 px-6 font-bold">Judul Tiket</th>
@@ -38,12 +38,12 @@
                             <td class="py-4 px-6 text-slate-400 max-w-md line-clamp-2">
                                 {{ $ticket->description }}
                             </td>
-                            <td class="py-4 px-6">
+                            <td class="py-4 px-6 whitespace-nowrap">
                                 <span class="px-2.5 py-1 rounded-full text-[10px] font-bold {{ $ticket->is_active ? 'bg-emerald-500/20 text-emerald-400 border border-emerald-500/30' : 'bg-slate-800 text-slate-500' }}">
                                     {{ $ticket->is_active ? 'Aktif' : 'Non-Aktif' }}
                                 </span>
                             </td>
-                            <td class="py-4 px-6 text-right space-x-2">
+                            <td class="py-4 px-6 text-right space-x-2 whitespace-nowrap">
                                 <button wire:click="editTicket({{ $ticket->id }})" class="px-3 py-1.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-sky-400 font-bold text-xs transition-colors">
                                     ✏️ Edit
                                 </button>
@@ -71,7 +71,7 @@
     <!-- Modal Form (Only Title & Description) -->
     @if($modalOpen)
         <div class="fixed inset-0 z-50 bg-slate-950/80 backdrop-blur-sm flex items-center justify-center p-4">
-            <div class="bg-slate-900 rounded-3xl max-w-lg w-full p-6 sm:p-8 space-y-6 border border-slate-800 shadow-2xl relative">
+            <div class="bg-slate-900 rounded-3xl max-w-lg w-full p-5 sm:p-8 space-y-6 border border-slate-800 shadow-2xl relative max-h-[90vh] overflow-y-auto">
                 
                 <div class="flex justify-between items-center border-b border-slate-800 pb-4">
                     <div>

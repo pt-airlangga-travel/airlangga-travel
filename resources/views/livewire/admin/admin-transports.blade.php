@@ -1,5 +1,5 @@
 <div class="space-y-6">
-    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-slate-950 p-6 rounded-3xl border border-slate-800">
+    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-slate-950 p-4 sm:p-6 rounded-3xl border border-slate-800">
         <div>
             <h2 class="text-xl font-extrabold text-white">Kelola Sewa Transportasi & Armada</h2>
             <p class="text-xs text-slate-400">Tambah & edit pricelist armada, BBM & supir, serta foto detail armada.</p>
@@ -18,7 +18,7 @@
     {{-- Table --}}
     <div class="bg-slate-950 rounded-3xl border border-slate-800 overflow-hidden shadow-xl">
         <div class="overflow-x-auto">
-            <table class="w-full text-left text-xs text-slate-300">
+            <table class="w-full min-w-[640px] text-left text-xs text-slate-300">
                 <thead class="bg-slate-900 text-slate-400 uppercase text-[10px] tracking-wider border-b border-slate-800">
                     <tr>
                         <th class="py-4 px-6 font-bold">Gambar Display Utama</th>
@@ -36,10 +36,10 @@
                             </td>
                             <td class="py-4 px-6 font-bold text-white text-sm">{{ $rental->title }}</td>
                             <td class="py-4 px-6 text-slate-400">{{ $rental->category }}</td>
-                            <td class="py-4 px-6 text-slate-400">
+                            <td class="py-4 px-6 text-slate-400 whitespace-nowrap">
                                 {{ count($rental->fleet_items ?? []) }} Unit Terdaftar
                             </td>
-                            <td class="py-4 px-6 text-right space-x-2">
+                            <td class="py-4 px-6 text-right space-x-2 whitespace-nowrap">
                                 <button wire:click="editRental({{ $rental->id }})" class="px-3 py-1.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-sky-400 font-bold text-xs transition-colors">
                                     ✏️ Edit
                                 </button>
@@ -63,7 +63,7 @@
     {{-- Modal --}}
     @if($modalOpen)
         <div class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-sm">
-            <div class="bg-slate-900 border border-slate-800 rounded-3xl max-w-3xl w-full p-6 sm:p-8 space-y-6 shadow-2xl max-h-[90vh] overflow-y-auto">
+            <div class="bg-slate-900 border border-slate-800 rounded-3xl max-w-3xl w-full p-5 sm:p-8 space-y-6 shadow-2xl max-h-[90vh] overflow-y-auto">
                 <div class="flex justify-between items-center border-b border-slate-800 pb-4">
                     <h3 class="text-lg font-bold text-white">{{ $editingId ? 'Edit Armada' : 'Tambah Armada Baru' }}</h3>
                     <button wire:click="$set('modalOpen', false)" class="text-slate-400 hover:text-white font-bold text-xl">✕</button>
@@ -95,10 +95,10 @@
                     {{-- Google Drive Link --}}
                     <div>
                         <label class="font-bold text-slate-300 block mb-1 uppercase tracking-wider text-xs">Link Google Drive Dokumentasi / Foto Armada</label>
-                        <div class="flex gap-2">
+                        <div class="flex flex-col sm:flex-row gap-2">
                             <input type="url" wire:model="drive_link" placeholder="https://drive.google.com/drive/folders/..." class="w-full px-4 py-2.5 bg-slate-950 border border-slate-800 rounded-xl text-white focus:ring-2 focus:ring-sky-500 focus:outline-none font-semibold text-xs sm:text-sm">
                             @if(!empty($drive_link))
-                                <a href="{{ $drive_link }}" target="_blank" rel="noopener noreferrer" class="px-3 py-2 bg-sky-600 hover:bg-sky-500 text-white font-bold text-xs rounded-xl shrink-0 flex items-center gap-1 shadow-sm">
+                                <a href="{{ $drive_link }}" target="_blank" rel="noopener noreferrer" class="px-3 py-2 bg-sky-600 hover:bg-sky-500 text-white font-bold text-xs rounded-xl shrink-0 flex items-center justify-center gap-1 shadow-sm">
                                     Buka Drive ↗
                                 </a>
                             @endif
@@ -107,13 +107,13 @@
 
                     {{-- Fleet Items Builder --}}
                     <div class="border border-slate-800 rounded-2xl p-4 bg-slate-950 space-y-3">
-                        <div class="flex justify-between items-center mb-1">
+                        <div class="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-2 mb-1">
                             <span class="font-bold text-slate-300 text-xs uppercase tracking-wider">Item Unit Armada & Harga</span>
-                            <button type="button" wire:click="addFleetItem" class="px-3 py-1.5 bg-sky-600 text-white rounded-xl text-xs font-bold">+ Tambah Unit</button>
+                            <button type="button" wire:click="addFleetItem" class="px-3 py-1.5 bg-sky-600 text-white rounded-xl text-xs font-bold self-start sm:self-auto shrink-0">+ Tambah Unit</button>
                         </div>
 
                         {{-- Column Labels --}}
-                        <div class="grid grid-cols-12 gap-2 text-[11px] font-bold text-slate-500 uppercase px-1">
+                        <div class="hidden sm:grid sm:grid-cols-12 gap-2 text-[11px] font-bold text-slate-500 uppercase px-1">
                             <div class="col-span-3">Nama Unit</div>
                             <div class="col-span-2">Pax / Seat</div>
                             <div class="col-span-2">Harga / Hari</div>
@@ -123,23 +123,23 @@
                         </div>
 
                         @foreach($fleet_items as $index => $item)
-                            <div class="grid grid-cols-12 gap-2 items-center">
-                                <div class="col-span-3">
+                            <div class="grid grid-cols-2 sm:grid-cols-12 gap-2 items-center bg-slate-900/50 sm:bg-transparent p-3 sm:p-0 rounded-xl border border-slate-800/60 sm:border-0">
+                                <div class="col-span-2 sm:col-span-3">
                                     <input type="text" wire:model="fleet_items.{{ $index }}.unit" placeholder="Innova Reborn" class="w-full px-3 py-2 bg-slate-900 border border-slate-800 rounded-lg text-white text-xs focus:ring-1 focus:ring-sky-500">
                                 </div>
-                                <div class="col-span-2">
+                                <div class="col-span-1 sm:col-span-2">
                                     <input type="text" wire:model="fleet_items.{{ $index }}.seat" placeholder="7 pax" class="w-full px-3 py-2 bg-slate-900 border border-slate-800 rounded-lg text-white text-xs focus:ring-1 focus:ring-sky-500">
                                 </div>
-                                <div class="col-span-2">
+                                <div class="col-span-1 sm:col-span-2">
                                     <input type="number" wire:model="fleet_items.{{ $index }}.price_per_day" placeholder="916000" class="w-full px-3 py-2 bg-slate-900 border border-slate-800 rounded-lg text-white text-xs focus:ring-1 focus:ring-sky-500">
                                 </div>
-                                <div class="col-span-2">
+                                <div class="col-span-2 sm:col-span-2">
                                     <input type="text" wire:model="fleet_items.{{ $index }}.image" placeholder="URL Display Foto" class="w-full px-3 py-2 bg-slate-900 border border-slate-800 rounded-lg text-white text-xs focus:ring-1 focus:ring-sky-500">
                                 </div>
-                                <div class="col-span-2">
+                                <div class="col-span-1 sm:col-span-2">
                                     <input type="text" wire:model="fleet_items.{{ $index }}.link" placeholder="Link Drive / External" class="w-full px-3 py-2 bg-slate-900 border border-slate-800 rounded-lg text-white text-xs focus:ring-1 focus:ring-sky-500">
                                 </div>
-                                <div class="col-span-1 text-center">
+                                <div class="col-span-1 sm:col-span-1 text-right sm:text-center">
                                     <button type="button" wire:click="removeFleetItem({{ $index }})" class="text-rose-400 font-bold text-lg hover:text-rose-300">✕</button>
                                 </div>
                             </div>

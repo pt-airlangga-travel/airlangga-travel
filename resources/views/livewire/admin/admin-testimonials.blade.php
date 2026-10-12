@@ -1,5 +1,5 @@
 <div class="space-y-6">
-    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-slate-950 p-6 rounded-3xl border border-slate-800">
+    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-slate-950 p-4 sm:p-6 rounded-3xl border border-slate-800">
         <div>
             <h2 class="text-xl font-extrabold text-white">Kelola Ulasan Wisatawan & Jamaah</h2>
             <p class="text-xs text-slate-400">Tambah, edit, dan hapus testimonial pelanggan yang tampil di website.</p>
@@ -18,7 +18,7 @@
     {{-- Table --}}
     <div class="bg-slate-950 rounded-3xl border border-slate-800 overflow-hidden shadow-xl">
         <div class="overflow-x-auto">
-            <table class="w-full text-left text-xs text-slate-300">
+            <table class="w-full min-w-[680px] text-left text-xs text-slate-300">
                 <thead class="bg-slate-900 text-slate-400 uppercase text-[10px] tracking-wider border-b border-slate-800">
                     <tr>
                         <th class="py-4 px-6 font-bold">Foto Avatar</th>
@@ -39,7 +39,7 @@
                                 {{ $item->client_name }}
                                 <span class="block text-xs text-slate-400 font-normal">{{ $item->client_title }}</span>
                             </td>
-                            <td class="py-4 px-6 text-amber-400 font-bold">
+                            <td class="py-4 px-6 text-amber-400 font-bold whitespace-nowrap">
                                 {{ str_repeat('⭐', $item->rating) }}
                             </td>
                             <td class="py-4 px-6 text-slate-400 text-xs font-semibold">
@@ -48,7 +48,7 @@
                             <td class="py-4 px-6 text-slate-400 text-xs line-clamp-2 max-w-xs">
                                 "{{ $item->comment }}"
                             </td>
-                            <td class="py-4 px-6 text-right space-x-2">
+                            <td class="py-4 px-6 text-right space-x-2 whitespace-nowrap">
                                 <button wire:click="editTestimonial({{ $item->id }})" class="px-3 py-1.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-sky-400 font-bold text-xs transition-colors">
                                     ✏️ Edit
                                 </button>
@@ -72,14 +72,14 @@
     {{-- Modal --}}
     @if($modalOpen)
         <div class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-sm">
-            <div class="bg-slate-900 border border-slate-800 rounded-3xl max-w-2xl w-full p-6 sm:p-8 space-y-6 shadow-2xl max-h-[90vh] overflow-y-auto">
+            <div class="bg-slate-900 border border-slate-800 rounded-3xl max-w-2xl w-full p-5 sm:p-8 space-y-6 shadow-2xl max-h-[90vh] overflow-y-auto">
                 <div class="flex justify-between items-center border-b border-slate-800 pb-4">
                     <h3 class="text-lg font-bold text-white">{{ $editingId ? 'Edit Ulasan' : 'Tambah Ulasan Baru' }}</h3>
                     <button wire:click="$set('modalOpen', false)" class="text-slate-400 hover:text-white font-bold text-xl">✕</button>
                 </div>
 
                 <form wire:submit.prevent="saveTestimonial" class="space-y-4 text-xs sm:text-sm">
-                    <div class="grid grid-cols-2 gap-4">
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                         <div>
                             <label class="font-bold text-slate-300 block mb-1 uppercase tracking-wider text-xs">Nama Pelanggan</label>
                             <input type="text" wire:model="client_name" placeholder="Bpk. H. Rahmat" class="w-full px-4 py-2.5 bg-slate-950 border border-slate-800 rounded-xl text-white focus:ring-2 focus:ring-sky-500 focus:outline-none font-semibold">
@@ -90,7 +90,7 @@
                         </div>
                     </div>
 
-                    <div class="grid grid-cols-2 gap-4">
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                         <div>
                             <label class="font-bold text-slate-300 block mb-1 uppercase tracking-wider text-xs">Nama Paket Wisata / Ibadah</label>
                             <input type="text" wire:model="package_name" placeholder="Umrah Executive Bintang 5" class="w-full px-4 py-2.5 bg-slate-950 border border-slate-800 rounded-xl text-white focus:ring-2 focus:ring-sky-500 focus:outline-none font-semibold">

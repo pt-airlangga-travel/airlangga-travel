@@ -18,4 +18,11 @@ class ExampleTest extends TestCase
 
         $response->assertStatus(200);
     }
+
+    public function test_unauthenticated_admin_request_redirects_to_admin_login(): void
+    {
+        $response = $this->get('/admin/unair-store');
+
+        $response->assertRedirect(route('admin.login'));
+    }
 }

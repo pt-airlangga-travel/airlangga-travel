@@ -1,5 +1,5 @@
 <div class="min-h-screen flex items-center justify-center py-12 px-4">
-    <div class="max-w-md w-full bg-white rounded-3xl p-8 shadow-2xl border border-slate-100 space-y-6">
+    <div class="max-w-md w-full bg-white rounded-3xl p-6 sm:p-8 shadow-2xl border border-slate-100 space-y-6">
         
         <div class="text-center space-y-2">
             <div class="w-12 h-12 rounded-2xl traveloka-gradient flex items-center justify-center text-white font-bold mx-auto">

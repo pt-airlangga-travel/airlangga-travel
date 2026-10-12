@@ -1,5 +1,5 @@
 <div class="space-y-6">
-    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-slate-950 p-6 rounded-3xl border border-slate-800">
+    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-slate-950 p-4 sm:p-6 rounded-3xl border border-slate-800">
         <div>
             <h2 class="text-xl font-extrabold text-white">Kelola E-Paspor & Visa</h2>
             <p class="text-xs text-slate-400">Tambah & edit pricelist pembuatan Epaspor, benefit, visa, dan foto galeri detail.</p>
@@ -18,7 +18,7 @@
     {{-- Table --}}
     <div class="bg-slate-950 rounded-3xl border border-slate-800 overflow-hidden shadow-xl">
         <div class="overflow-x-auto">
-            <table class="w-full text-left text-xs text-slate-300">
+            <table class="w-full min-w-[600px] text-left text-xs text-slate-300">
                 <thead class="bg-slate-900 text-slate-400 uppercase text-[10px] tracking-wider border-b border-slate-800">
                     <tr>
                         <th class="py-4 px-6 font-bold">Display Utama</th>
@@ -35,13 +35,13 @@
                                 <img src="{{ $srv->cover_image }}" class="w-16 h-12 object-cover rounded-xl border border-slate-700">
                             </td>
                             <td class="py-4 px-6 font-bold text-white text-sm">{{ $srv->title }}</td>
-                            <td class="py-4 px-6">
+                            <td class="py-4 px-6 whitespace-nowrap">
                                 <span class="px-2.5 py-1 rounded-full text-[10px] font-bold bg-sky-500/10 text-sky-400 border border-sky-500/20 uppercase">{{ $srv->type }}</span>
                             </td>
-                            <td class="py-4 px-6 text-slate-400">
+                            <td class="py-4 px-6 text-slate-400 whitespace-nowrap">
                                 {{ count($srv->pricing_options ?? []) }} Opsi Terdaftar
                             </td>
-                            <td class="py-4 px-6 text-right space-x-2">
+                            <td class="py-4 px-6 text-right space-x-2 whitespace-nowrap">
                                 <button wire:click="editService({{ $srv->id }})" class="px-3 py-1.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-sky-400 font-bold text-xs transition-colors">
                                     ✏️ Edit
                                 </button>
@@ -65,7 +65,7 @@
     {{-- Modal --}}
     @if($modalOpen)
         <div class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-sm">
-            <div class="bg-slate-900 border border-slate-800 rounded-3xl max-w-3xl w-full p-6 sm:p-8 space-y-6 shadow-2xl max-h-[90vh] overflow-y-auto">
+            <div class="bg-slate-900 border border-slate-800 rounded-3xl max-w-3xl w-full p-5 sm:p-8 space-y-6 shadow-2xl max-h-[90vh] overflow-y-auto">
                 <div class="flex justify-between items-center border-b border-slate-800 pb-4">
                     <h3 class="text-lg font-bold text-white">{{ $editingId ? 'Edit Layanan' : 'Tambah Layanan Baru' }}</h3>
                     <button wire:click="$set('modalOpen', false)" class="text-slate-400 hover:text-white font-bold text-xl">✕</button>
@@ -91,20 +91,20 @@
 
                     {{-- Pricing Options Builder --}}
                     <div class="border border-slate-800 rounded-2xl p-4 bg-slate-950 space-y-3">
-                        <div class="flex justify-between items-center">
+                        <div class="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-2">
                             <span class="font-bold text-slate-300 text-xs uppercase tracking-wider">Opsi Paspor & Visa (Harga)</span>
-                            <button type="button" wire:click="addPriceOption" class="px-3 py-1.5 bg-sky-600 text-white rounded-xl text-xs font-bold">+ Tambah Opsi</button>
+                            <button type="button" wire:click="addPriceOption" class="px-3 py-1.5 bg-sky-600 text-white rounded-xl text-xs font-bold self-start sm:self-auto shrink-0">+ Tambah Opsi</button>
                         </div>
 
                         @foreach($pricing_options as $index => $opt)
-                            <div class="grid grid-cols-12 gap-2 items-center">
-                                <div class="col-span-6">
+                            <div class="grid grid-cols-1 sm:grid-cols-12 gap-2 items-center bg-slate-900/50 sm:bg-transparent p-2.5 sm:p-0 rounded-xl border border-slate-800/60 sm:border-0">
+                                <div class="sm:col-span-6">
                                     <input type="text" wire:model="pricing_options.{{ $index }}.item" placeholder="Item (misal: Epaspor 5 tahun / Visa Jepang)" class="w-full px-3 py-2 bg-slate-900 border border-slate-800 rounded-lg text-white text-xs focus:ring-1 focus:ring-sky-500">
                                 </div>
-                                <div class="col-span-5">
+                                <div class="sm:col-span-5">
                                     <input type="number" wire:model="pricing_options.{{ $index }}.price" placeholder="Harga Rp" class="w-full px-3 py-2 bg-slate-900 border border-slate-800 rounded-lg text-white text-xs focus:ring-1 focus:ring-sky-500">
                                 </div>
-                                <div class="col-span-1 text-right">
+                                <div class="sm:col-span-1 text-right">
                                     <button type="button" wire:click="removePriceOption({{ $index }})" class="text-rose-400 font-bold text-lg hover:text-rose-300">✕</button>
                                 </div>
                             </div>

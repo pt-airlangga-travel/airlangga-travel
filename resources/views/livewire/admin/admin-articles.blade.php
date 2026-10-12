@@ -11,17 +11,17 @@
     @endif
 
     <!-- Top Action & Filter Header -->
-    <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-8">
+    <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6 sm:mb-8">
         <div>
             <h2 class="text-xl font-extrabold text-slate-900 tracking-wide">Daftar Blog & Panduan Travel</h2>
             <p class="text-xs text-slate-500 mt-1">Kelola artikel berita, tips wisata, UNAIR Store, dan panduan umrah untuk pengunjung website.</p>
         </div>
 
-        <div class="flex flex-wrap items-center gap-3">
-            <button wire:click="openCategoryModal" class="px-4 py-3 rounded-xl bg-slate-900 hover:bg-slate-800 text-amber-400 border border-slate-800 font-bold text-xs tracking-wide shadow-md transition-all flex items-center gap-2">
+        <div class="flex flex-wrap items-center gap-2.5 sm:gap-3 w-full sm:w-auto">
+            <button wire:click="openCategoryModal" class="flex-1 sm:flex-initial justify-center px-4 py-3 rounded-xl bg-slate-900 hover:bg-slate-800 text-amber-400 border border-slate-800 font-bold text-xs tracking-wide shadow-md transition-all flex items-center gap-2">
                 <span>🏷️ Kelola Kategori</span>
             </button>
-            <button wire:click="openCreateModal" class="px-5 py-3 rounded-xl bg-sky-600 hover:bg-sky-500 text-white font-bold text-xs tracking-wide shadow-lg shadow-sky-600/30 transition-all flex items-center gap-2">
+            <button wire:click="openCreateModal" class="flex-1 sm:flex-initial justify-center px-5 py-3 rounded-xl bg-sky-600 hover:bg-sky-500 text-white font-bold text-xs tracking-wide shadow-lg shadow-sky-600/30 transition-all flex items-center gap-2">
                 <span>📝 Tambah Artikel Baru</span>
             </button>
         </div>
@@ -49,7 +49,7 @@
     <!-- Articles Table -->
     <div class="bg-slate-950 rounded-2xl border border-slate-800 overflow-hidden shadow-xl">
         <div class="overflow-x-auto">
-            <table class="w-full text-left text-xs text-slate-300">
+            <table class="w-full min-w-[720px] text-left text-xs text-slate-300">
                 <thead class="bg-slate-900/80 text-slate-400 uppercase text-[10px] tracking-wider font-bold border-b border-slate-800">
                     <tr>
                         <th class="px-6 py-4">Cover & Judul</th>
@@ -88,7 +88,7 @@
                             <td class="px-6 py-4 whitespace-nowrap font-medium text-slate-400">
                                 {{ $item->author }}
                             </td>
-                            <td class="px-6 py-4 text-center font-bold text-slate-300">
+                            <td class="px-6 py-4 text-center font-bold text-slate-300 whitespace-nowrap">
                                 👁️ {{ number_format($item->views) }}
                             </td>
                             <td class="px-6 py-4 text-center whitespace-nowrap">
@@ -129,7 +129,7 @@
     <!-- Create / Edit Modal -->
     @if($modalOpen)
         <div class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-sm overflow-y-auto">
-            <div class="bg-slate-900 border border-slate-800 rounded-3xl max-w-2xl w-full p-6 sm:p-8 space-y-6 shadow-2xl my-8">
+            <div class="bg-slate-900 border border-slate-800 rounded-3xl max-w-2xl w-full p-5 sm:p-8 space-y-6 shadow-2xl my-8 max-h-[90vh] overflow-y-auto">
                 <div class="flex justify-between items-center border-b border-slate-800 pb-4">
                     <h3 class="text-lg font-bold text-white">
                         {{ $editingId ? 'Edit Artikel Blog' : 'Tambah Artikel Blog Baru' }}
@@ -222,7 +222,7 @@
     <!-- Kelola Kategori Blog Modal -->
     @if($categoryModalOpen)
         <div class="fixed inset-0 z-[60] flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-sm">
-            <div class="bg-slate-900 border border-slate-800 rounded-3xl max-w-lg w-full p-6 sm:p-8 space-y-5 shadow-2xl">
+            <div class="bg-slate-900 border border-slate-800 rounded-3xl max-w-lg w-full p-5 sm:p-8 space-y-5 shadow-2xl">
                 <div class="flex justify-between items-center border-b border-slate-800 pb-4">
                     <div>
                         <h3 class="text-lg font-bold text-white">🏷️ Kelola Kategori Blog & Artikel</h3>
@@ -236,7 +236,7 @@
                     <input type="text"
                            wire:model="newCategoryName"
                            placeholder="Nama kategori baru (misal: Info Beasiswa, UNAIR Store)..."
-                           class="flex-1 px-4 py-2.5 bg-slate-950 border border-slate-800 rounded-xl text-xs text-white focus:outline-none focus:ring-2 focus:ring-sky-500">
+                           class="flex-1 min-w-0 px-4 py-2.5 bg-slate-950 border border-slate-800 rounded-xl text-xs text-white focus:outline-none focus:ring-2 focus:ring-sky-500">
                     <button type="submit" class="px-4 py-2.5 rounded-xl bg-sky-600 hover:bg-sky-500 text-white font-bold text-xs shrink-0 shadow-md">
                         + Tambah
                     </button>
@@ -257,8 +257,8 @@
                     @endforeach
                 </div>
 
-                <div class="pt-3 border-t border-slate-800 flex justify-between items-center">
-                    <a href="{{ route('admin.categories') }}" class="text-xs font-bold text-sky-400 hover:underline">
+                <div class="pt-3 border-t border-slate-800 flex flex-col sm:flex-row justify-between items-stretch sm:items-center gap-3">
+                    <a href="{{ route('admin.categories') }}" class="text-xs font-bold text-sky-400 hover:underline text-center sm:text-left">
                         Buka Menu Kelola Semua Kategori →
                     </a>
                     <button type="button" wire:click="$set('categoryModalOpen', false)" class="px-5 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-white font-bold text-xs">

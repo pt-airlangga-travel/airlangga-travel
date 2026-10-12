@@ -1,6 +1,6 @@
 <div class="space-y-6">
     <!-- Top Master Data Header & Navigation Tabs -->
-    <div class="bg-slate-950 p-6 rounded-3xl border border-slate-800 space-y-5 shadow-xl">
+    <div class="bg-slate-950 p-4 sm:p-6 rounded-3xl border border-slate-800 space-y-5 shadow-xl">
         <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-4">
             <div>
                 <span class="inline-block px-3 py-0.5 rounded-full bg-sky-500/20 text-sky-400 border border-sky-500/30 text-[10px] font-bold uppercase tracking-widest mb-1.5">
@@ -12,10 +12,10 @@
                 </p>
             </div>
 
-            <div class="flex flex-wrap items-center gap-3 shrink-0">
+            <div class="flex flex-col sm:flex-row flex-wrap items-stretch sm:items-center gap-2.5 sm:gap-3 shrink-0">
                 <a href="{{ route('services.unair-store') }}"
                    target="_blank"
-                   class="px-4 py-2.5 rounded-2xl bg-slate-900 hover:bg-slate-800 text-sky-400 border border-slate-800 font-bold text-xs flex items-center gap-2 transition-colors">
+                   class="px-4 py-2.5 rounded-2xl bg-slate-900 hover:bg-slate-800 text-sky-400 border border-slate-800 font-bold text-xs flex items-center justify-center gap-2 transition-colors">
                     <span>🔗</span> Lihat Halaman UNAIR Store
                 </a>
 
@@ -53,21 +53,21 @@
         <div class="flex flex-wrap items-center gap-2 pt-1">
             <button type="button"
                     wire:click="$set('activeTab', 'products')"
-                    class="px-4 py-2.5 rounded-xl text-xs font-extrabold transition-all flex items-center gap-2 {{ $activeTab === 'products' ? 'bg-sky-600 text-white shadow-lg shadow-sky-600/25' : 'bg-slate-900 text-slate-400 hover:bg-slate-800 hover:text-white border border-slate-800' }}">
+                    class="w-full sm:w-auto justify-center sm:justify-start px-4 py-2.5 rounded-xl text-xs font-extrabold transition-all flex items-center gap-2 {{ $activeTab === 'products' ? 'bg-sky-600 text-white shadow-lg shadow-sky-600/25' : 'bg-slate-900 text-slate-400 hover:bg-slate-800 hover:text-white border border-slate-800' }}">
                 <span>🛍️</span>
                 <span>Katalog Produk (CRUD)</span>
             </button>
 
             <button type="button"
                     wire:click="$set('activeTab', 'content')"
-                    class="px-4 py-2.5 rounded-xl text-xs font-extrabold transition-all flex items-center gap-2 {{ $activeTab === 'content' ? 'bg-sky-600 text-white shadow-lg shadow-sky-600/25' : 'bg-slate-900 text-slate-400 hover:bg-slate-800 hover:text-white border border-slate-800' }}">
+                    class="w-full sm:w-auto justify-center sm:justify-start px-4 py-2.5 rounded-xl text-xs font-extrabold transition-all flex items-center gap-2 {{ $activeTab === 'content' ? 'bg-sky-600 text-white shadow-lg shadow-sky-600/25' : 'bg-slate-900 text-slate-400 hover:bg-slate-800 hover:text-white border border-slate-800' }}">
                 <span>💬</span>
                 <span>Nomor WA &amp; Konten Halaman</span>
             </button>
 
             <button type="button"
                     wire:click="$set('activeTab', 'categories')"
-                    class="px-4 py-2.5 rounded-xl text-xs font-extrabold transition-all flex items-center gap-2 {{ $activeTab === 'categories' ? 'bg-sky-600 text-white shadow-lg shadow-sky-600/25' : 'bg-slate-900 text-slate-400 hover:bg-slate-800 hover:text-white border border-slate-800' }}">
+                    class="w-full sm:w-auto justify-center sm:justify-start px-4 py-2.5 rounded-xl text-xs font-extrabold transition-all flex items-center gap-2 {{ $activeTab === 'categories' ? 'bg-sky-600 text-white shadow-lg shadow-sky-600/25' : 'bg-slate-900 text-slate-400 hover:bg-slate-800 hover:text-white border border-slate-800' }}">
                 <span>🏷️</span>
                 <span>Kategori Produk Store</span>
             </button>
@@ -112,7 +112,7 @@
             <!-- Products Data Table -->
             <div class="bg-slate-950 rounded-3xl border border-slate-800 overflow-hidden shadow-xl">
                 <div class="overflow-x-auto">
-                    <table class="w-full text-left text-xs text-slate-300">
+                    <table class="w-full min-w-[720px] text-left text-xs text-slate-300">
                         <thead class="bg-slate-900 text-slate-400 uppercase text-[10px] tracking-wider border-b border-slate-800">
                             <tr>
                                 <th class="py-4 px-6 font-bold">Foto</th>
@@ -204,7 +204,7 @@
     @if($activeTab === 'content')
         <form wire:submit.prevent="saveStorePageSettings" class="space-y-6">
             <!-- Section A: WhatsApp Settings for UNAIR Store -->
-            <div class="bg-slate-950 p-6 sm:p-8 rounded-3xl border border-slate-800 space-y-5 shadow-xl">
+            <div class="bg-slate-950 p-4 sm:p-8 rounded-3xl border border-slate-800 space-y-5 shadow-xl">
                 <div class="border-b border-slate-800 pb-4">
                     <span class="px-2.5 py-0.5 rounded-full bg-emerald-500/20 text-emerald-400 text-[10px] font-extrabold uppercase tracking-wider">
                         WhatsApp UNAIR Store
@@ -245,7 +245,7 @@
             </div>
 
             <!-- Section B: Hero Section Content -->
-            <div class="bg-slate-950 p-6 sm:p-8 rounded-3xl border border-slate-800 space-y-5 shadow-xl">
+            <div class="bg-slate-950 p-4 sm:p-8 rounded-3xl border border-slate-800 space-y-5 shadow-xl">
                 <div class="border-b border-slate-800 pb-4">
                     <span class="px-2.5 py-0.5 rounded-full bg-sky-500/20 text-sky-400 text-[10px] font-extrabold uppercase tracking-wider">
                         Hero &amp; Pencarian
@@ -298,7 +298,7 @@
             </div>
 
             <!-- Section C: Bottom Banner -->
-            <div class="bg-slate-950 p-6 sm:p-8 rounded-3xl border border-slate-800 space-y-5 shadow-xl">
+            <div class="bg-slate-950 p-4 sm:p-8 rounded-3xl border border-slate-800 space-y-5 shadow-xl">
                 <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-slate-800 pb-4">
                     <div>
                         <span class="px-2.5 py-0.5 rounded-full bg-amber-500/20 text-amber-300 text-[10px] font-extrabold uppercase tracking-wider">
@@ -308,7 +308,7 @@
                         <p class="text-xs text-slate-400">Atur teks banner di bagian bawah katalog (atau matikan centang jika tidak ingin ditampilkan).</p>
                     </div>
 
-                    <label class="inline-flex items-center gap-2.5 cursor-pointer bg-slate-900 px-4 py-2.5 rounded-xl border border-slate-800 shrink-0">
+                    <label class="inline-flex items-center gap-2.5 cursor-pointer bg-slate-900 px-4 py-2.5 rounded-xl border border-slate-800 shrink-0 self-start sm:self-auto">
                         <input type="checkbox" wire:model="store_banner_enabled" class="w-4 h-4 rounded border-slate-700 bg-slate-950 text-sky-600 focus:ring-sky-500">
                         <span class="text-xs font-bold text-slate-200">Tampilkan Banner Ini</span>
                     </label>
@@ -349,7 +349,7 @@
 
                 <div class="pt-4 border-t border-slate-800 flex justify-end">
                     <button type="submit"
-                            class="px-6 py-3 rounded-2xl bg-sky-600 hover:bg-sky-500 text-white font-extrabold text-xs sm:text-sm shadow-lg shadow-sky-600/30 transition-all flex items-center gap-2">
+                            class="w-full sm:w-auto justify-center px-6 py-3 rounded-2xl bg-sky-600 hover:bg-sky-500 text-white font-extrabold text-xs sm:text-sm shadow-lg shadow-sky-600/30 transition-all flex items-center gap-2">
                         <span>💾</span> Simpan Pengaturan WA &amp; Konten UNAIR Store
                     </button>
                 </div>
@@ -359,7 +359,7 @@
 
     <!-- TAB 3: KATEGORI PRODUK UNAIR STORE (CRUD) -->
     @if($activeTab === 'categories')
-        <div class="bg-slate-950 p-6 sm:p-8 rounded-3xl border border-slate-800 space-y-6 shadow-xl">
+        <div class="bg-slate-950 p-4 sm:p-8 rounded-3xl border border-slate-800 space-y-6 shadow-xl">
             <div class="border-b border-slate-800 pb-4">
                 <span class="px-2.5 py-0.5 rounded-full bg-sky-500/20 text-sky-400 text-[10px] font-extrabold uppercase tracking-wider">
                     Kategori Katalog
@@ -385,10 +385,10 @@
                 @forelse($categories as $idx => $cat)
                     <div wire:key="store-cat-row-{{ $idx }}" class="p-4 bg-slate-900/40 hover:bg-slate-900/80 flex flex-col sm:flex-row sm:items-center justify-between gap-3 transition-colors">
                         @if($editingCategoryIndex === $idx)
-                            <div class="flex items-center gap-2 flex-1">
+                            <div class="flex flex-wrap sm:flex-nowrap items-center gap-2 flex-1 w-full">
                                 <input type="text"
                                        wire:model="editingCategoryName"
-                                       class="flex-1 px-3.5 py-2 bg-slate-950 border border-sky-500 rounded-xl text-xs text-white font-bold focus:outline-none">
+                                       class="w-full sm:flex-1 px-3.5 py-2 bg-slate-950 border border-sky-500 rounded-xl text-xs text-white font-bold focus:outline-none">
                                 <button type="button"
                                         wire:click="saveEditCategory({{ $idx }})"
                                         class="px-3.5 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs">
@@ -435,7 +435,7 @@
     <!-- Modal Form Create / Edit Product -->
     @if($modalOpen)
         <div class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-sm">
-            <div class="bg-slate-900 border border-slate-800 rounded-3xl max-w-2xl w-full p-6 sm:p-8 space-y-6 shadow-2xl max-h-[90vh] overflow-y-auto">
+            <div class="bg-slate-900 border border-slate-800 rounded-3xl max-w-2xl w-full p-5 sm:p-8 space-y-6 shadow-2xl max-h-[90vh] overflow-y-auto">
                 <div class="flex justify-between items-center border-b border-slate-800 pb-4">
                     <div>
                         <h3 class="text-lg font-bold text-white">{{ $editingId ? 'Edit Produk UNAIR Store' : 'Tambah Produk UNAIR Store' }}</h3>

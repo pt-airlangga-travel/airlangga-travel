@@ -1,6 +1,6 @@
 <div class="space-y-6">
     <!-- Header -->
-    <div class="bg-slate-950 p-6 rounded-3xl border border-slate-800">
+    <div class="bg-slate-950 p-4 sm:p-6 rounded-3xl border border-slate-800">
         <span class="inline-block px-3 py-0.5 rounded-full bg-sky-500/20 text-sky-400 border border-sky-500/30 text-[10px] font-bold uppercase tracking-widest mb-1.5">
             Master Data
         </span>
@@ -18,7 +18,7 @@
     <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 items-start">
 
         <!-- 1. Kategori Blog & Artikel -->
-        <div class="bg-slate-950 rounded-3xl border border-slate-800 p-6 space-y-5 shadow-xl">
+        <div class="bg-slate-950 rounded-3xl border border-slate-800 p-4 sm:p-6 space-y-5 shadow-xl">
             <div class="border-b border-slate-800 pb-4">
                 <span class="text-[10px] font-extrabold uppercase tracking-widest text-sky-400">Blog &amp; Berita</span>
                 <h3 class="text-base font-bold text-white mt-0.5">📝 Kategori Blog &amp; Artikel</h3>
@@ -29,7 +29,7 @@
                 <input type="text"
                        wire:model="newBlogCategory"
                        placeholder="Tambah kategori blog..."
-                       class="flex-1 px-3.5 py-2.5 bg-slate-900 border border-slate-800 rounded-xl text-xs text-white focus:outline-none focus:ring-2 focus:ring-sky-500">
+                       class="flex-1 min-w-0 px-3.5 py-2.5 bg-slate-900 border border-slate-800 rounded-xl text-xs text-white focus:outline-none focus:ring-2 focus:ring-sky-500">
                 <button type="submit" class="px-4 py-2.5 rounded-xl bg-sky-600 hover:bg-sky-500 text-white font-bold text-xs shrink-0 shadow-md">
                     + Tambah
                 </button>
@@ -53,7 +53,7 @@
         </div>
 
         <!-- 2. Kategori UNAIR Store -->
-        <div class="bg-slate-950 rounded-3xl border border-slate-800 p-6 space-y-5 shadow-xl">
+        <div class="bg-slate-950 rounded-3xl border border-slate-800 p-4 sm:p-6 space-y-5 shadow-xl">
             <div class="border-b border-slate-800 pb-4">
                 <span class="text-[10px] font-extrabold uppercase tracking-widest text-amber-400">Official Merchandise</span>
                 <h3 class="text-base font-bold text-white mt-0.5">🛍️ Kategori UNAIR Store</h3>
@@ -64,7 +64,7 @@
                 <input type="text"
                        wire:model="newStoreCategory"
                        placeholder="Tambah kategori UNAIR Store..."
-                       class="flex-1 px-3.5 py-2.5 bg-slate-900 border border-slate-800 rounded-xl text-xs text-white focus:outline-none focus:ring-2 focus:ring-sky-500">
+                       class="flex-1 min-w-0 px-3.5 py-2.5 bg-slate-900 border border-slate-800 rounded-xl text-xs text-white focus:outline-none focus:ring-2 focus:ring-sky-500">
                 <button type="submit" class="px-4 py-2.5 rounded-xl bg-sky-600 hover:bg-sky-500 text-white font-bold text-xs shrink-0 shadow-md">
                     + Tambah
                 </button>
@@ -88,7 +88,7 @@
         </div>
 
         <!-- 3. Kategori Paket Tour & Wisata -->
-        <div class="bg-slate-950 rounded-3xl border border-slate-800 p-6 space-y-5 shadow-xl">
+        <div class="bg-slate-950 rounded-3xl border border-slate-800 p-4 sm:p-6 space-y-5 shadow-xl">
             <div class="border-b border-slate-800 pb-4">
                 <span class="text-[10px] font-extrabold uppercase tracking-widest text-emerald-400">Layanan Utama</span>
                 <h3 class="text-base font-bold text-white mt-0.5">✈️ Kategori Paket Tour</h3>
@@ -99,7 +99,7 @@
                 <input type="text"
                        wire:model="newTourCategoryName"
                        placeholder="Tambah kategori tour..."
-                       class="flex-1 px-3.5 py-2.5 bg-slate-900 border border-slate-800 rounded-xl text-xs text-white focus:outline-none focus:ring-2 focus:ring-sky-500">
+                       class="flex-1 min-w-0 px-3.5 py-2.5 bg-slate-900 border border-slate-800 rounded-xl text-xs text-white focus:outline-none focus:ring-2 focus:ring-sky-500">
                 <button type="submit" class="px-4 py-2.5 rounded-xl bg-sky-600 hover:bg-sky-500 text-white font-bold text-xs shrink-0 shadow-md">
                     + Tambah
                 </button>

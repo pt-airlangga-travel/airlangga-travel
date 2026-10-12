@@ -1,7 +1,7 @@
 <div class="space-y-6">
-    <div class="flex justify-between items-center">
+    <div class="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-3">
         <h2 class="text-lg font-bold text-slate-900">Kelola Foto Dokumentasi Perjalanan</h2>
-        <button wire:click="openCreateModal" class="px-4 py-2.5 rounded-xl bg-sky-600 hover:bg-sky-500 text-white font-bold text-xs shadow-md">
+        <button wire:click="openCreateModal" class="px-4 py-2.5 rounded-xl bg-sky-600 hover:bg-sky-500 text-white font-bold text-xs shadow-md self-start sm:self-auto">
             + Unggah Foto Baru
         </button>
     </div>
@@ -12,10 +12,10 @@
         </div>
     @endif
 
-    <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-6">
         @foreach($galleries as $item)
-            <div class="bg-slate-950 rounded-2xl overflow-hidden border border-slate-800 p-3 space-y-3 relative group">
-                <img src="{{ $item->image_url }}" class="w-full h-40 object-cover rounded-xl border border-slate-800">
+            <div class="bg-slate-950 rounded-2xl overflow-hidden border border-slate-800 p-2.5 sm:p-3 space-y-3 relative group">
+                <img src="{{ $item->image_url }}" class="w-full h-32 sm:h-40 object-cover rounded-xl border border-slate-800">
                 <div class="flex justify-between items-center pt-1">
                     <span class="text-[10px] text-slate-500 font-bold">ID: #{{ $item->id }}</span>
                     <button wire:click="deleteGallery({{ $item->id }})" onclick="return confirm('Hapus foto ini?')" class="px-3 py-1 rounded-lg bg-rose-500/20 hover:bg-rose-500 text-rose-300 hover:text-white text-xs font-bold transition-colors">

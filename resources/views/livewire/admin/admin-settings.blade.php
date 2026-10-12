@@ -13,7 +13,7 @@
         </div>
     @endif
 
-    <form wire:submit.prevent="saveSettings" class="bg-slate-950 rounded-3xl p-6 sm:p-8 border border-slate-800 space-y-8 text-xs shadow-xl">
+    <form wire:submit.prevent="saveSettings" class="bg-slate-950 rounded-3xl p-4 sm:p-8 border border-slate-800 space-y-8 text-xs shadow-xl">
 
         <!-- Section 1: WhatsApp, Telepon, Alamat & Google Maps -->
         <div class="space-y-4">
@@ -144,7 +144,7 @@
         </div>
 
         <div class="pt-4 flex justify-end border-t border-slate-800">
-            <button type="submit" class="px-6 py-3 rounded-xl bg-emerald-600 hover:bg-emerald-500 font-bold text-white text-xs shadow-lg shadow-emerald-600/20 transition-all">
+            <button type="submit" class="w-full sm:w-auto px-6 py-3 rounded-xl bg-emerald-600 hover:bg-emerald-500 font-bold text-white text-xs shadow-lg shadow-emerald-600/20 transition-all">
                 💾 Simpan Perubahan Pengaturan
             </button>
         </div>
