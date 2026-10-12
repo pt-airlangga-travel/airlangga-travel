@@ -115,35 +115,35 @@
     </section>
 
     <!-- Company Stats Counter Bar -->
-    <section class="max-w-7xl mx-auto px-4 py-8 sm:py-16">
+    <section class="max-w-7xl mx-auto px-4 py-8 sm:py-14">
         <div class="grid grid-cols-2 lg:grid-cols-4 gap-3.5 sm:gap-6 text-center">
-            <div class="bg-white px-3.5 py-4 sm:p-6 rounded-2xl sm:rounded-3xl border border-slate-100 shadow-sm hover:shadow-md transition-shadow flex flex-col items-center justify-center">
-                <div class="w-8 h-8 rounded-xl bg-sky-50 text-sky-600 flex items-center justify-center mb-2 sm:hidden">
-                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+            <div class="bg-white px-3.5 py-4 sm:p-6 rounded-2xl sm:rounded-3xl border border-slate-100 shadow-sm hover:shadow-md transition-all flex flex-col items-center justify-center">
+                <div class="w-8 h-8 sm:w-12 sm:h-12 rounded-xl sm:rounded-2xl bg-sky-50 text-sky-600 flex items-center justify-center mb-2 sm:mb-3">
+                    <svg class="w-4 h-4 sm:w-6 sm:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
                 </div>
-                <span class="text-xl sm:text-4xl font-extrabold tracking-tight text-sky-600 block whitespace-nowrap">15+ Tahun</span>
-                <span class="text-slate-500 text-[11px] sm:text-sm font-medium mt-1 block leading-snug">Pengalaman Pengelolaan Tour</span>
+                <span class="text-xl sm:text-3xl lg:text-2xl xl:text-3xl font-extrabold tracking-tight text-sky-600 block whitespace-nowrap">15+ Tahun</span>
+                <span class="text-slate-500 text-[11px] sm:text-sm font-medium mt-1 sm:mt-1.5 block leading-snug">Pengalaman Pengelolaan Tour</span>
             </div>
-            <div class="bg-white px-3.5 py-4 sm:p-6 rounded-2xl sm:rounded-3xl border border-slate-100 shadow-sm hover:shadow-md transition-shadow flex flex-col items-center justify-center">
-                <div class="w-8 h-8 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center mb-2 sm:hidden">
-                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
+            <div class="bg-white px-3.5 py-4 sm:p-6 rounded-2xl sm:rounded-3xl border border-slate-100 shadow-sm hover:shadow-md transition-all flex flex-col items-center justify-center">
+                <div class="w-8 h-8 sm:w-12 sm:h-12 rounded-xl sm:rounded-2xl bg-emerald-50 text-emerald-600 flex items-center justify-center mb-2 sm:mb-3">
+                    <svg class="w-4 h-4 sm:w-6 sm:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
                 </div>
-                <span class="text-xl sm:text-4xl font-extrabold tracking-tight text-emerald-600 block whitespace-nowrap">25.000+</span>
-                <span class="text-slate-500 text-[11px] sm:text-sm font-medium mt-1 block leading-snug">Wisatawan & Jamaah Umrah</span>
+                <span class="text-xl sm:text-3xl lg:text-2xl xl:text-3xl font-extrabold tracking-tight text-emerald-600 block whitespace-nowrap">25.000+</span>
+                <span class="text-slate-500 text-[11px] sm:text-sm font-medium mt-1 sm:mt-1.5 block leading-snug">Wisatawan & Jamaah Umrah</span>
             </div>
-            <div class="bg-white px-3.5 py-4 sm:p-6 rounded-2xl sm:rounded-3xl border border-slate-100 shadow-sm hover:shadow-md transition-shadow flex flex-col items-center justify-center">
-                <div class="w-8 h-8 rounded-xl bg-amber-50 text-amber-500 flex items-center justify-center mb-2 sm:hidden">
-                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
+            <div class="bg-white px-3.5 py-4 sm:p-6 rounded-2xl sm:rounded-3xl border border-slate-100 shadow-sm hover:shadow-md transition-all flex flex-col items-center justify-center">
+                <div class="w-8 h-8 sm:w-12 sm:h-12 rounded-xl sm:rounded-2xl bg-amber-50 text-amber-500 flex items-center justify-center mb-2 sm:mb-3">
+                    <svg class="w-4 h-4 sm:w-6 sm:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
                 </div>
-                <span class="text-xl sm:text-4xl font-extrabold tracking-tight text-amber-500 block whitespace-nowrap">150+</span>
-                <span class="text-slate-500 text-[11px] sm:text-sm font-medium mt-1 block leading-snug">Pilihan Destinasi Wisata</span>
+                <span class="text-xl sm:text-3xl lg:text-2xl xl:text-3xl font-extrabold tracking-tight text-amber-500 block whitespace-nowrap">150+</span>
+                <span class="text-slate-500 text-[11px] sm:text-sm font-medium mt-1 sm:mt-1.5 block leading-snug">Pilihan Destinasi Wisata</span>
             </div>
-            <div class="bg-white px-3.5 py-4 sm:p-6 rounded-2xl sm:rounded-3xl border border-slate-100 shadow-sm hover:shadow-md transition-shadow flex flex-col items-center justify-center">
-                <div class="w-8 h-8 rounded-xl bg-purple-50 text-purple-600 flex items-center justify-center mb-2 sm:hidden">
-                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path></svg>
+            <div class="bg-white px-3.5 py-4 sm:p-6 rounded-2xl sm:rounded-3xl border border-slate-100 shadow-sm hover:shadow-md transition-all flex flex-col items-center justify-center">
+                <div class="w-8 h-8 sm:w-12 sm:h-12 rounded-xl sm:rounded-2xl bg-purple-50 text-purple-600 flex items-center justify-center mb-2 sm:mb-3">
+                    <svg class="w-4 h-4 sm:w-6 sm:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path></svg>
                 </div>
-                <span class="text-xl sm:text-4xl font-extrabold tracking-tight text-purple-600 block whitespace-nowrap">100% Official</span>
-                <span class="text-slate-500 text-[11px] sm:text-sm font-medium mt-1 block leading-snug">Izin PPIU Kemenag & ASITA</span>
+                <span class="text-xl sm:text-3xl lg:text-2xl xl:text-3xl font-extrabold tracking-tight text-purple-600 block whitespace-nowrap">100% Official</span>
+                <span class="text-slate-500 text-[11px] sm:text-sm font-medium mt-1 sm:mt-1.5 block leading-snug">Izin PPIU Kemenag & ASITA</span>
             </div>
         </div>
     </section>

@@ -121,11 +121,11 @@
     <!-- Main Navigation Bar -->
     <header class="sticky top-0 z-50 glass-nav border-b border-slate-200/80 transition-all duration-300">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex justify-between items-center h-16 sm:h-20 lg:h-24 py-1">
+            <div class="flex justify-between items-center h-20 lg:h-24 py-1">
 
                 <!-- Brand Logo -->
                 <a href="{{ route('home') }}" class="flex items-center gap-3 group">
-                    <img src="{{ asset('assets/agt.png') }}" alt="Airlangga Travel Logo" style="max-height: 88px; width: auto;" class="h-14 sm:h-20 lg:h-24 -mt-1.5 sm:mt-0 w-auto object-contain group-hover:scale-105 transition-transform">
+                    <img src="{{ asset('assets/agt.png') }}" alt="Airlangga Travel Logo" style="max-height: 88px; width: auto;" class="h-16 sm:h-20 lg:h-24 w-auto object-contain group-hover:scale-105 transition-transform">
                 </a>
 
                 <!-- Desktop Navigation Links -->
