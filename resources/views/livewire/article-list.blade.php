@@ -11,7 +11,7 @@
     <!-- Category Filter & Search Bar -->
     <section class="max-w-6xl mx-auto px-4 -mt-9 relative z-20">
         <div class="bg-white rounded-2xl sm:rounded-3xl shadow-xl shadow-sky-950/10 border border-slate-100 p-4 sm:p-6">
-            <!-- Top Row: Search Input & Category Dropdown -->
+            <!-- Top Row: Search Input & Sort Dropdown -->
             <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
                 <!-- Search Input -->
                 <div class="relative flex-1">
@@ -31,17 +31,17 @@
                     @endif
                 </div>
 
-                <!-- Category Select Dropdown -->
+                <!-- Sort Select Dropdown -->
                 <div class="relative w-full sm:w-64 shrink-0">
                     <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-sky-600">
-                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z"></path></svg>
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 4h13M3 8h9m-9 4h6m4 0l4-4m0 0l4 4m-4-4v12"></path></svg>
                     </div>
-                    <select wire:model.live="selectedCategory"
+                    <select wire:model.live="sort"
                             class="w-full pl-10 pr-10 py-3 bg-slate-50 border border-slate-200/90 rounded-2xl text-xs sm:text-sm font-semibold text-slate-700 appearance-none focus:outline-none focus:ring-2 focus:ring-sky-500 focus:bg-white transition-all cursor-pointer">
-                        <option value="">Semua Kategori</option>
-                        @foreach($categories as $cat)
-                            <option value="{{ $cat }}">{{ $cat }}</option>
-                        @endforeach
+                        <option value="latest">Urutkan: Terbaru</option>
+                        <option value="popular">Urutkan: Terpopuler</option>
+                        <option value="oldest">Urutkan: Terlama</option>
+                        <option value="title_asc">Urutkan: Judul (A-Z)</option>
                     </select>
                     <div class="absolute inset-y-0 right-0 pr-3.5 flex items-center pointer-events-none text-slate-400">
                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
@@ -49,16 +49,16 @@
                 </div>
             </div>
 
-            <!-- Desktop Wrapped Category Pills (No Horizontal Scrollbar) -->
-            <div class="hidden md:flex flex-wrap items-center justify-center gap-2 pt-4 mt-4 border-t border-slate-100">
+            <!-- Wrapped Category Pills (No Horizontal Scrollbar on Mobile or Desktop) -->
+            <div class="flex flex-wrap items-center justify-center gap-1.5 sm:gap-2 pt-3.5 sm:pt-4 mt-3.5 sm:mt-4 border-t border-slate-100">
                 <button wire:click="setCategory('')"
-                        class="px-3.5 py-2 rounded-xl text-xs font-bold transition-all {{ $selectedCategory === '' ? 'bg-sky-600 text-white shadow-md shadow-sky-600/25' : 'bg-slate-100/80 text-slate-600 hover:bg-sky-50 hover:text-sky-700' }}">
+                        class="px-3 sm:px-3.5 py-1.5 sm:py-2 rounded-xl text-[11px] sm:text-xs font-bold transition-all {{ $selectedCategory === '' ? 'bg-sky-600 text-white shadow-md shadow-sky-600/25' : 'bg-slate-100/80 text-slate-600 hover:bg-sky-50 hover:text-sky-700' }}">
                     Semua Kategori
                 </button>
                 @foreach($categories as $cat)
                     <button wire:key="pub-blog-cat-{{ $loop->index }}"
                             wire:click="setCategory('{{ addslashes($cat) }}')"
-                            class="px-3.5 py-2 rounded-xl text-xs font-bold transition-all {{ $selectedCategory === $cat ? 'bg-sky-600 text-white shadow-md shadow-sky-600/25' : 'bg-slate-100/80 text-slate-600 hover:bg-sky-50 hover:text-sky-700' }}">
+                            class="px-3 sm:px-3.5 py-1.5 sm:py-2 rounded-xl text-[11px] sm:text-xs font-bold transition-all {{ $selectedCategory === $cat ? 'bg-sky-600 text-white shadow-md shadow-sky-600/25' : 'bg-slate-100/80 text-slate-600 hover:bg-sky-50 hover:text-sky-700' }}">
                         {{ $cat }}
                     </button>
                 @endforeach

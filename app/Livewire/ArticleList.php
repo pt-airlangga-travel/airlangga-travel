@@ -14,6 +14,8 @@ class ArticleList extends Component
 
     public string $selectedCategory = '';
 
+    public string $sort = 'latest';
+
     public function setCategory(string $category): void
     {
         $this->selectedCategory = $category;
@@ -26,6 +28,11 @@ class ArticleList extends Component
     }
 
     public function updatingSelectedCategory(): void
+    {
+        $this->resetPage();
+    }
+
+    public function updatingSort(): void
     {
         $this->resetPage();
     }
@@ -45,7 +52,17 @@ class ArticleList extends Component
             });
         }
 
-        $articles = $query->latest()->paginate(6);
+        if ($this->sort === 'popular') {
+            $query->orderByDesc('views')->latest();
+        } elseif ($this->sort === 'oldest') {
+            $query->oldest();
+        } elseif ($this->sort === 'title_asc') {
+            $query->orderBy('title');
+        } else {
+            $query->latest();
+        }
+
+        $articles = $query->paginate(6);
         $categories = Article::getCategories();
 
         return view('livewire.article-list', [
