@@ -5,6 +5,10 @@ on:
 
 name: 🚀 Deploy website on push
 
+concurrency:
+  group: deploy-production
+  cancel-in-progress: true
+
 jobs:
   web-deploy:
     name: 🎉 Deploy
@@ -46,6 +50,7 @@ jobs:
           password: ${{ secrets.FTP_PASSWORD }}
           local-dir: ./
           server-dir: ${{ secrets.FTP_PATH }}
+          timeout: 120000
           exclude: |
             **/.git*
             **/.git*/**
