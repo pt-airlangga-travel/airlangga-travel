@@ -193,12 +193,44 @@
                         @error('excerpt') <span class="text-rose-400 mt-1 block">{{ $message }}</span> @enderror
                     </div>
 
-                    <div>
-                        <label class="block font-bold text-slate-300 uppercase mb-1">Isi Artikel Lengkap (Support HTML)</label>
-                        <textarea wire:model="content" 
-                                  rows="6" 
-                                  placeholder="Tuliskan isi konten artikel berita lengkap..." 
-                                  class="w-full px-4 py-3 bg-slate-950 border border-slate-800 rounded-xl text-white focus:ring-2 focus:ring-sky-500 font-mono"></textarea>
+                    <div x-data="{
+                        insertFormat(snippet) {
+                            const el = $refs.contentInput;
+                            if (!el) return;
+                            const start = el.selectionStart || 0;
+                            const end = el.selectionEnd || 0;
+                            const val = el.value || '';
+                            const prefix = (start > 0 && val[start - 1] !== '\n') ? '\n' : '';
+                            el.value = val.substring(0, start) + prefix + snippet + val.substring(end);
+                            el.dispatchEvent(new Event('input'));
+                            el.focus();
+                        }
+                    }">
+                        <div class="flex flex-wrap items-center justify-between gap-2 mb-1.5">
+                            <label class="block font-bold text-slate-300 uppercase">Isi Artikel Lengkap</label>
+                            <div class="flex flex-wrap items-center gap-1.5">
+                                <button type="button"
+                                        @click="insertFormat('1. Judul Bagian\n')"
+                                        class="px-2.5 py-1 rounded-lg bg-slate-800 hover:bg-slate-700 text-sky-400 font-bold text-[11px] border border-slate-700 transition-colors">
+                                    + Subjudul (1.)
+                                </button>
+                                <button type="button"
+                                        @click="insertFormat('- Nama Poin: Penjelasan singkat...\n')"
+                                        class="px-2.5 py-1 rounded-lg bg-slate-800 hover:bg-slate-700 text-emerald-400 font-bold text-[11px] border border-slate-700 transition-colors">
+                                    + Poin List (-)
+                                </button>
+                            </div>
+                        </div>
+                        <textarea x-ref="contentInput"
+                                  wire:model="content" 
+                                  rows="8" 
+                                  placeholder="Tulis isi artikel biasa di sini...&#10;&#10;Gunakan Enter untuk paragraf baru.&#10;Gunakan '- Judul: Isi' untuk membuat poin daftar otomatis.&#10;Gunakan '1. Subjudul' untuk membuat subjudul bernomor." 
+                                  class="w-full px-4 py-3 bg-slate-950 border border-slate-800 rounded-xl text-white leading-relaxed focus:ring-2 focus:ring-sky-500"></textarea>
+                        <div class="mt-1.5 flex flex-wrap items-center gap-x-4 gap-y-1 text-[11px] text-slate-400">
+                            <span>💡 <strong class="text-slate-300">Enter</strong> = Paragraf baru</span>
+                            <span>• <strong class="text-slate-300">- Judul: Isi</strong> = Kotak poin centang otomatis</span>
+                            <span>• <strong class="text-slate-300">1. Subjudul</strong> = Subjudul bernomor</span>
+                        </div>
                         @error('content') <span class="text-rose-400 mt-1 block">{{ $message }}</span> @enderror
                     </div>
 
