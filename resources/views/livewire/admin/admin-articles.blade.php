@@ -54,6 +54,7 @@
                     <tr>
                         <th class="px-6 py-4">Cover & Judul</th>
                         <th class="px-6 py-4">Kategori</th>
+                        <th class="px-6 py-4">Tanggal Publish</th>
                         <th class="px-6 py-4">Penulis</th>
                         <th class="px-6 py-4 text-center">Dibaca (Views)</th>
                         <th class="px-6 py-4 text-center">Status Publikasi</th>
@@ -85,6 +86,9 @@
                                     {{ $item->category }}
                                 </span>
                             </td>
+                            <td class="px-6 py-4 whitespace-nowrap font-semibold text-slate-300">
+                                📅 {{ $item->created_at?->format('d M Y') }}
+                            </td>
                             <td class="px-6 py-4 whitespace-nowrap font-medium text-slate-400">
                                 {{ $item->author }}
                             </td>
@@ -110,7 +114,7 @@
                         </tr>
                     @empty
                         <tr>
-                            <td colspan="6" class="px-6 py-12 text-center text-slate-500 font-medium">
+                            <td colspan="7" class="px-6 py-12 text-center text-slate-500 font-medium">
                                 Belum ada artikel blog ditemukan. Klik tombol "Tambah Artikel Baru" untuk menerbitkan artikel pertama.
                             </td>
                         </tr>
@@ -147,12 +151,12 @@
                         @error('title') <span class="text-rose-400 mt-1 block">{{ $message }}</span> @enderror
                     </div>
 
-                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
                         <div>
                             <div class="flex items-center justify-between mb-1">
                                 <label class="block font-bold text-slate-300 uppercase">Kategori</label>
                                 <button type="button" wire:click="openCategoryModal" class="text-[11px] font-bold text-sky-400 hover:text-sky-300 underline">
-                                    + Kelola Kategori
+                                    + Kelola
                                 </button>
                             </div>
                             <select wire:model="category" class="w-full px-4 py-3 bg-slate-950 border border-slate-800 rounded-xl text-white focus:ring-2 focus:ring-sky-500">
@@ -161,6 +165,14 @@
                                 @endforeach
                             </select>
                             @error('category') <span class="text-rose-400 mt-1 block">{{ $message }}</span> @enderror
+                        </div>
+
+                        <div>
+                            <label class="block font-bold text-slate-300 uppercase mb-1">Tanggal Publish</label>
+                            <input type="date"
+                                   wire:model="published_date"
+                                   class="w-full px-4 py-3 bg-slate-950 border border-slate-800 rounded-xl text-white focus:ring-2 focus:ring-sky-500 [color-scheme:dark]">
+                            @error('published_date') <span class="text-rose-400 mt-1 block">{{ $message }}</span> @enderror
                         </div>
 
                         <div>

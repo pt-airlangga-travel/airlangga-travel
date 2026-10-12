@@ -19,6 +19,7 @@ class Article extends Model
         'author',
         'views',
         'is_published',
+        'created_at',
     ];
 
     protected $casts = [

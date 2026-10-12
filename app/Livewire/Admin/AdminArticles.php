@@ -3,6 +3,7 @@
 namespace App\Livewire\Admin;
 
 use App\Models\Article;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Str;
 use Livewire\Component;
 use Livewire\WithFileUploads;
@@ -39,6 +40,8 @@ class AdminArticles extends Component
     public $coverFile;
 
     public string $author = 'Tim Redaksi Airlangga Travel';
+
+    public string $published_date = '';
 
     public bool $is_published = true;
 
@@ -111,11 +114,13 @@ class AdminArticles extends Component
             'cover_image',
             'coverFile',
             'author',
+            'published_date',
             'is_published',
         ]);
         $categories = Article::getCategories();
         $this->category = $categories[0] ?? 'Tips Wisata';
         $this->author = 'Tim Redaksi Airlangga Travel';
+        $this->published_date = now()->format('Y-m-d');
         $this->is_published = true;
         $this->modalOpen = true;
     }
@@ -131,6 +136,7 @@ class AdminArticles extends Component
         $this->cover_image = $article->cover_image ?? '';
         $this->coverFile = null;
         $this->author = $article->author ?? 'Tim Redaksi Airlangga Travel';
+        $this->published_date = $article->created_at ? $article->created_at->format('Y-m-d') : now()->format('Y-m-d');
         $this->is_published = (bool) $article->is_published;
 
         $this->modalOpen = true;
@@ -141,6 +147,7 @@ class AdminArticles extends Component
         $this->validate([
             'title' => 'required|min:3',
             'category' => 'required',
+            'published_date' => 'required|date',
             'excerpt' => 'required|min:10',
             'content' => 'required|min:20',
             'coverFile' => 'nullable|image|max:5120',
@@ -168,6 +175,7 @@ class AdminArticles extends Component
             'cover_image' => $coverUrl ?: 'https://images.unsplash.com/photo-1518548419970-58e3b4079ab2?q=80&w=1200',
             'author' => $this->author ?: 'Tim Redaksi Airlangga Travel',
             'is_published' => $this->is_published,
+            'created_at' => Carbon::parse($this->published_date)->startOfDay(),
         ];
 
         if ($this->editingId) {
