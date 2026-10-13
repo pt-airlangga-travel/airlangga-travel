@@ -124,8 +124,8 @@
             <div class="flex justify-between items-center h-20 lg:h-24 py-1">
 
                 <!-- Brand Logo -->
-                <a href="{{ route('home') }}" class="flex items-center gap-3 group">
-                    <img src="{{ asset('assets/agt.png') }}" alt="Airlangga Travel Logo" style="max-height: 88px; width: auto;" class="h-16 sm:h-20 lg:h-24 w-auto object-contain group-hover:scale-105 transition-transform">
+                <a href="{{ route('home') }}" class="flex items-center gap-3 group shrink-0">
+                    <img src="{{ asset('assets/agt.png') }}" alt="Airlangga Travel Logo" style="max-height: none; width: auto;" class="h-24 sm:h-28 lg:h-32 -my-4 w-auto object-contain group-hover:scale-105 transition-transform">
                 </a>
 
                 <!-- Desktop Navigation Links -->
@@ -268,6 +268,17 @@
                         $footerLegality2 = '✓ Anggota Resmi ASITA';
                     }
 
+                    if (request()->routeIs('services.unair-store')) {
+                        try {
+                            $storeSettings = \App\Models\UnairStoreItem::getSettings();
+                            $waNumber = $storeSettings['store_whatsapp_number'] ?? '6285157715414';
+                            $waMessage = $storeSettings['store_whatsapp_custom_message'] ?? 'Halo Admin UNAIR Store, saya ingin bertanya mengenai produk merchandise:';
+                        } catch (\Throwable $e) {
+                            $waNumber = '6285157715414';
+                            $waMessage = 'Halo Admin UNAIR Store, saya ingin bertanya mengenai produk merchandise:';
+                        }
+                    }
+
                     $cleanWaNumber = preg_replace('/[^0-9]/', '', $waNumber) ?: '6281233020117';
                     if (str_starts_with($cleanWaNumber, '0')) {
                         $cleanWaNumber = '62' . substr($cleanWaNumber, 1);
@@ -369,17 +380,19 @@
     </main>
 
     <!-- Floating Sticky WhatsApp Widget -->
-    <div class="fixed bottom-6 right-6 z-50 flex items-center gap-3 group">
-        <div class="hidden sm:block bg-white text-slate-800 text-xs font-semibold px-3 py-2 rounded-xl shadow-xl border border-slate-100 group-hover:scale-105 transition-all">
-            Butuh Bantuan Booking? <span class="text-emerald-600 font-bold">Chat Kami!</span>
+    @unless(request()->routeIs('services.unair-store'))
+        <div class="fixed bottom-6 right-6 z-50 flex items-center gap-3 group">
+            <div class="hidden sm:block bg-white text-slate-800 text-xs font-semibold px-3 py-2 rounded-xl shadow-xl border border-slate-100 group-hover:scale-105 transition-all">
+                Butuh Bantuan Booking? <span class="text-emerald-600 font-bold">Chat Kami!</span>
+            </div>
+            <a href="{{ $waUrl }}"
+               target="_blank"
+               aria-label="Chat via WhatsApp"
+               class="w-14 h-14 rounded-full bg-emerald-500 text-white flex items-center justify-center shadow-2xl shadow-emerald-600/40 hover:bg-emerald-600 transition-transform hover:scale-110 pulse-wa">
+                <svg class="w-8 h-8 fill-current" viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-0.999 3.648 3.742-0.981z"/></svg>
+            </a>
         </div>
-        <a href="{{ $waUrl }}"
-           target="_blank"
-           aria-label="Chat via WhatsApp"
-           class="w-14 h-14 rounded-full bg-emerald-500 text-white flex items-center justify-center shadow-2xl shadow-emerald-600/40 hover:bg-emerald-600 transition-transform hover:scale-110 pulse-wa">
-            <svg class="w-8 h-8 fill-current" viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-0.999 3.648 3.742-0.981z"/></svg>
-        </a>
-    </div>
+    @endunless
 
     <!-- Main Footer -->
     <footer class="bg-slate-900 text-slate-400 text-sm mt-16 border-t border-slate-800">

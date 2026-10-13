@@ -103,7 +103,7 @@ class UnairStoreItem extends Model
     public static function getPageSettings(): array
     {
         $defaults = [
-            'store_whatsapp_number' => '6281233020117',
+            'store_whatsapp_number' => '6285157715414',
             'store_whatsapp_order_prefix' => 'Halo Admin UNAIR Store, saya ingin menanyakan ketersediaan produk:',
             'store_whatsapp_custom_message' => 'Halo UNAIR Store / Airlangga Travel, saya ingin konsultasi pemesanan custom merchandise / souvenir:',
             'store_hero_badge' => '🛍️ Official Merchandise & Travel Store',
@@ -123,6 +123,11 @@ class UnairStoreItem extends Model
             if ($raw) {
                 $decoded = json_decode($raw, true);
                 if (is_array($decoded)) {
+                    if (($decoded['store_whatsapp_number'] ?? '') === '6281233020117') {
+                        $decoded['store_whatsapp_number'] = '6285157715414';
+                        SiteSetting::set('unair_store_page_settings', json_encode(array_merge($defaults, $decoded)));
+                    }
+
                     return array_merge($defaults, $decoded);
                 }
             }

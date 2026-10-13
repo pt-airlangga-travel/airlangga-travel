@@ -92,7 +92,7 @@ class AdminUnairStore extends Component
     {
         $settings = UnairStoreItem::getPageSettings();
 
-        $this->store_whatsapp_number = (string) ($settings['store_whatsapp_number'] ?? '6281233020117');
+        $this->store_whatsapp_number = (string) ($settings['store_whatsapp_number'] ?? '6285157715414');
         $this->store_whatsapp_order_prefix = (string) ($settings['store_whatsapp_order_prefix'] ?? '');
         $this->store_whatsapp_custom_message = (string) ($settings['store_whatsapp_custom_message'] ?? '');
         $this->store_hero_badge = (string) ($settings['store_hero_badge'] ?? '');

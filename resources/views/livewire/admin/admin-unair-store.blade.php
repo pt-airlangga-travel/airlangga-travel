@@ -218,9 +218,9 @@
                         <label class="font-bold text-slate-300 block mb-1.5 uppercase tracking-wider text-xs">Nomor WhatsApp Admin UNAIR Store</label>
                         <input type="text"
                                wire:model="store_whatsapp_number"
-                               placeholder="Contoh: 6281233020117"
+                               placeholder="Contoh: 6285157715414"
                                class="w-full px-4 py-2.5 bg-slate-900 border border-slate-800 rounded-xl text-white font-semibold focus:ring-2 focus:ring-sky-500 focus:outline-none">
-                        <span class="text-[11px] text-slate-500 mt-1 block">Gunakan awalan kode negara <code class="text-sky-400">628...</code> (atau <code class="text-sky-400">08...</code> akan otomatis dikonversi ke 628).</span>
+                        <span class="text-[11px] text-slate-500 mt-1 block">Gunakan awalan kode negara <code class="text-sky-400">628...</code> (misal: <code class="text-sky-400">6285157715414</code> untuk +62 851-5771-5414).</span>
                         @error('store_whatsapp_number') <span class="text-xs text-rose-400 mt-1 block">{{ $message }}</span> @enderror
                     </div>
 
