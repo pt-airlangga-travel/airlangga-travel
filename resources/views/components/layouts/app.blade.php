@@ -82,8 +82,8 @@
     <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
 
     <!-- Top Announcement Bar -->
-    <div class="traveloka-gradient text-white text-xs py-2 px-4 shadow-inner">
-        <div class="max-w-7xl mx-auto px-4 flex flex-col sm:flex-row justify-between items-center gap-2">
+    <div class="traveloka-gradient text-white text-[11px] py-1 px-4 shadow-inner">
+        <div class="max-w-7xl mx-auto px-4 flex flex-col sm:flex-row justify-between items-center gap-1.5 sm:gap-2">
             <div class="flex items-center gap-4 text-slate-100">
                 <span class="inline-flex items-center gap-1 font-semibold">
                     <svg class="w-3.5 h-3.5 text-amber-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path></svg>
@@ -121,16 +121,16 @@
     <!-- Main Navigation Bar -->
     <header class="sticky top-0 z-50 glass-nav border-b border-slate-200/80 transition-all duration-300">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex justify-between items-center h-20 lg:h-24 py-1">
+            <div class="flex justify-between items-center h-16 lg:h-[70px]">
 
                 <!-- Brand Logo -->
                 <a href="{{ route('home') }}" class="flex items-center gap-3 group shrink-0">
-                    <img src="{{ asset('assets/agt.png') }}" alt="Airlangga Travel Logo" style="max-height: none; width: auto;" class="h-24 sm:h-28 lg:h-32 -my-4 w-auto object-contain group-hover:scale-105 transition-transform">
+                    <img src="{{ asset('assets/agt.png') }}?v={{ file_exists(public_path('assets/agt.png')) ? filemtime(public_path('assets/agt.png')) : time() }}" alt="Airlangga Travel Logo" class="h-10 sm:h-11 lg:h-[50px] w-auto object-contain group-hover:scale-105 transition-transform">
                 </a>
 
                 <!-- Desktop Navigation Links -->
                 <nav class="hidden lg:flex items-center gap-1 font-medium text-sm text-slate-600">
-                    <a href="{{ route('home') }}" class="px-3.5 py-2 rounded-xl transition-colors hover:text-sky-600 hover:bg-sky-50/80 {{ request()->routeIs('home') ? 'text-sky-600 font-bold bg-sky-50' : '' }}">
+                    <a href="{{ route('home') }}" class="px-3.5 py-1.5 rounded-xl transition-colors hover:text-sky-600 hover:bg-sky-50/80 {{ request()->routeIs('home') ? 'text-sky-600 font-bold bg-sky-50' : '' }}">
                         Beranda
                     </a>
 
@@ -141,7 +141,7 @@
                          @mouseleave="closeTimer = setTimeout(() => dropdownOpen = false, 200)">
                         <button type="button"
                                 @click="dropdownOpen = !dropdownOpen"
-                                class="px-3.5 py-2 rounded-xl transition-colors hover:text-sky-600 hover:bg-sky-50/80 flex items-center gap-1.5 {{ request()->routeIs('services.*') || request()->routeIs('packages.*') || request()->routeIs('tickets.*') ? 'text-sky-600 font-bold bg-sky-50' : '' }}">
+                                class="px-3.5 py-1.5 rounded-xl transition-colors hover:text-sky-600 hover:bg-sky-50/80 flex items-center gap-1.5 {{ request()->routeIs('services.*') || request()->routeIs('packages.*') || request()->routeIs('tickets.*') ? 'text-sky-600 font-bold bg-sky-50' : '' }}">
                             <span>Layanan</span>
                             <svg class="w-4 h-4 transition-transform duration-200" :class="dropdownOpen ? 'rotate-180 text-sky-600' : ''" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
@@ -209,27 +209,26 @@
                                     <div class="flex-1">
                                         <div class="flex items-center justify-between">
                                             <span class="font-bold text-slate-800 text-xs group-hover:text-sky-600">UNAIR Store</span>
-                                            <span class="px-1.5 py-0.5 rounded-md bg-amber-100 text-amber-700 font-extrabold text-[9px] uppercase tracking-wider">Official</span>
                                         </div>
-                                        <div class="text-[11px] text-slate-500 font-normal">Merchandise & Travel Gear</div>
+                                        <div class="text-[11px] text-slate-500 font-normal">Merchandise & Souvenir Kampus</div>
                                     </div>
                                 </a>
                             </div>
                         </div>
                     </div>
 
-                    <a href="https://tiket.airlanggatravel.com" target="_blank" rel="noopener" class="px-3.5 py-2 rounded-xl transition-colors hover:text-sky-600 hover:bg-sky-50/80 font-semibold text-sky-700 flex items-center gap-1">
+                    <a href="https://tiket.airlanggatravel.com" target="_blank" rel="noopener" class="px-3.5 py-1.5 rounded-xl transition-colors hover:text-sky-600 hover:bg-sky-50/80 font-semibold text-sky-700 flex items-center gap-1">
                         <span>Ticketing</span>
                         <svg class="w-3.5 h-3.5 text-sky-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
                     </a>
 
-                    <a href="{{ route('about') }}" class="px-3.5 py-2 rounded-xl transition-colors hover:text-sky-600 hover:bg-sky-50/80 {{ request()->routeIs('about') ? 'text-sky-600 font-bold bg-sky-50' : '' }}">
+                    <a href="{{ route('about') }}" class="px-3.5 py-1.5 rounded-xl transition-colors hover:text-sky-600 hover:bg-sky-50/80 {{ request()->routeIs('about') ? 'text-sky-600 font-bold bg-sky-50' : '' }}">
                         Tentang Kami
                     </a>
-                    <a href="{{ route('articles.index') }}" class="px-3.5 py-2 rounded-xl transition-colors hover:text-sky-600 hover:bg-sky-50/80 {{ request()->routeIs('articles.*') ? 'text-sky-600 font-bold bg-sky-50' : '' }}">
+                    <a href="{{ route('articles.index') }}" class="px-3.5 py-1.5 rounded-xl transition-colors hover:text-sky-600 hover:bg-sky-50/80 {{ request()->routeIs('articles.*') ? 'text-sky-600 font-bold bg-sky-50' : '' }}">
                         Blog
                     </a>
-                    <a href="{{ route('contact') }}" class="px-3.5 py-2 rounded-xl transition-colors hover:text-sky-600 hover:bg-sky-50/80 {{ request()->routeIs('contact') ? 'text-sky-600 font-bold bg-sky-50' : '' }}">
+                    <a href="{{ route('contact') }}" class="px-3.5 py-1.5 rounded-xl transition-colors hover:text-sky-600 hover:bg-sky-50/80 {{ request()->routeIs('contact') ? 'text-sky-600 font-bold bg-sky-50' : '' }}">
                         Kontak
                     </a>
                 </nav>
@@ -294,7 +293,7 @@
                 <div class="hidden lg:flex items-center gap-3">
                     <a href="{{ $waUrl }}"
                        target="_blank"
-                       class="inline-flex items-center gap-2 px-4 py-2.5 rounded-full bg-emerald-600 text-white font-semibold text-xs tracking-wide hover:bg-emerald-500 shadow-md shadow-emerald-500/20 transition-all hover:scale-105 pulse-wa">
+                       class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-emerald-600 text-white font-semibold text-xs tracking-wide hover:bg-emerald-500 shadow-md shadow-emerald-500/20 transition-all hover:scale-105 pulse-wa">
                         <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-0.999 3.648 3.742-0.981z"/></svg>
                         Pesan via WA
                     </a>

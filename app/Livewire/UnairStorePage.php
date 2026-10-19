@@ -4,6 +4,7 @@ namespace App\Livewire;
 
 use App\Models\InquiryLog;
 use App\Models\UnairStoreItem;
+use Illuminate\Support\Str;
 use Livewire\Attributes\Url;
 use Livewire\Component;
 
@@ -20,8 +21,12 @@ class UnairStorePage extends Component
 
     public ?UnairStoreItem $activeModalItem = null;
 
+    public string $selectedSize = '';
+
+    public string $selectedColor = '';
+
     /**
-     * @var array<int|string, array{id: int, title: string, category: string, price: float, cover_image: string, qty: int}>
+     * @var array<string, array{cart_key: string, id: int, title: string, category: string, price: float, cover_image: string, size?: string, color?: string, qty: int}>
      */
     public array $cart = [];
 
@@ -47,6 +52,7 @@ class UnairStorePage extends Component
             'Rektorat',
             'Plaza Airlangga',
             'Stovit Store',
+            'Ekspedisi Instan Kurir',
         ];
     }
 
@@ -62,6 +68,11 @@ class UnairStorePage extends Component
             $this->activeModalItem = UnairStoreItem::where('slug', $this->productSlug)
                 ->where('is_active', true)
                 ->first();
+
+            if ($this->activeModalItem) {
+                $this->selectedSize = $this->activeModalItem->sizes_list[0] ?? '';
+                $this->selectedColor = $this->activeModalItem->colors_list[0] ?? '';
+            }
         }
     }
 
@@ -70,6 +81,7 @@ class UnairStorePage extends Component
         $this->selectedCategory = $category;
         $this->activeModalItem = null;
         $this->productSlug = '';
+        $this->dispatch('scroll-to-top');
     }
 
     public function openDetailModal(int $id): void
@@ -79,6 +91,8 @@ class UnairStorePage extends Component
         if ($item) {
             $this->activeModalItem = $item;
             $this->productSlug = (string) $item->slug;
+            $this->selectedSize = $item->sizes_list[0] ?? '';
+            $this->selectedColor = $item->colors_list[0] ?? '';
             $this->dispatch('scroll-to-top');
         }
     }
@@ -87,10 +101,12 @@ class UnairStorePage extends Component
     {
         $this->activeModalItem = null;
         $this->productSlug = '';
+        $this->selectedSize = '';
+        $this->selectedColor = '';
         $this->dispatch('scroll-to-top');
     }
 
-    public function addToCart(int $itemId, bool $openModal = false): void
+    public function addToCart(int $itemId, bool $openModal = false, ?string $size = null, ?string $color = null): void
     {
         UnairStoreItem::ensureReady();
         $item = UnairStoreItem::where('is_active', true)->find($itemId);
@@ -98,22 +114,35 @@ class UnairStorePage extends Component
             return;
         }
 
+        $chosenSize = $size ?? ($this->activeModalItem && $this->activeModalItem->id === $item->id ? $this->selectedSize : ($item->sizes_list[0] ?? ''));
+        $chosenColor = $color ?? ($this->activeModalItem && $this->activeModalItem->id === $item->id ? $this->selectedColor : ($item->colors_list[0] ?? ''));
+
         $unitPrice = ($item->discount_price !== null && (float) $item->discount_price > 0)
             ? (float) $item->discount_price
             : (float) ($item->price ?? 0);
 
-        if (isset($this->cart[$itemId])) {
-            $this->cart[$itemId]['qty'] = ((int) $this->cart[$itemId]['qty']) + 1;
-            $this->cart[$itemId]['title'] = (string) $item->title;
-            $this->cart[$itemId]['price'] = $unitPrice;
-            $this->cart[$itemId]['cover_image'] = (string) $item->cover_image;
+        $cartKey = (string) $itemId;
+        if ($chosenSize !== '' || $chosenColor !== '') {
+            $cartKey .= '_'.Str::slug($chosenSize.'-'.$chosenColor);
+        }
+
+        if (isset($this->cart[$cartKey])) {
+            $this->cart[$cartKey]['qty'] = ((int) $this->cart[$cartKey]['qty']) + 1;
+            $this->cart[$cartKey]['title'] = (string) $item->title;
+            $this->cart[$cartKey]['price'] = $unitPrice;
+            $this->cart[$cartKey]['cover_image'] = (string) $item->cover_image;
+            $this->cart[$cartKey]['size'] = $chosenSize;
+            $this->cart[$cartKey]['color'] = $chosenColor;
         } else {
-            $this->cart[$itemId] = [
+            $this->cart[$cartKey] = [
+                'cart_key' => $cartKey,
                 'id' => (int) $item->id,
                 'title' => (string) $item->title,
                 'category' => (string) $item->category,
                 'price' => $unitPrice,
                 'cover_image' => (string) $item->cover_image,
+                'size' => $chosenSize,
+                'color' => $chosenColor,
                 'qty' => 1,
             ];
         }
@@ -125,33 +154,36 @@ class UnairStorePage extends Component
         }
     }
 
-    public function incrementCartItem(int $itemId): void
+    public function incrementCartItem(string|int $cartKey): void
     {
-        if (isset($this->cart[$itemId])) {
-            $this->cart[$itemId]['qty'] = ((int) $this->cart[$itemId]['qty']) + 1;
+        $key = (string) $cartKey;
+        if (isset($this->cart[$key])) {
+            $this->cart[$key]['qty'] = ((int) $this->cart[$key]['qty']) + 1;
             session()->put('unair_store_cart', $this->cart);
         }
     }
 
-    public function decrementCartItem(int $itemId): void
+    public function decrementCartItem(string|int $cartKey): void
     {
-        if (! isset($this->cart[$itemId])) {
+        $key = (string) $cartKey;
+        if (! isset($this->cart[$key])) {
             return;
         }
 
-        $newQty = ((int) $this->cart[$itemId]['qty']) - 1;
+        $newQty = ((int) $this->cart[$key]['qty']) - 1;
         if ($newQty <= 0) {
-            unset($this->cart[$itemId]);
+            unset($this->cart[$key]);
         } else {
-            $this->cart[$itemId]['qty'] = $newQty;
+            $this->cart[$key]['qty'] = $newQty;
         }
 
         session()->put('unair_store_cart', $this->cart);
     }
 
-    public function removeFromCart(int $itemId): void
+    public function removeFromCart(string|int $cartKey): void
     {
-        unset($this->cart[$itemId]);
+        $key = (string) $cartKey;
+        unset($this->cart[$key]);
         session()->put('unair_store_cart', $this->cart);
     }
 
@@ -216,11 +248,20 @@ class UnairStorePage extends Component
             $subtotal = $price * $qty;
             $totalPrice += $subtotal;
 
+            $variantInfo = [];
+            if (! empty($row['size'])) {
+                $variantInfo[] = 'Ukuran: '.$row['size'];
+            }
+            if (! empty($row['color'])) {
+                $variantInfo[] = 'Warna: '.$row['color'];
+            }
+            $variantStr = ! empty($variantInfo) ? ' ('.implode(', ', $variantInfo).')' : '';
+
             if ($price > 0) {
-                $lines[] = "- {$row['title']}";
+                $lines[] = "- {$row['title']}{$variantStr}";
                 $lines[] = "  Jumlah: {$qty} pcs (Rp ".number_format($subtotal, 0, ',', '.').')';
             } else {
-                $lines[] = "- {$row['title']} ({$qty} pcs)";
+                $lines[] = "- {$row['title']}{$variantStr} ({$qty} pcs)";
             }
         }
 
@@ -348,6 +389,6 @@ class UnairStorePage extends Component
             'storeWaNumber' => $storeWaNumber,
             'relatedItems' => $relatedItems,
             'pickupOptions' => self::getPickupOptions(),
-        ])->layout('components.layouts.app', ['title' => ($this->activeModalItem ? $this->activeModalItem->title.' - ' : '').($pageSettings['store_hero_title'] ?? 'UNAIR Store').' | Airlangga Travel']);
+        ])->layout('components.layouts.app', ['title' => ($this->activeModalItem ? $this->activeModalItem->title.' - ' : '').($pageSettings['store_hero_title'] ?? 'Merchandise Universitas Airlangga').' | Airlangga Travel']);
     }
 }

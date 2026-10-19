@@ -1,14 +1,20 @@
 <div>
     <!-- Hero Banner -->
-    <div class="bg-gradient-to-br from-amber-100 via-amber-50 to-sky-100 text-slate-900 py-16 px-4 hero-pattern border-b border-amber-200">
-        <div class="max-w-7xl mx-auto text-center space-y-4">
-            <span class="inline-block px-4 py-1.5 rounded-full bg-amber-500/20 text-amber-900 text-xs font-bold uppercase tracking-widest border border-amber-300">
+    <div class="relative bg-gradient-to-br from-sky-100 via-blue-50 to-cyan-100/80 text-slate-900 pt-8 sm:pt-11 pb-14 sm:pb-16 px-4 hero-pattern border-b border-sky-200/80 overflow-hidden">
+        <div class="max-w-3xl mx-auto text-center space-y-3 sm:space-y-4 relative z-10 flex flex-col items-center">
+            <span class="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-amber-500/15 text-amber-900 text-xs font-bold uppercase tracking-wider border border-amber-300/60 shadow-2xs">
                 🎟️ Tiket Wisata & Voucher Destinasi
             </span>
-            <h1 class="text-3xl sm:text-5xl font-extrabold tracking-tight text-slate-900">Pemesanan Tiket Wisata & Rekreasi Instant</h1>
-            <p class="text-slate-700 text-sm sm:text-base max-w-2xl mx-auto font-medium">
-                Voucher wahana permainan, tiket destinasi populer Bali, Lombok, Jatim, dan penerbangan/kereta api promo agen resmi.
-            </p>
+
+            <h1 class="text-3xl sm:text-5xl lg:text-6xl font-black tracking-tight text-slate-900 leading-[1.15]">
+                Pemesanan Tiket Wisata & <span class="bg-gradient-to-r from-sky-600 via-blue-600 to-indigo-600 bg-clip-text text-transparent">Rekreasi Instant</span>
+            </h1>
+
+            <div class="inline-block max-w-3xl mx-auto px-5 sm:px-6 py-2.5 rounded-2xl sm:rounded-full bg-white/80 backdrop-blur-xs border border-sky-100/90 shadow-2xs">
+                <p class="text-xs sm:text-sm md:text-base text-slate-700 font-medium leading-relaxed">
+                    Voucher wahana permainan, tiket destinasi populer <span class="text-sky-700 font-bold">Bali, Lombok, Jatim</span>, dan tiket promo agen resmi.
+                </p>
+            </div>
         </div>
     </div>
 

@@ -1,14 +1,20 @@
 <div>
     <!-- Hero Banner -->
-    <div class="bg-gradient-to-br from-sky-100 via-blue-50 to-cyan-100/80 text-slate-900 py-16 px-4 hero-pattern border-b border-sky-100">
-        <div class="max-w-7xl mx-auto text-center space-y-3">
-            <span class="inline-block px-4 py-1.5 rounded-full bg-sky-600/10 text-sky-900 text-xs font-bold uppercase tracking-widest border border-sky-300/60 shadow-sm">
+    <div class="relative bg-gradient-to-br from-sky-100 via-blue-50 to-cyan-100/80 text-slate-900 pt-8 sm:pt-11 pb-24 sm:pb-28 px-4 hero-pattern border-b border-sky-200/80 overflow-hidden">
+        <div class="max-w-4xl mx-auto text-center space-y-3 sm:space-y-4 relative z-10 flex flex-col items-center">
+            <span class="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-sky-600/10 text-sky-800 text-xs font-bold uppercase tracking-wider border border-sky-300/50 shadow-2xs">
                 🎫 Layanan Pemesanan Tiket Fast Response 24 Jam
             </span>
-            <h1 class="text-3xl sm:text-5xl font-extrabold tracking-tight text-slate-900">Tiket Pesawat, Kereta & Sewa Mobil</h1>
-            <p class="text-slate-700 text-sm sm:text-base max-w-xl mx-auto font-medium leading-relaxed">
-                Dapatkan harga promo agen resmi dan layanan bantuan issued instan via WhatsApp.
-            </p>
+
+            <h1 class="text-3xl sm:text-5xl lg:text-6xl font-black tracking-tight text-slate-900 leading-[1.15]">
+                Tiket Pesawat, Kereta & <span class="bg-gradient-to-r from-sky-600 via-blue-600 to-indigo-600 bg-clip-text text-transparent">Sewa Mobil</span>
+            </h1>
+
+            <div class="inline-block max-w-3xl mx-auto px-5 sm:px-6 py-2.5 rounded-2xl sm:rounded-full bg-white/80 backdrop-blur-xs border border-sky-100/90 shadow-2xs">
+                <p class="text-xs sm:text-sm md:text-base text-slate-700 font-medium leading-relaxed">
+                    Dapatkan <span class="text-sky-700 font-bold">harga promo agen resmi</span> dan layanan bantuan issued instan via WhatsApp.
+                </p>
+            </div>
         </div>
     </div>
 

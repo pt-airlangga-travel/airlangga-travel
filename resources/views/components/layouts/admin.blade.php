@@ -72,11 +72,11 @@
                 </a>
 
                 <div class="pt-3 pb-1 px-4 text-[10px] font-extrabold uppercase tracking-widest text-sky-400">
-                    Master Data UNAIR Store
+                    Merchandise UNAIR
                 </div>
 
                 <a href="{{ route('admin.unair-store') }}" class="flex items-center gap-3 px-4 py-2.5 rounded-xl transition-colors {{ request()->routeIs('admin.unair-store') ? 'bg-sky-600 text-white font-bold' : 'text-slate-400 hover:bg-slate-800 hover:text-white' }}">
-                    Kelola UNAIR Store
+                    Kelola Merchandise
                 </a>
 
                 <div class="pt-3 pb-1 px-4 text-[10px] font-extrabold uppercase tracking-widest text-slate-500">

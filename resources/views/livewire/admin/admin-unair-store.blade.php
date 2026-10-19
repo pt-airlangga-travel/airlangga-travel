@@ -4,11 +4,11 @@
         <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-4">
             <div>
                 <span class="inline-block px-3 py-0.5 rounded-full bg-sky-500/20 text-sky-400 border border-sky-500/30 text-[10px] font-bold uppercase tracking-widest mb-1.5">
-                    Master Data Khusus UNAIR Store
+                    Merchandise Universitas Airlangga
                 </span>
-                <h2 class="text-xl font-extrabold text-white">Kelola Master Data UNAIR Store</h2>
+                <h2 class="text-xl font-extrabold text-white">Kelola Merchandise Universitas Airlangga</h2>
                 <p class="text-xs text-slate-400">
-                    Pusat pengelolaan lengkap katalog produk, deskripsi detail produk, nomor WhatsApp, konten halaman, serta kategori produk UNAIR Store.
+                    Pusat pengelolaan lengkap katalog produk, foto galeri, nomor WhatsApp, branding banner hero, dan kategori merchandise.
                 </p>
             </div>
 
@@ -16,14 +16,14 @@
                 <a href="{{ route('services.unair-store') }}"
                    target="_blank"
                    class="px-4 py-2.5 rounded-2xl bg-slate-900 hover:bg-slate-800 text-sky-400 border border-slate-800 font-bold text-xs flex items-center justify-center gap-2 transition-colors">
-                    <span>🔗</span> Lihat Halaman UNAIR Store
+                    <span>🔗</span> Lihat Halaman Publik
                 </a>
 
                 @if($activeTab === 'products')
                     <button type="button"
                             wire:click="openCreateModal"
                             class="px-5 py-2.5 rounded-2xl bg-sky-600 hover:bg-sky-500 text-white font-bold text-xs flex items-center justify-center gap-2 shadow-lg shadow-sky-600/20 transition-all">
-                        <span>➕</span> Tambah Produk UNAIR Store
+                        <span>➕</span> Tambah Produk Merchandise
                     </button>
                 @endif
             </div>
@@ -144,6 +144,20 @@
                                                 ★ {{ $item->badge }}
                                             </span>
                                         @endif
+                                        @if(!empty($item->sizes_list) || !empty($item->colors_list))
+                                            <div class="flex flex-wrap items-center gap-1 mt-1.5">
+                                                @if(!empty($item->sizes_list))
+                                                    <span class="px-1.5 py-0.5 rounded bg-sky-950 text-sky-400 border border-sky-800/80 text-[10px] font-medium">
+                                                        Ukuran: {{ implode(', ', $item->sizes_list) }}
+                                                    </span>
+                                                @endif
+                                                @if(!empty($item->colors_list))
+                                                    <span class="px-1.5 py-0.5 rounded bg-amber-950 text-amber-400 border border-amber-800/80 text-[10px] font-medium">
+                                                        Warna: {{ implode(', ', $item->colors_list) }}
+                                                    </span>
+                                                @endif
+                                            </div>
+                                        @endif
                                     </td>
                                     <td class="py-4 px-6 text-slate-400 font-semibold">
                                         {{ $item->category }}
@@ -177,7 +191,7 @@
                                         <button type="button" wire:click="editItem({{ $item->id }})" class="px-3 py-1.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-sky-400 font-bold text-xs transition-colors">
                                             ✏️ Edit
                                         </button>
-                                        <button type="button" wire:click="deleteItem({{ $item->id }})" wire:confirm="Yakin ingin menghapus produk UNAIR Store ini?" class="px-3 py-1.5 rounded-xl bg-rose-500/10 hover:bg-rose-500/20 text-rose-400 font-bold text-xs transition-colors border border-rose-500/20">
+                                        <button type="button" wire:click="deleteItem({{ $item->id }})" wire:confirm="Yakin ingin menghapus produk merchandise ini?" class="px-3 py-1.5 rounded-xl bg-rose-500/10 hover:bg-rose-500/20 text-rose-400 font-bold text-xs transition-colors border border-rose-500/20">
                                             🗑️ Hapus
                                         </button>
                                     </td>
@@ -185,7 +199,7 @@
                             @empty
                                 <tr>
                                     <td colspan="7" class="py-12 text-center text-slate-500 text-xs">
-                                        Belum ada produk di UNAIR Store yang sesuai filter. Klik "Tambah Produk UNAIR Store" untuk membuat baru.
+                                        Belum ada produk merchandise yang sesuai filter. Klik "Tambah Produk Merchandise" untuk membuat baru.
                                     </td>
                                 </tr>
                             @endforelse
@@ -203,19 +217,19 @@
     <!-- TAB 2: NOMOR WA & KONTEN HALAMAN UNAIR STORE -->
     @if($activeTab === 'content')
         <form wire:submit.prevent="saveStorePageSettings" class="space-y-6">
-            <!-- Section A: WhatsApp Settings for UNAIR Store -->
+            <!-- Section A: WhatsApp Settings for Merchandise -->
             <div class="bg-slate-950 p-4 sm:p-8 rounded-3xl border border-slate-800 space-y-5 shadow-xl">
                 <div class="border-b border-slate-800 pb-4">
                     <span class="px-2.5 py-0.5 rounded-full bg-emerald-500/20 text-emerald-400 text-[10px] font-extrabold uppercase tracking-wider">
-                        WhatsApp UNAIR Store
+                        WhatsApp Merchandise UNAIR
                     </span>
                     <h3 class="text-base sm:text-lg font-extrabold text-white mt-1">Pengaturan Nomor WhatsApp &amp; Template Pesan</h3>
-                    <p class="text-xs text-slate-400">Nomor dan template pesan di bawah ini digunakan untuk tombol tanya ketersediaan produk &amp; konsultasi di halaman UNAIR Store.</p>
+                    <p class="text-xs text-slate-400">Nomor dan template pesan di bawah ini digunakan untuk tombol tanya ketersediaan produk &amp; konsultasi di halaman Merchandise Universitas Airlangga.</p>
                 </div>
 
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-5 text-xs sm:text-sm">
                     <div class="md:col-span-2">
-                        <label class="font-bold text-slate-300 block mb-1.5 uppercase tracking-wider text-xs">Nomor WhatsApp Admin UNAIR Store</label>
+                        <label class="font-bold text-slate-300 block mb-1.5 uppercase tracking-wider text-xs">Nomor WhatsApp Admin Merchandise UNAIR</label>
                         <input type="text"
                                wire:model="store_whatsapp_number"
                                placeholder="Contoh: 6285157715414"
@@ -244,22 +258,155 @@
                 </div>
             </div>
 
-            <!-- Section B: Hero Section Content -->
-            <div class="bg-slate-950 p-4 sm:p-8 rounded-3xl border border-slate-800 space-y-5 shadow-xl">
+            <!-- Section B: Hero Section Content & Branding -->
+            <div class="bg-slate-950 p-4 sm:p-8 rounded-3xl border border-slate-800 space-y-6 shadow-xl">
                 <div class="border-b border-slate-800 pb-4">
                     <span class="px-2.5 py-0.5 rounded-full bg-sky-500/20 text-sky-400 text-[10px] font-extrabold uppercase tracking-wider">
-                        Hero &amp; Pencarian
+                        Hero &amp; Branding
                     </span>
-                    <h3 class="text-base sm:text-lg font-extrabold text-white mt-1">Konten Banner Hero Atas UNAIR Store</h3>
-                    <p class="text-xs text-slate-400">Sesuaikan teks badge, judul utama, teks highlight biru, dan deskripsi pada bagian atas halaman UNAIR Store.</p>
+                    <h3 class="text-base sm:text-lg font-extrabold text-white mt-1">Konten Banner Hero Merchandise Universitas Airlangga</h3>
+                    <p class="text-xs text-slate-400">Sesuaikan logo, judul utama, aksen warna, deskripsi, dan lihat pratinjau tampilan banner hero secara langsung.</p>
+                </div>
+
+                <!-- Live Visual Preview of Hero Banner -->
+                <div class="p-4 sm:p-5 rounded-2xl bg-slate-900/90 border border-slate-800 space-y-3">
+                    <div class="flex items-center justify-between text-xs pb-1">
+                        <span class="font-bold text-sky-400 uppercase tracking-wider text-[11px] flex items-center gap-1.5">
+                            <span>👁️</span> Pratinjau Tampilan Publik Banner Hero
+                        </span>
+                        <span class="text-slate-500 text-[10px]">Menyesuaikan secara otomatis</span>
+                    </div>
+
+                    <!-- Mini Public Banner Render -->
+                    <div class="relative rounded-2xl bg-gradient-to-br from-sky-100 via-blue-50 to-cyan-100 text-slate-900 pt-5 pb-7 px-4 text-center space-y-3 border border-sky-200 overflow-hidden">
+                        @php
+                            $previewLogoClass = match($store_hero_logo_size) {
+                                'medium' => 'w-auto h-10 sm:h-12 max-w-[190px]',
+                                'xlarge' => 'w-auto h-17 sm:h-21 max-w-[310px]',
+                                '2xlarge' => 'w-auto h-21 sm:h-25 max-w-[360px]',
+                                default => 'w-auto h-14 sm:h-17 max-w-[260px]',
+                            };
+                        @endphp
+                        <!-- Logo in Preview -->
+                        <div class="flex justify-center items-center py-2">
+                            @if($logoFile)
+                                <img src="{{ $logoFile->temporaryUrl() }}" alt="Preview Logo Baru" class="{{ $previewLogoClass }} object-contain drop-shadow-md transition-all duration-300">
+                            @else
+                                <img src="{{ asset('assets/unair-store-logo.png') }}?v={{ file_exists(public_path('assets/unair-store-logo.png')) ? filemtime(public_path('assets/unair-store-logo.png')) : time() }}" alt="Logo Saat Ini" class="{{ $previewLogoClass }} object-contain drop-shadow-md transition-all duration-300">
+                            @endif
+                        </div>
+
+                        <!-- Title in Preview -->
+                        <div class="space-y-1.5">
+                            <h4 class="text-sm sm:text-base font-black tracking-tight text-slate-900 leading-snug">
+                                @if(!empty($store_hero_highlight))
+                                    {{ $store_hero_title ?: 'Merchandise' }}
+                                    <span class="bg-gradient-to-r from-sky-600 via-blue-600 to-indigo-600 bg-clip-text text-transparent">{{ $store_hero_highlight }}</span>
+                                @else
+                                    @php
+                                        $prevTitle = $store_hero_title ?: 'Merchandise Universitas Airlangga';
+                                    @endphp
+                                    @if(\Illuminate\Support\Str::startsWith(strtolower($prevTitle), 'merchandise '))
+                                        Merchandise <span class="bg-gradient-to-r from-sky-600 via-blue-600 to-indigo-600 bg-clip-text text-transparent">{{ \Illuminate\Support\Str::substr($prevTitle, 12) }}</span>
+                                    @else
+                                        {{ $prevTitle }}
+                                    @endif
+                                @endif
+                            </h4>
+
+                            <!-- Accent line in Preview -->
+                            <div class="flex items-center justify-center gap-1.5">
+                                <span class="w-6 h-1 rounded-full bg-sky-500"></span>
+                                <span class="w-2.5 h-1 rounded-full bg-amber-400"></span>
+                                <span class="w-6 h-1 rounded-full bg-blue-600"></span>
+                            </div>
+
+                            <!-- Description Capsule in Preview -->
+                            @if(!empty($store_hero_description))
+                                <div class="inline-block max-w-lg mx-auto px-4 py-1.5 rounded-full bg-white/75 border border-sky-100/90 text-[11px] sm:text-xs text-slate-700 font-medium">
+                                    {!! str_replace(
+                                        ['merchandise Universitas Airlangga', 'apparel eksklusif Ksatria Airlangga', 'souvenir kampus'],
+                                        ['<span class="text-sky-700 font-bold">merchandise Universitas Airlangga</span>', '<span class="text-slate-900 font-extrabold">apparel eksklusif Ksatria Airlangga</span>', '<span class="text-amber-700 font-bold">souvenir kampus</span>'],
+                                        e($store_hero_description)
+                                    ) !!}
+                                </div>
+                            @endif
+                        </div>
+                    </div>
                 </div>
 
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-5 text-xs sm:text-sm">
+                    <!-- Upload Logo Field -->
+                    <div class="md:col-span-2 p-4 rounded-2xl bg-slate-900 border border-slate-800 space-y-2">
+                        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-1.5">
+                            <label class="font-bold text-slate-300 block uppercase tracking-wider text-xs">Ganti File Logo Banner Hero</label>
+                            @if($logoFile)
+                                <button type="button" wire:click="$set('logoFile', null)" class="text-xs text-rose-400 hover:underline font-semibold self-start sm:self-auto">
+                                    Batal Ganti Logo
+                                </button>
+                            @endif
+                        </div>
+                        <p class="text-[11px] text-slate-400">Upload file logo baru (format PNG transparan direkomendasikan). Logo akan langsung diperbarui di tampilan publik saat tombol Simpan ditekan.</p>
+                        <input type="file"
+                                wire:model="logoFile"
+                                accept="image/png,image/jpeg,image/webp"
+                                class="w-full px-3.5 py-2 bg-slate-950 border border-slate-800 rounded-xl text-xs text-slate-300 file:mr-3 file:py-1.5 file:px-3.5 file:rounded-lg file:border-0 file:text-xs file:font-bold file:bg-sky-600 file:text-white hover:file:bg-sky-500 cursor-pointer focus:outline-none focus:ring-2 focus:ring-sky-500">
+                        @error('logoFile') <span class="text-xs text-rose-400 mt-1 block">{{ $message }}</span> @enderror
+                    </div>
+
+                    <!-- Logo Size Selection -->
+                    <div class="md:col-span-2 p-4 rounded-2xl bg-slate-900 border border-slate-800 space-y-2.5">
+                        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-1">
+                            <label class="font-bold text-slate-300 block uppercase tracking-wider text-xs">Ukuran Tampilan Logo di Hero Publik</label>
+                            <span class="text-[11px] text-sky-400 font-medium">Bisa diatur sesuai logo horizontal maupun persegi</span>
+                        </div>
+                        <p class="text-[11px] text-slate-400">Pilih skala ukuran logo pada banner hero utama UNAIR Store. Pratinjau di atas akan langsung menyesuaikan.</p>
+                        
+                        <div class="grid grid-cols-2 sm:grid-cols-4 gap-2.5 pt-1">
+                            <label class="relative flex flex-col items-center justify-center p-3 rounded-xl border cursor-pointer transition-all {{ $store_hero_logo_size === 'medium' ? 'bg-sky-600/20 border-sky-500 text-sky-300 ring-1 ring-sky-500' : 'bg-slate-950 border-slate-800 text-slate-400 hover:border-slate-700' }}">
+                                <input type="radio" wire:model.live="store_hero_logo_size" value="medium" class="sr-only">
+                                <span class="text-xs font-bold text-white">Sedang</span>
+                                <span class="text-[10px] text-slate-400 mt-0.5">Compact</span>
+                            </label>
+
+                            <label class="relative flex flex-col items-center justify-center p-3 rounded-xl border cursor-pointer transition-all {{ $store_hero_logo_size === 'large' ? 'bg-sky-600/20 border-sky-500 text-sky-300 ring-1 ring-sky-500' : 'bg-slate-950 border-slate-800 text-slate-400 hover:border-slate-700' }}">
+                                <input type="radio" wire:model.live="store_hero_logo_size" value="large" class="sr-only">
+                                <span class="text-xs font-bold text-white">Besar</span>
+                                <span class="text-[10px] text-sky-400 font-semibold mt-0.5">Standar Rekomendasi</span>
+                            </label>
+
+                            <label class="relative flex flex-col items-center justify-center p-3 rounded-xl border cursor-pointer transition-all {{ $store_hero_logo_size === 'xlarge' ? 'bg-sky-600/20 border-sky-500 text-sky-300 ring-1 ring-sky-500' : 'bg-slate-950 border-slate-800 text-slate-400 hover:border-slate-700' }}">
+                                <input type="radio" wire:model.live="store_hero_logo_size" value="xlarge" class="sr-only">
+                                <span class="text-xs font-bold text-white">Sangat Besar</span>
+                                <span class="text-[10px] text-slate-400 mt-0.5">X-Large (Menonjol)</span>
+                            </label>
+
+                            <label class="relative flex flex-col items-center justify-center p-3 rounded-xl border cursor-pointer transition-all {{ $store_hero_logo_size === '2xlarge' ? 'bg-sky-600/20 border-sky-500 text-sky-300 ring-1 ring-sky-500' : 'bg-slate-950 border-slate-800 text-slate-400 hover:border-slate-700' }}">
+                                <input type="radio" wire:model.live="store_hero_logo_size" value="2xlarge" class="sr-only">
+                                <span class="text-xs font-bold text-white">Jumbo</span>
+                                <span class="text-[10px] text-slate-400 mt-0.5">2X-Large (Maksimal)</span>
+                            </label>
+                        </div>
+                    </div>
+
                     <div>
-                        <label class="font-bold text-slate-300 block mb-1.5 uppercase tracking-wider text-xs">Badge / Label Kecil Hero</label>
+                        <div class="flex items-center justify-between mb-1.5">
+                            <label class="font-bold text-slate-300 block uppercase tracking-wider text-xs">Judul / Subtitle Hero</label>
+                            <span class="text-[10px] text-slate-400 font-normal">Opsional (bisa dikosongkan)</span>
+                        </div>
                         <input type="text"
-                               wire:model="store_hero_badge"
-                               placeholder="🛍️ Official Merchandise & Travel Store"
+                               wire:model.live="store_hero_title"
+                               placeholder="Contoh: Merchandise Universitas Airlangga"
+                               class="w-full px-4 py-2.5 bg-slate-900 border border-slate-800 rounded-xl text-white font-semibold focus:ring-2 focus:ring-sky-500 focus:outline-none">
+                        <span class="text-[11px] text-slate-500 mt-1 block">Ukuran teks ini telah disesuaikan agar proporsional dan tidak menenggelamkan logo UNAIR Store.</span>
+                        @error('store_hero_title') <span class="text-xs text-rose-400 mt-1 block">{{ $message }}</span> @enderror
+                    </div>
+
+                    <div>
+                        <label class="font-bold text-slate-300 block mb-1.5 uppercase tracking-wider text-xs">Teks Highlight Biru Judul Hero</label>
+                        <input type="text"
+                               wire:model.live="store_hero_highlight"
+                               placeholder="Universitas Airlangga"
                                class="w-full px-4 py-2.5 bg-slate-900 border border-slate-800 rounded-xl text-white font-semibold focus:ring-2 focus:ring-sky-500 focus:outline-none">
                     </div>
 
@@ -267,31 +414,24 @@
                         <label class="font-bold text-slate-300 block mb-1.5 uppercase tracking-wider text-xs">Placeholder Pencarian Produk</label>
                         <input type="text"
                                wire:model="store_search_placeholder"
-                               placeholder="Cari produk UNAIR Store..."
+                               placeholder="Cari merchandise Universitas Airlangga..."
                                class="w-full px-4 py-2.5 bg-slate-900 border border-slate-800 rounded-xl text-white font-semibold focus:ring-2 focus:ring-sky-500 focus:outline-none">
                     </div>
 
                     <div>
-                        <label class="font-bold text-slate-300 block mb-1.5 uppercase tracking-wider text-xs">Judul Utama Hero</label>
+                        <label class="font-bold text-slate-300 block mb-1.5 uppercase tracking-wider text-xs">Badge / Label Kecil Hero (Opsional)</label>
                         <input type="text"
-                               wire:model="store_hero_title"
-                               placeholder="UNAIR Store"
+                               wire:model="store_hero_badge"
+                               placeholder="Kosongkan agar hero fokus pada Logo &amp; Judul"
                                class="w-full px-4 py-2.5 bg-slate-900 border border-slate-800 rounded-xl text-white font-semibold focus:ring-2 focus:ring-sky-500 focus:outline-none">
-                        @error('store_hero_title') <span class="text-xs text-rose-400 mt-1 block">{{ $message }}</span> @enderror
-                    </div>
-
-                    <div>
-                        <label class="font-bold text-slate-300 block mb-1.5 uppercase tracking-wider text-xs">Teks Highlight Biru Judul Hero</label>
-                        <input type="text"
-                               wire:model="store_hero_highlight"
-                               placeholder="& Official Merch"
-                               class="w-full px-4 py-2.5 bg-slate-900 border border-slate-800 rounded-xl text-white font-semibold focus:ring-2 focus:ring-sky-500 focus:outline-none">
+                        <span class="text-[11px] text-slate-500 mt-1 block">Biarkan kosong agar tampilan hero bersih menampilkan Logo dan Judul saja seperti saat ini.</span>
                     </div>
 
                     <div class="md:col-span-2">
-                        <label class="font-bold text-slate-300 block mb-1.5 uppercase tracking-wider text-xs">Deskripsi Hero UNAIR Store</label>
-                        <textarea wire:model="store_hero_description"
-                                  rows="3"
+                        <label class="font-bold text-slate-300 block mb-1.5 uppercase tracking-wider text-xs">Deskripsi Ringkas Hero</label>
+                        <textarea wire:model.live="store_hero_description"
+                                  rows="2"
+                                  placeholder="Koleksi merchandise Universitas Airlangga, apparel eksklusif Ksatria Airlangga, serta aneka souvenir kampus."
                                   class="w-full px-4 py-2.5 bg-slate-900 border border-slate-800 rounded-xl text-white focus:ring-2 focus:ring-sky-500 focus:outline-none"></textarea>
                     </div>
                 </div>
@@ -335,7 +475,7 @@
                         <label class="font-bold text-slate-300 block mb-1.5 uppercase tracking-wider text-xs">Judul Banner</label>
                         <input type="text"
                                wire:model="store_banner_title"
-                               placeholder="Butuh Souvenir Seminar, Wisuda, atau Gathering Fakultas?"
+                               placeholder="Butuh Custom Merchandise untuk Event, Unit Universitas, atau Corporate?"
                                class="w-full px-4 py-2.5 bg-slate-900 border border-slate-800 rounded-xl text-white font-semibold focus:ring-2 focus:ring-sky-500 focus:outline-none">
                     </div>
 
@@ -350,22 +490,22 @@
                 <div class="pt-4 border-t border-slate-800 flex justify-end">
                     <button type="submit"
                             class="w-full sm:w-auto justify-center px-6 py-3 rounded-2xl bg-sky-600 hover:bg-sky-500 text-white font-extrabold text-xs sm:text-sm shadow-lg shadow-sky-600/30 transition-all flex items-center gap-2">
-                        <span>💾</span> Simpan Pengaturan WA &amp; Konten UNAIR Store
+                        <span>💾</span> Simpan Pengaturan WA &amp; Konten Merchandise
                     </button>
                 </div>
             </div>
         </form>
     @endif
 
-    <!-- TAB 3: KATEGORI PRODUK UNAIR STORE (CRUD) -->
+    <!-- TAB 3: KATEGORI PRODUK MERCHANDISE (CRUD) -->
     @if($activeTab === 'categories')
         <div class="bg-slate-950 p-4 sm:p-8 rounded-3xl border border-slate-800 space-y-6 shadow-xl">
             <div class="border-b border-slate-800 pb-4">
                 <span class="px-2.5 py-0.5 rounded-full bg-sky-500/20 text-sky-400 text-[10px] font-extrabold uppercase tracking-wider">
                     Kategori Katalog
                 </span>
-                <h3 class="text-base sm:text-lg font-extrabold text-white mt-1">Kelola Kategori Produk UNAIR Store</h3>
-                <p class="text-xs text-slate-400">Tambah, ubah nama, atau hapus kategori produk yang tampil pada filter halaman UNAIR Store.</p>
+                <h3 class="text-base sm:text-lg font-extrabold text-white mt-1">Kelola Kategori Produk Merchandise</h3>
+                <p class="text-xs text-slate-400">Tambah, ubah nama, atau hapus kategori produk yang tampil pada filter halaman Merchandise Universitas Airlangga.</p>
             </div>
 
             <!-- Add Category Form -->
@@ -376,7 +516,7 @@
                        class="flex-1 px-4 py-2.5 bg-slate-900 border border-slate-800 rounded-xl text-xs sm:text-sm text-white font-semibold focus:ring-2 focus:ring-sky-500 focus:outline-none">
                 <button type="submit"
                         class="px-5 py-2.5 rounded-xl bg-sky-600 hover:bg-sky-500 text-white font-extrabold text-xs shrink-0 shadow-lg shadow-sky-600/20">
-                    ➕ Tambah Kategori Store
+                    ➕ Tambah Kategori
                 </button>
             </form>
 
@@ -416,7 +556,7 @@
                                 </button>
                                 <button type="button"
                                         wire:click="deleteStoreCategory('{{ addslashes($cat) }}')"
-                                        wire:confirm="Hapus kategori '{{ $cat }}' dari daftar kategori UNAIR Store?"
+                                        wire:confirm="Hapus kategori '{{ $cat }}' dari daftar kategori merchandise?"
                                         class="px-3 py-1.5 rounded-xl bg-rose-500/10 hover:bg-rose-500/20 text-rose-400 border border-rose-500/20 font-bold text-xs transition-colors">
                                     🗑️ Hapus
                                 </button>
@@ -425,7 +565,7 @@
                     </div>
                 @empty
                     <div class="p-8 text-center text-xs text-slate-500">
-                        Belum ada kategori produk UNAIR Store.
+                        Belum ada kategori produk merchandise.
                     </div>
                 @endforelse
             </div>
@@ -438,7 +578,7 @@
             <div class="bg-slate-900 border border-slate-800 rounded-3xl max-w-2xl w-full p-5 sm:p-8 space-y-6 shadow-2xl max-h-[90vh] overflow-y-auto">
                 <div class="flex justify-between items-center border-b border-slate-800 pb-4">
                     <div>
-                        <h3 class="text-lg font-bold text-white">{{ $editingId ? 'Edit Produk UNAIR Store' : 'Tambah Produk UNAIR Store' }}</h3>
+                        <h3 class="text-lg font-bold text-white">{{ $editingId ? 'Edit Produk Merchandise' : 'Tambah Produk Merchandise' }}</h3>
                         <p class="text-xs text-slate-400">Lengkapi informasi produk, foto galeri, dan deskripsi produk yang akan ditampilkan di halaman detail.</p>
                     </div>
                     <button type="button" wire:click="$set('modalOpen', false)" class="text-slate-400 hover:text-white font-bold text-xl">✕</button>
@@ -492,7 +632,80 @@
 
                         <div class="sm:col-span-2">
                             <label class="font-bold text-slate-300 block mb-1 uppercase tracking-wider text-xs">Label / Edisi Produk (Opsional)</label>
-                            <input type="text" wire:model="badge" placeholder="Contoh: Best Seller, Official Merch, Limited Edition" class="w-full px-4 py-2.5 bg-slate-950 border border-slate-800 rounded-xl text-white focus:ring-2 focus:ring-sky-500 focus:outline-none font-semibold">
+                            <input type="text" wire:model="badge" placeholder="Contoh: Best Seller, Favorit Ksatria, Limited Edition" class="w-full px-4 py-2.5 bg-slate-950 border border-slate-800 rounded-xl text-white focus:ring-2 focus:ring-sky-500 focus:outline-none font-semibold">
+                        </div>
+                    </div>
+
+                    <!-- Varian Ukuran (Size) & Warna (Color) -->
+                    <div class="p-4 sm:p-5 rounded-2xl bg-slate-950 border border-slate-800 space-y-4">
+                        <div class="flex items-center justify-between border-b border-slate-800/80 pb-2.5">
+                            <div>
+                                <span class="text-xs font-bold text-white uppercase tracking-wider flex items-center gap-1.5">
+                                    <span>⚙️</span>
+                                    <span>Varian Ukuran (Size) &amp; Warna (Color)</span>
+                                </span>
+                                <p class="text-[11px] text-slate-400 mt-0.5">Atur pilihan ukuran dan warna untuk katalog ini. Pengunjung dapat memilih via dropdown saat memesan.</p>
+                            </div>
+                        </div>
+
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            <!-- Varian Ukuran -->
+                            <div class="space-y-2">
+                                <label class="font-bold text-slate-300 block uppercase tracking-wider text-xs">
+                                    Pilihan Ukuran (Size)
+                                </label>
+                                <div class="flex gap-2">
+                                    <input type="text"
+                                           wire:model="newSizeInput"
+                                           wire:keydown.enter.prevent="addSize"
+                                           placeholder="Ketik ukuran lalu Enter (atau: S, M, L, XL)"
+                                           class="flex-1 px-3.5 py-2 bg-slate-900 border border-slate-800 rounded-xl text-white text-xs focus:ring-2 focus:ring-sky-500 focus:outline-none">
+                                    <button type="button"
+                                            wire:click="addSize"
+                                            class="px-3 py-2 rounded-xl bg-sky-600 hover:bg-sky-500 text-white font-bold text-xs shrink-0 transition-colors">
+                                        + Tambah
+                                    </button>
+                                </div>
+                                <div class="flex flex-wrap gap-1.5 pt-1 min-h-7">
+                                    @forelse($available_sizes as $sIdx => $sizeVal)
+                                        <span wire:key="admin-sz-{{ $sIdx }}" class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-sky-500/20 text-sky-300 border border-sky-500/30 text-xs font-semibold">
+                                            <span>{{ $sizeVal }}</span>
+                                            <button type="button" wire:click="removeSize({{ $sIdx }})" class="text-rose-400 hover:text-rose-300 font-bold text-xs ml-0.5">✕</button>
+                                        </span>
+                                    @empty
+                                        <span class="text-[11px] text-slate-500 italic">Belum ada varian ukuran (produk all-size).</span>
+                                    @endforelse
+                                </div>
+                            </div>
+
+                            <!-- Varian Warna -->
+                            <div class="space-y-2">
+                                <label class="font-bold text-slate-300 block uppercase tracking-wider text-xs">
+                                    Pilihan Warna (Color)
+                                </label>
+                                <div class="flex gap-2">
+                                    <input type="text"
+                                           wire:model="newColorInput"
+                                           wire:keydown.enter.prevent="addColor"
+                                           placeholder="Ketik warna lalu Enter (atau: Hitam, Navy)"
+                                           class="flex-1 px-3.5 py-2 bg-slate-900 border border-slate-800 rounded-xl text-white text-xs focus:ring-2 focus:ring-sky-500 focus:outline-none">
+                                    <button type="button"
+                                            wire:click="addColor"
+                                            class="px-3 py-2 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold text-xs shrink-0 transition-colors">
+                                        + Tambah
+                                    </button>
+                                </div>
+                                <div class="flex flex-wrap gap-1.5 pt-1 min-h-7">
+                                    @forelse($available_colors as $cIdx => $colorVal)
+                                        <span wire:key="admin-clr-{{ $cIdx }}" class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-amber-500/20 text-amber-300 border border-amber-500/30 text-xs font-semibold">
+                                            <span>{{ $colorVal }}</span>
+                                            <button type="button" wire:click="removeColor({{ $cIdx }})" class="text-rose-400 hover:text-rose-300 font-bold text-xs ml-0.5">✕</button>
+                                        </span>
+                                    @empty
+                                        <span class="text-[11px] text-slate-500 italic">Belum ada varian warna (opsional).</span>
+                                    @endforelse
+                                </div>
+                            </div>
                         </div>
                     </div>
 
@@ -583,13 +796,13 @@
                         <label class="font-bold text-slate-300 block mb-1 uppercase tracking-wider text-xs">Custom Pesan WhatsApp Produk Ini (Opsional)</label>
                         <input type="text"
                                wire:model="wa_template_message"
-                               placeholder="Kosongkan untuk mengikuti template WA default UNAIR Store"
+                               placeholder="Kosongkan untuk mengikuti template WA default merchandise"
                                class="w-full px-4 py-2.5 bg-slate-950 border border-slate-800 rounded-xl text-white focus:ring-2 focus:ring-sky-500 focus:outline-none">
                     </div>
 
                     <div class="flex items-center gap-3 pt-1">
                         <input type="checkbox" id="store_is_active" wire:model="is_active" class="w-4 h-4 rounded border-slate-800 bg-slate-950 text-sky-600 focus:ring-sky-500">
-                        <label for="store_is_active" class="text-xs font-bold text-slate-300">Tampilkan Produk di Halaman UNAIR Store</label>
+                        <label for="store_is_active" class="text-xs font-bold text-slate-300">Tampilkan Produk di Halaman Merchandise</label>
                     </div>
 
                     <div class="pt-4 flex justify-end gap-3 border-t border-slate-800">

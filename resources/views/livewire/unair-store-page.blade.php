@@ -40,10 +40,8 @@
             <div class="bg-white border-b border-slate-200/80 py-2.5 sm:py-3 px-4 text-xs font-medium text-slate-600">
                 <div class="max-w-6xl mx-auto flex flex-col sm:flex-row sm:items-center justify-between gap-2.5 sm:gap-4">
                     <div class="flex items-center gap-1.5 sm:gap-2 overflow-x-auto whitespace-nowrap py-0.5">
-                        <a href="{{ route('home') }}" class="hover:text-sky-600 transition-colors font-semibold">Beranda</a>
-                        <span class="text-slate-300">›</span>
                         <button type="button" wire:click="closeModal" class="hover:text-sky-600 transition-colors font-semibold">
-                            {{ $pageSettings['store_hero_title'] ?? 'UNAIR Store' }}
+                            {{ $pageSettings['store_hero_title'] ?? 'Merchandise Universitas Airlangga' }}
                         </button>
                         <span class="text-slate-300">›</span>
                         <button type="button" wire:click="setCategory('{{ addslashes($activeModalItem->category) }}')" class="hover:text-sky-600 transition-colors font-semibold">
@@ -180,7 +178,7 @@
                                     <div class="p-4 sm:p-5 rounded-2xl bg-gradient-to-r from-sky-50 via-indigo-50/40 to-amber-50/50 border border-sky-200/70 flex items-center justify-between gap-3">
                                         <div class="space-y-0.5">
                                             <span class="text-[11px] font-extrabold uppercase tracking-wider text-sky-600 block">
-                                                Official Merchandise UNAIR Store
+                                                Merchandise Universitas Airlangga
                                             </span>
                                             <span class="text-base sm:text-lg font-extrabold text-slate-900 block">
                                                 📍 Tersedia di Gerai UNAIR Store Kampus
@@ -199,12 +197,59 @@
                                         <span class="sm:col-span-4 text-slate-500 font-semibold">Status Ketersediaan</span>
                                         <span class="sm:col-span-8 font-bold text-emerald-600">{{ $activeModalItem->stock_status }}</span>
                                     </div>
-                                    <div class="grid grid-cols-1 sm:grid-cols-12 gap-1 sm:gap-4 py-1.5">
-                                        <span class="sm:col-span-4 text-slate-500 font-semibold">Pembelian</span>
-                                        <span class="sm:col-span-8 font-bold text-slate-800">Langsung di UNAIR Store (Kampus Universitas Airlangga)</span>
+                                    <div class="grid grid-cols-1 sm:grid-cols-12 gap-1.5 sm:gap-4 py-2">
+                                        <span class="sm:col-span-4 text-slate-500 font-semibold">Opsi Pengambilan</span>
+                                        <div class="sm:col-span-8 flex flex-wrap items-center gap-1.5">
+                                            @foreach($pickupOptions as $opt)
+                                                <span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-lg bg-sky-50 border border-sky-100 text-[11px] font-bold text-sky-800">
+                                                    <span>📍</span>
+                                                    <span>{{ $opt }}</span>
+                                                </span>
+                                            @endforeach
+                                        </div>
                                     </div>
                                 </div>
                             </div>
+
+                            <!-- Pilihan Ukuran & Warna Dropdowns (Jika Katalog Memiliki Varian) -->
+                            @if(!empty($activeModalItem->sizes_list) || !empty($activeModalItem->colors_list))
+                                <div class="p-4 rounded-2xl bg-slate-50 border border-slate-200/80 space-y-3">
+                                    <div class="text-xs font-black uppercase tracking-wider text-slate-700 flex items-center gap-1.5">
+                                        <span>⚙️</span>
+                                        <span>Pilih Varian Pesanan</span>
+                                    </div>
+
+                                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                                        @if(!empty($activeModalItem->sizes_list))
+                                            <div>
+                                                <label class="block text-xs font-bold text-slate-700 mb-1">
+                                                    Pilihan Ukuran *
+                                                </label>
+                                                <select wire:model.live="selectedSize"
+                                                        class="w-full px-3.5 py-2.5 bg-white border border-slate-200 rounded-xl text-xs sm:text-sm font-bold text-slate-800 focus:outline-none focus:ring-2 focus:ring-sky-500 shadow-2xs">
+                                                    @foreach($activeModalItem->sizes_list as $sz)
+                                                        <option value="{{ $sz }}">{{ $sz }}</option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
+                                        @endif
+
+                                        @if(!empty($activeModalItem->colors_list))
+                                            <div>
+                                                <label class="block text-xs font-bold text-slate-700 mb-1">
+                                                    Pilihan Warna *
+                                                </label>
+                                                <select wire:model.live="selectedColor"
+                                                        class="w-full px-3.5 py-2.5 bg-white border border-slate-200 rounded-xl text-xs sm:text-sm font-bold text-slate-800 focus:outline-none focus:ring-2 focus:ring-sky-500 shadow-2xs">
+                                                    @foreach($activeModalItem->colors_list as $clr)
+                                                        <option value="{{ $clr }}">{{ $clr }}</option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
+                                        @endif
+                                    </div>
+                                </div>
+                            @endif
 
                             <!-- Direct Campus Store Notice & Action Buttons -->
                             <div class="space-y-4 pt-4 border-t border-slate-100">
@@ -212,7 +257,7 @@
                                     <span class="text-lg shrink-0">📍</span>
                                     <div class="text-xs text-slate-600 leading-relaxed">
                                         <span class="font-extrabold text-slate-900 block mb-0.5">Pemesanan via Keranjang & Konfirmasi WhatsApp</span>
-                                        Masukkan produk ke <strong class="text-slate-800">Keranjang</strong> untuk memilih beberapa barang sekaligus, lalu isi form data pemesan & lokasi pengambilan (<strong class="text-slate-800">Aseec, Rektorat, Plaza Airlangga, atau Stovit Store</strong>) untuk konfirmasi via WhatsApp.
+                                        Masukkan produk ke <strong class="text-slate-800">Keranjang</strong> untuk memilih beberapa barang sekaligus, lalu isi form data pemesan & lokasi pengambilan (<strong class="text-slate-800">Aseec, Rektorat, Plaza Airlangga, Stovit Store, atau Ekspedisi Instan Kurir</strong>) untuk konfirmasi via WhatsApp.
                                     </div>
                                 </div>
 
@@ -275,7 +320,7 @@
                     <div class="pt-2 space-y-4">
                         <div class="flex items-center justify-between">
                             <h2 class="text-lg sm:text-xl font-extrabold text-slate-900">
-                                Produk Lainnya di {{ $pageSettings['store_hero_title'] ?? 'UNAIR Store' }}
+                                Produk Lainnya di {{ $pageSettings['store_hero_title'] ?? 'Merchandise Universitas Airlangga' }}
                             </h2>
                             <button type="button"
                                     wire:click="closeModal"
@@ -408,33 +453,90 @@
     @else
         <!-- CATALOG LIST VIEW -->
         <!-- Hero Banner (AGT Signature Sky/Blue Gradient Theme) -->
-        <div class="relative bg-gradient-to-br from-sky-100 via-blue-50 to-cyan-100/80 text-slate-900 pt-6 sm:pt-9 pb-14 sm:pb-16 px-4 hero-pattern border-b border-sky-200 overflow-hidden">
-            <div class="max-w-7xl mx-auto text-center space-y-2.5 sm:space-y-3 relative z-10">
-                @if(!empty($pageSettings['store_hero_badge']))
-                    <span class="inline-block px-3.5 sm:px-4 py-1 sm:py-1.5 rounded-full bg-sky-600/10 text-sky-950 text-[11px] sm:text-xs font-extrabold uppercase tracking-widest border border-sky-300 shadow-sm">
-                        {{ $pageSettings['store_hero_badge'] }}
-                    </span>
-                @endif
-                <h1 class="text-2xl sm:text-5xl font-extrabold tracking-tight text-slate-900 leading-tight">
-                    {{ $pageSettings['store_hero_title'] ?? 'UNAIR Store' }}
-                    @if(!empty($pageSettings['store_hero_highlight']))
-                        <span class="text-sky-600">{{ $pageSettings['store_hero_highlight'] }}</span>
+        <div class="relative bg-gradient-to-br from-sky-100 via-blue-50 to-cyan-100/80 text-slate-900 pt-5 sm:pt-7 pb-12 sm:pb-14 px-4 hero-pattern border-b border-sky-200 overflow-hidden">
+            <div class="max-w-4xl mx-auto text-center space-y-4 sm:space-y-5 relative z-10 flex flex-col items-center">
+                
+                @php
+                    $logoSizeSetting = $pageSettings['store_hero_logo_size'] ?? 'large';
+                    $heroLogoClass = match($logoSizeSetting) {
+                        'medium' => 'w-auto h-16 sm:h-20 md:h-28 lg:h-32 max-w-[75vw] sm:max-w-xs md:max-w-md',
+                        'xlarge' => 'w-auto h-28 sm:h-36 md:h-44 lg:h-52 max-w-[92vw] sm:max-w-xl md:max-w-2xl',
+                        '2xlarge' => 'w-auto h-32 sm:h-40 md:h-52 lg:h-60 max-w-[95vw] sm:max-w-2xl md:max-w-3xl',
+                        default => 'w-auto h-24 sm:h-28 md:h-36 lg:h-44 max-w-[88vw] sm:max-w-lg md:max-w-xl',
+                    };
+                    $heroGlowClass = match($logoSizeSetting) {
+                        'medium' => '-inset-2.5 sm:-inset-4 blur-lg',
+                        'xlarge' => '-inset-6 sm:-inset-9 blur-2xl sm:blur-3xl',
+                        '2xlarge' => '-inset-7 sm:-inset-11 blur-2xl sm:blur-3xl',
+                        default => '-inset-4 sm:-inset-7 blur-xl sm:blur-2xl',
+                    };
+                @endphp
+
+                <!-- Logo Merchandise Universitas Airlangga with Ambient Glow -->
+                <div class="relative group inline-flex items-center justify-center">
+                    <div class="absolute {{ $heroGlowClass }} bg-gradient-to-tr from-sky-400/30 via-blue-500/15 to-amber-300/30 rounded-3xl opacity-80 group-hover:opacity-100 transition duration-500 pointer-events-none"></div>
+                    <img src="{{ asset('assets/unair-store-logo.png') }}?v={{ file_exists(public_path('assets/unair-store-logo.png')) ? filemtime(public_path('assets/unair-store-logo.png')) : time() }}"
+                         alt="Logo Merchandise Universitas Airlangga"
+                         class="relative z-10 {{ $heroLogoClass }} object-contain drop-shadow-xl transition-all duration-300 group-hover:scale-105">
+                </div>
+
+                <!-- Hero Text Content -->
+                <div class="space-y-3 w-full">
+                    @php
+                        $heroTitleTrimmed = trim((string) ($pageSettings['store_hero_title'] ?? 'Merchandise Universitas Airlangga'));
+                    @endphp
+                    @if($heroTitleTrimmed !== '')
+                        <div class="space-y-2">
+                            <h1 class="text-xl sm:text-3xl md:text-4xl lg:text-[42px] font-black tracking-tight text-slate-900 leading-[1.18]">
+                                @if(!empty($pageSettings['store_hero_highlight']))
+                                    {{ $pageSettings['store_hero_title'] ?? 'Merchandise' }}
+                                    <span class="bg-gradient-to-r from-sky-600 via-blue-600 to-indigo-600 bg-clip-text text-transparent">{{ $pageSettings['store_hero_highlight'] }}</span>
+                                @else
+                                    @php
+                                        $heroTitle = $heroTitleTrimmed;
+                                    @endphp
+                                    @if(\Illuminate\Support\Str::startsWith(strtolower($heroTitle), 'merchandise '))
+                                        Merchandise <span class="bg-gradient-to-r from-sky-600 via-blue-600 to-indigo-600 bg-clip-text text-transparent">{{ \Illuminate\Support\Str::substr($heroTitle, 12) }}</span>
+                                    @else
+                                        {{ $heroTitle }}
+                                    @endif
+                                @endif
+                            </h1>
+
+                            <!-- Sleek Color Accent Line -->
+                            <div class="flex items-center justify-center gap-1.5 pt-0.5 pb-0.5">
+                                <span class="w-8 h-1 rounded-full bg-sky-500"></span>
+                                <span class="w-3 h-1 rounded-full bg-amber-400"></span>
+                                <span class="w-8 h-1 rounded-full bg-blue-600"></span>
+                            </div>
+                        </div>
                     @endif
-                </h1>
-                @if(!empty($pageSettings['store_hero_description']))
-                    <p class="text-slate-700 text-xs sm:text-base max-w-2xl mx-auto font-medium leading-relaxed px-1">
-                        {{ $pageSettings['store_hero_description'] }}
-                    </p>
-                @endif
+
+                    <!-- Styled Compact Capsule for Description (Not Plain Text, Not Overly Large) -->
+                    @if(!empty($pageSettings['store_hero_description']))
+                        @php
+                            $desc = $pageSettings['store_hero_description'];
+                        @endphp
+                        <div class="inline-block max-w-2xl mx-auto px-5 sm:px-6 py-2.5 rounded-2xl sm:rounded-full bg-white/75 backdrop-blur-xs border border-sky-100/90 shadow-2xs">
+                            <p class="text-xs sm:text-sm md:text-base text-slate-700 font-medium leading-relaxed">
+                                {!! str_replace(
+                                    ['merchandise Universitas Airlangga', 'apparel eksklusif Ksatria Airlangga', 'souvenir kampus'],
+                                    ['<span class="text-sky-700 font-bold">merchandise Universitas Airlangga</span>', '<span class="text-slate-900 font-extrabold">apparel eksklusif Ksatria Airlangga</span>', '<span class="text-amber-700 font-bold">souvenir kampus</span>'],
+                                    e($desc)
+                                ) !!}
+                            </p>
+                        </div>
+                    @endif
+                </div>
             </div>
 
-            <!-- Decorative Glow -->
+            <!-- Decorative Glow Background Effects -->
             <div class="absolute top-6 left-10 w-72 h-72 bg-sky-300/30 rounded-full blur-3xl pointer-events-none"></div>
             <div class="absolute bottom-0 right-10 w-80 h-80 bg-amber-300/20 rounded-full blur-3xl pointer-events-none"></div>
         </div>
 
         <!-- Category Filter & Search Bar (Matches Blog Filter Design) -->
-        <section class="max-w-6xl mx-auto px-3.5 sm:px-4 -mt-8 sm:-mt-9 relative z-20">
+        <section class="max-w-6xl mx-auto px-3.5 sm:px-4 -mt-6 sm:-mt-7 relative z-20">
             <div class="bg-white rounded-2xl sm:rounded-3xl shadow-xl shadow-sky-950/10 border border-slate-100 p-3.5 sm:p-6">
                 <!-- Top Row: Search Input, Sort Dropdown & Cart Button -->
                 <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-2.5 sm:gap-3">
@@ -531,7 +633,8 @@
                             };
                         @endphp
                         <div wire:key="store-item-{{ $item->id }}"
-                             class="bg-white rounded-2xl sm:rounded-3xl overflow-hidden border border-slate-200/80 hover:border-sky-300 shadow-md shadow-slate-200/50 hover:shadow-2xl hover:shadow-sky-950/10 hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between group">
+                             wire:click="openDetailModal({{ $item->id }})"
+                             class="bg-white rounded-2xl sm:rounded-3xl overflow-hidden border border-slate-200/80 hover:border-sky-300 shadow-md shadow-slate-200/50 hover:shadow-2xl hover:shadow-sky-950/10 hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between group cursor-pointer">
                             <div>
                                 <!-- Product Image with Badges & Bottom Overlay -->
                                 <div class="relative h-56 sm:h-64 overflow-hidden bg-slate-100 cursor-pointer"
@@ -571,11 +674,11 @@
 
                                 <!-- Product Info -->
                                 <div class="p-4 sm:p-6 pb-3.5 sm:pb-4 space-y-3 sm:space-y-3.5">
-                                    <!-- Official Merch Micro-Tag -->
+                                    <!-- Merch Micro-Tag -->
                                     <div class="flex items-center justify-between text-[11px] font-bold">
                                         <span class="inline-flex items-center gap-1 text-sky-600 uppercase tracking-wider">
                                             <svg class="w-3.5 h-3.5 text-sky-500 shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg>
-                                            Official UNAIR Merch
+                                            UNAIR Merch
                                         </span>
                                         <span class="text-slate-400 font-semibold">Kualitas Premium</span>
                                     </div>
@@ -592,7 +695,7 @@
                                     <!-- Feature Chips -->
                                     <div class="flex flex-wrap items-center gap-1.5 pt-0.5">
                                         <span class="px-2.5 py-1 rounded-lg bg-slate-100 text-slate-600 font-semibold text-[10px]">
-                                            ✓ Official Merchandise
+                                            ✓ Merchandise Kampus
                                         </span>
                                         <span class="px-2.5 py-1 rounded-lg bg-sky-50 text-sky-700 font-semibold text-[10px]">
                                             📍 Store Kampus UNAIR
@@ -636,24 +739,16 @@
                                 </div>
                             </div>
 
-                            <!-- Action Footer -->
-                            <div class="px-4 sm:px-6 pb-4 sm:pb-6 pt-1 grid grid-cols-2 gap-2 sm:gap-2.5">
+                            <!-- Action Footer: Shopee Style (Detail Produk) -->
+                            <div class="px-4 sm:px-6 pb-4 sm:pb-6 pt-1">
                                 <button type="button"
-                                        wire:click="addToCart({{ $item->id }})"
-                                        class="py-2.5 sm:py-3 px-3 rounded-xl font-extrabold text-xs text-center transition-all flex items-center justify-center gap-1.5 shadow-sm active:scale-95 {{ isset($cart[$item->id]) ? 'bg-amber-400 hover:bg-amber-300 text-slate-950 border border-amber-300' : 'bg-emerald-600 hover:bg-emerald-500 text-white shadow-emerald-600/20' }}">
-                                    <span>🛒</span>
-                                    @if(isset($cart[$item->id]))
-                                        <span>({{ $cart[$item->id]['qty'] }}) + Tambah</span>
-                                    @else
-                                        <span>+ Keranjang</span>
-                                    @endif
-                                </button>
-
-                                <button type="button"
-                                        wire:click="openDetailModal({{ $item->id }})"
-                                        class="py-2.5 sm:py-3 px-3 rounded-xl bg-sky-600 hover:bg-sky-500 active:scale-95 text-white font-extrabold text-xs text-center transition-all flex items-center justify-center gap-1.5 shadow-md shadow-sky-600/20">
+                                        wire:click.stop="openDetailModal({{ $item->id }})"
+                                        class="w-full py-2.5 sm:py-3 px-4 rounded-xl sm:rounded-2xl bg-sky-600 hover:bg-sky-500 active:scale-98 text-white font-extrabold text-xs sm:text-sm text-center transition-all flex items-center justify-center gap-2 shadow-md shadow-sky-600/20 group-hover:shadow-lg">
                                     <span>🔎</span>
-                                    <span>Detail</span>
+                                    <span>Lihat Detail Produk</span>
+                                    <svg class="w-4 h-4 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7"></path>
+                                    </svg>
                                 </button>
                             </div>
                         </div>
@@ -674,7 +769,7 @@
                                 </span>
                             @endif
                             <h2 class="text-xl sm:text-4xl font-extrabold tracking-tight leading-snug sm:leading-tight">
-                                {{ $pageSettings['store_banner_title'] ?? 'Butuh Souvenir Seminar, Wisuda, atau Gathering Fakultas?' }}
+                                {{ $pageSettings['store_banner_title'] ?? 'Butuh Custom Merchandise untuk Event, Unit Universitas, atau Corporate?' }}
                             </h2>
                             @if(!empty($pageSettings['store_banner_description']))
                                 <p class="text-slate-300 text-xs sm:text-sm leading-relaxed">
@@ -818,8 +913,8 @@
                             </div>
                         @else
                             <div class="space-y-2.5 max-h-64 overflow-y-auto pr-0.5 sm:pr-1">
-                                @foreach($cart as $cartItem)
-                                    <div wire:key="cart-row-{{ $cartItem['id'] }}"
+                                @foreach($cart as $cartKey => $cartItem)
+                                    <div wire:key="cart-row-{{ $cartKey }}"
                                          class="p-3 sm:p-3.5 rounded-2xl bg-slate-50 border border-slate-200/80 flex flex-col sm:flex-row sm:items-center justify-between gap-2.5 sm:gap-3">
                                         <!-- Product Image & Title -->
                                         <div class="flex items-start sm:items-center gap-3 min-w-0">
@@ -832,13 +927,29 @@
                                                 <div class="text-xs sm:text-sm font-extrabold text-slate-900 line-clamp-2 leading-snug">
                                                     {{ $cartItem['title'] }}
                                                 </div>
+
+                                                @if(!empty($cartItem['size']) || !empty($cartItem['color']))
+                                                    <div class="flex flex-wrap items-center gap-1.5 mt-1">
+                                                        @if(!empty($cartItem['size']))
+                                                            <span class="inline-flex items-center px-2 py-0.5 rounded-md bg-sky-100 text-sky-800 text-[10px] font-bold">
+                                                                Ukuran: {{ $cartItem['size'] }}
+                                                            </span>
+                                                        @endif
+                                                        @if(!empty($cartItem['color']))
+                                                            <span class="inline-flex items-center px-2 py-0.5 rounded-md bg-amber-100 text-amber-900 text-[10px] font-bold">
+                                                                Warna: {{ $cartItem['color'] }}
+                                                            </span>
+                                                        @endif
+                                                    </div>
+                                                @endif
+
                                                 @if(($cartItem['price'] ?? 0) > 0)
                                                     <div class="mt-0.5 text-[11px] sm:text-xs font-semibold text-slate-500">
                                                         @ Rp {{ number_format((float) $cartItem['price'], 0, ',', '.') }} / item
                                                     </div>
                                                 @else
                                                     <div class="mt-0.5 text-[11px] text-slate-500 font-semibold">
-                                                        Official UNAIR Store Merch
+                                                        Merchandise Universitas Airlangga
                                                     </div>
                                                 @endif
                                             </div>
@@ -859,7 +970,7 @@
 
                                             <div class="flex items-center gap-1.5">
                                                 <button type="button"
-                                                        wire:click="decrementCartItem({{ $cartItem['id'] }})"
+                                                        wire:click="decrementCartItem('{{ $cartKey }}')"
                                                         class="w-8 h-8 sm:w-7 sm:h-7 rounded-lg bg-white hover:bg-slate-100 active:scale-95 border border-slate-200 text-slate-700 font-black text-xs flex items-center justify-center shadow-2xs">
                                                     −
                                                 </button>
@@ -867,12 +978,12 @@
                                                     {{ $cartItem['qty'] }}
                                                 </span>
                                                 <button type="button"
-                                                        wire:click="incrementCartItem({{ $cartItem['id'] }})"
+                                                        wire:click="incrementCartItem('{{ $cartKey }}')"
                                                         class="w-8 h-8 sm:w-7 sm:h-7 rounded-lg bg-white hover:bg-slate-100 active:scale-95 border border-slate-200 text-slate-700 font-black text-xs flex items-center justify-center shadow-2xs">
                                                     +
                                                 </button>
                                                 <button type="button"
-                                                        wire:click="removeFromCart({{ $cartItem['id'] }})"
+                                                        wire:click="removeFromCart('{{ $cartKey }}')"
                                                         title="Hapus"
                                                         class="ml-0.5 w-8 h-8 sm:w-7 sm:h-7 rounded-lg bg-rose-50 hover:bg-rose-100 active:scale-95 text-rose-600 text-xs flex items-center justify-center border border-rose-200/60">
                                                     🗑️
@@ -944,10 +1055,10 @@
                         </div>
 
                         <div>
-                            <label class="block text-xs font-bold text-slate-700 mb-1">Catatan Tambahan (Opsional)</label>
+                            <label class="block text-xs font-bold text-slate-700 mb-1">Catatan Pesanan (Opsional)</label>
                             <textarea wire:model="notes"
                                       rows="2"
-                                      placeholder="Contoh: Ukuran L, warna Navy, atau catatan pesanan lainnya..."
+                                      placeholder="Catatan pesanan..."
                                       class="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm text-slate-900 focus:outline-none focus:ring-2 focus:ring-sky-500 focus:bg-white"></textarea>
                             @error('notes') <span class="text-[11px] text-rose-600 font-semibold mt-1 block">{{ $message }}</span> @enderror
                         </div>

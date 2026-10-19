@@ -47,6 +47,14 @@ class AdminUnairStore extends Component
 
     public array $detail_images = [];
 
+    public array $available_sizes = [];
+
+    public string $newSizeInput = '';
+
+    public array $available_colors = [];
+
+    public string $newColorInput = '';
+
     public bool $is_active = true;
 
     // Page Content & WhatsApp Settings for UNAIR Store
@@ -76,6 +84,10 @@ class AdminUnairStore extends Component
 
     public string $store_banner_button_text = '';
 
+    public string $store_hero_logo_size = 'large';
+
+    public $logoFile = null;
+
     // Category CRUD inside UNAIR Store Master Data
     public string $newCategoryName = '';
 
@@ -96,9 +108,10 @@ class AdminUnairStore extends Component
         $this->store_whatsapp_order_prefix = (string) ($settings['store_whatsapp_order_prefix'] ?? '');
         $this->store_whatsapp_custom_message = (string) ($settings['store_whatsapp_custom_message'] ?? '');
         $this->store_hero_badge = (string) ($settings['store_hero_badge'] ?? '');
-        $this->store_hero_title = (string) ($settings['store_hero_title'] ?? 'UNAIR Store');
+        $this->store_hero_title = (string) ($settings['store_hero_title'] ?? 'Merchandise Universitas Airlangga');
         $this->store_hero_highlight = (string) ($settings['store_hero_highlight'] ?? '');
         $this->store_hero_description = (string) ($settings['store_hero_description'] ?? '');
+        $this->store_hero_logo_size = (string) ($settings['store_hero_logo_size'] ?? 'large');
         $this->store_search_placeholder = (string) ($settings['store_search_placeholder'] ?? '');
         $this->store_banner_enabled = ($settings['store_banner_enabled'] ?? '1') === '1';
         $this->store_banner_badge = (string) ($settings['store_banner_badge'] ?? '');
@@ -111,7 +124,7 @@ class AdminUnairStore extends Component
     {
         $this->validate([
             'store_whatsapp_number' => 'required|string|max:40',
-            'store_hero_title' => 'required|string|max:120',
+            'store_hero_title' => 'nullable|string|max:120',
         ]);
 
         UnairStoreItem::savePageSettings([
@@ -122,6 +135,7 @@ class AdminUnairStore extends Component
             'store_hero_title' => trim($this->store_hero_title),
             'store_hero_highlight' => trim($this->store_hero_highlight),
             'store_hero_description' => trim($this->store_hero_description),
+            'store_hero_logo_size' => in_array($this->store_hero_logo_size, ['medium', 'large', 'xlarge', '2xlarge'], true) ? $this->store_hero_logo_size : 'large',
             'store_search_placeholder' => trim($this->store_search_placeholder),
             'store_banner_enabled' => $this->store_banner_enabled ? '1' : '0',
             'store_banner_badge' => trim($this->store_banner_badge),
@@ -130,7 +144,16 @@ class AdminUnairStore extends Component
             'store_banner_button_text' => trim($this->store_banner_button_text),
         ]);
 
-        session()->flash('message', 'Pengaturan Nomor WhatsApp & Konten Halaman UNAIR Store berhasil disimpan!');
+        if ($this->logoFile) {
+            $this->validate([
+                'logoFile' => 'image|max:10240',
+            ]);
+            $dest = public_path('assets/unair-store-logo.png');
+            copy($this->logoFile->getRealPath(), $dest);
+            $this->logoFile = null;
+        }
+
+        session()->flash('message', 'Pengaturan Nomor WhatsApp, Logo, & Konten Halaman Merchandise Universitas Airlangga berhasil disimpan!');
     }
 
     public function addStoreCategory(): void
@@ -147,7 +170,7 @@ class AdminUnairStore extends Component
         }
 
         $this->newCategoryName = '';
-        session()->flash('message', "Kategori UNAIR Store \"{$name}\" berhasil ditambahkan.");
+        session()->flash('message', "Kategori merchandise \"{$name}\" berhasil ditambahkan.");
     }
 
     public function startEditCategory(int $index, string $currentName): void
@@ -194,7 +217,7 @@ class AdminUnairStore extends Component
         ));
 
         UnairStoreItem::saveCategories($categories);
-        session()->flash('message', "Kategori \"{$categoryName}\" berhasil dihapus dari daftar kategori UNAIR Store.");
+        session()->flash('message', "Kategori \"{$categoryName}\" berhasil dihapus dari daftar kategori merchandise.");
     }
 
     public function updatedCoverImageFile(): void
@@ -273,6 +296,56 @@ class AdminUnairStore extends Component
         }
     }
 
+    public function addSize(): void
+    {
+        $raw = trim($this->newSizeInput);
+        if ($raw === '') {
+            return;
+        }
+
+        $parts = array_map('trim', explode(',', $raw));
+        foreach ($parts as $part) {
+            if ($part !== '' && ! in_array($part, $this->available_sizes, true)) {
+                $this->available_sizes[] = $part;
+            }
+        }
+
+        $this->newSizeInput = '';
+    }
+
+    public function removeSize(int $index): void
+    {
+        if (isset($this->available_sizes[$index])) {
+            unset($this->available_sizes[$index]);
+            $this->available_sizes = array_values($this->available_sizes);
+        }
+    }
+
+    public function addColor(): void
+    {
+        $raw = trim($this->newColorInput);
+        if ($raw === '') {
+            return;
+        }
+
+        $parts = array_map('trim', explode(',', $raw));
+        foreach ($parts as $part) {
+            if ($part !== '' && ! in_array($part, $this->available_colors, true)) {
+                $this->available_colors[] = $part;
+            }
+        }
+
+        $this->newColorInput = '';
+    }
+
+    public function removeColor(int $index): void
+    {
+        if (isset($this->available_colors[$index])) {
+            unset($this->available_colors[$index]);
+            $this->available_colors = array_values($this->available_colors);
+        }
+    }
+
     public function openCreateModal(): void
     {
         $this->reset([
@@ -289,6 +362,10 @@ class AdminUnairStore extends Component
             'coverImageFile',
             'detailImageFiles',
             'detail_images',
+            'available_sizes',
+            'newSizeInput',
+            'available_colors',
+            'newColorInput',
         ]);
         $categories = UnairStoreItem::getCategories();
         $this->category = $categories[0] ?? 'Apparel & Fashion';
@@ -309,6 +386,10 @@ class AdminUnairStore extends Component
         $this->stock_status = $item->stock_status ?? 'Tersedia';
         $this->badge = $item->badge ?? '';
         $this->description = $item->description ?? '';
+        $this->available_sizes = $item->sizes_list;
+        $this->newSizeInput = '';
+        $this->available_colors = $item->colors_list;
+        $this->newColorInput = '';
         $defaultOldPrefix = 'Halo Airlangga Travel / UNAIR Store, saya ingin memesan produk: '.$item->title;
         $this->wa_template_message = ($item->wa_template_message && $item->wa_template_message !== $defaultOldPrefix)
             ? $item->wa_template_message
@@ -386,6 +467,8 @@ class AdminUnairStore extends Component
             'stock_status' => $this->stock_status,
             'badge' => trim($this->badge) !== '' ? trim($this->badge) : null,
             'description' => $this->description,
+            'available_sizes' => ! empty($this->available_sizes) ? array_values($this->available_sizes) : null,
+            'available_colors' => ! empty($this->available_colors) ? array_values($this->available_colors) : null,
             'cover_image' => $coverUrl ?: 'https://images.unsplash.com/photo-1551028719-00167b16eac5?auto=format&fit=crop&w=1000&q=80',
             'detail_images' => array_values($detailUrls),
             'wa_template_message' => $customWaMsg !== '' ? $customWaMsg : null,
@@ -400,7 +483,7 @@ class AdminUnairStore extends Component
         }
 
         $this->modalOpen = false;
-        session()->flash('message', 'Produk UNAIR Store berhasil disimpan!');
+        session()->flash('message', 'Produk merchandise berhasil disimpan!');
     }
 
     public function toggleItemStatus(int $id): void
@@ -414,7 +497,7 @@ class AdminUnairStore extends Component
     {
         UnairStoreItem::ensureReady();
         UnairStoreItem::destroy($id);
-        session()->flash('message', 'Produk UNAIR Store berhasil dihapus.');
+        session()->flash('message', 'Produk merchandise berhasil dihapus.');
     }
 
     public function render()
@@ -443,6 +526,6 @@ class AdminUnairStore extends Component
             'categories' => UnairStoreItem::getCategories(),
             'totalProducts' => UnairStoreItem::count(),
             'activeProducts' => UnairStoreItem::where('is_active', true)->count(),
-        ])->layout('components.layouts.admin', ['title' => 'Master Data UNAIR Store']);
+        ])->layout('components.layouts.admin', ['title' => 'Master Data Merchandise Universitas Airlangga']);
     }
 }
