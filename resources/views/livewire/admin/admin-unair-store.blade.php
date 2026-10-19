@@ -84,33 +84,61 @@
     @if($activeTab === 'products')
         <div class="space-y-4">
             <!-- Filter & Search Bar -->
-            <div class="bg-slate-950 p-4 rounded-2xl border border-slate-800 flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3">
-                <div class="flex items-center gap-2 overflow-x-auto pb-1 sm:pb-0">
-                    <button type="button"
-                            wire:click="$set('filterCategory', '')"
-                            class="px-3.5 py-2 rounded-xl text-xs font-bold shrink-0 transition-colors {{ $filterCategory === '' ? 'bg-sky-600 text-white' : 'bg-slate-900 text-slate-400 hover:text-white border border-slate-800' }}">
-                        Semua Kategori
-                    </button>
-                    @foreach($categories as $cat)
-                        <button type="button"
-                                wire:key="filter-cat-{{ $loop->index }}"
-                                wire:click="$set('filterCategory', '{{ $cat }}')"
-                                class="px-3.5 py-2 rounded-xl text-xs font-bold shrink-0 transition-colors {{ $filterCategory === $cat ? 'bg-sky-600 text-white' : 'bg-slate-900 text-slate-400 hover:text-white border border-slate-800' }}">
-                            {{ $cat }}
+            <div class="bg-slate-950 p-5 rounded-2xl border border-slate-800 space-y-4">
+                <!-- Search -->
+                <div class="flex items-center gap-3">
+                    <div class="relative flex-1 max-w-sm">
+                        <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-500">
+                            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0"></path></svg>
+                        </div>
+                        <input type="text"
+                               wire:model.live.debounce.300ms="searchProduct"
+                               placeholder="Cari nama / deskripsi produk..."
+                               class="w-full pl-9 pr-3.5 py-2.5 bg-slate-900 border border-slate-800 rounded-xl text-xs text-white placeholder-slate-500 focus:ring-2 focus:ring-sky-500 focus:outline-none">
+                    </div>
+                    @if(trim($searchProduct) !== '')
+                        <button type="button" wire:click="$set('searchProduct', '')"
+                                class="px-3 py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-400 hover:text-white text-xs font-bold transition-colors shrink-0">
+                            ✕ Reset
                         </button>
-                    @endforeach
+                    @endif
                 </div>
 
-                <div class="w-full sm:w-64 shrink-0">
-                    <input type="text"
-                           wire:model.live.debounce.300ms="searchProduct"
-                           placeholder="Cari nama / deskripsi produk..."
-                           class="w-full px-3.5 py-2 bg-slate-900 border border-slate-800 rounded-xl text-xs text-white focus:ring-2 focus:ring-sky-500 focus:outline-none">
+                <!-- Category Filter Pills (wraps) -->
+                <div>
+                    <p class="text-[10px] font-bold text-slate-500 uppercase tracking-wider mb-2">Filter Kategori</p>
+                    <div class="flex flex-wrap items-center gap-2">
+                        <button type="button"
+                                wire:click="$set('filterCategory', '')"
+                                class="px-3.5 py-2 rounded-xl text-xs font-bold transition-colors {{ $filterCategory === '' ? 'bg-sky-600 text-white shadow-md shadow-sky-600/25' : 'bg-slate-900 text-slate-400 hover:text-white hover:bg-slate-800 border border-slate-700' }}">
+                            🗂️ Semua Kategori
+                        </button>
+                        @foreach($categories as $cat)
+                            <button type="button"
+                                    wire:key="filter-cat-{{ $loop->index }}"
+                                    wire:click="$set('filterCategory', '{{ $cat }}')"
+                                    class="px-3.5 py-2 rounded-xl text-xs font-bold transition-colors {{ $filterCategory === $cat ? 'bg-sky-600 text-white shadow-md shadow-sky-600/25' : 'bg-slate-900 text-slate-400 hover:text-white hover:bg-slate-800 border border-slate-700' }}">
+                                {{ $cat }}
+                            </button>
+                        @endforeach
+                    </div>
                 </div>
             </div>
 
             <!-- Products Data Table -->
             <div class="bg-slate-950 rounded-3xl border border-slate-800 overflow-hidden shadow-xl">
+                <!-- Table Header Info -->
+                <div class="px-6 py-3.5 border-b border-slate-800 flex items-center justify-between gap-3">
+                    <p class="text-xs text-slate-400 font-semibold">
+                        Total <span class="text-white font-extrabold">{{ $totalProducts }}</span> produk
+                        @if($filterCategory !== '' || trim($searchProduct) !== '')
+                            &nbsp;·&nbsp; Menampilkan <span class="text-sky-400 font-extrabold">{{ $items->total() }}</span> hasil
+                        @endif
+                    </p>
+                    <p class="text-[11px] text-slate-500">
+                        Halaman {{ $items->currentPage() }} / {{ $items->lastPage() }}
+                    </p>
+                </div>
                 <div class="overflow-x-auto">
                     <table class="w-full min-w-[720px] text-left text-xs text-slate-300">
                         <thead class="bg-slate-900 text-slate-400 uppercase text-[10px] tracking-wider border-b border-slate-800">
@@ -207,8 +235,18 @@
                     </table>
                 </div>
 
-                <div class="p-4 border-t border-slate-800">
-                    {{ $items->links() }}
+                <div class="p-4 border-t border-slate-800 flex items-center justify-between gap-4">
+                    <p class="text-xs text-slate-500 font-medium shrink-0">
+                        Menampilkan {{ $items->firstItem() ?? 0 }}–{{ $items->lastItem() ?? 0 }} dari {{ $items->total() }} produk
+                    </p>
+                    <div class="[&_.pagination]:flex [&_.pagination]:items-center [&_.pagination]:gap-1
+                                [&_.page-item_.page-link]:block [&_.page-item_.page-link]:px-3 [&_.page-item_.page-link]:py-1.5 [&_.page-item_.page-link]:rounded-lg [&_.page-item_.page-link]:text-xs [&_.page-item_.page-link]:font-bold [&_.page-item_.page-link]:transition-colors
+                                [&_.page-item_.page-link]:bg-slate-800 [&_.page-item_.page-link]:text-slate-300 [&_.page-item_.page-link]:border [&_.page-item_.page-link]:border-slate-700
+                                [&_.page-item_.page-link:hover]:bg-sky-600 [&_.page-item_.page-link:hover]:text-white [&_.page-item_.page-link:hover]:border-sky-600
+                                [&_.page-item.active_.page-link]:bg-sky-600 [&_.page-item.active_.page-link]:text-white [&_.page-item.active_.page-link]:border-sky-600
+                                [&_.page-item.disabled_.page-link]:opacity-30 [&_.page-item.disabled_.page-link]:cursor-not-allowed">
+                        {{ $items->links() }}
+                    </div>
                 </div>
             </div>
         </div>

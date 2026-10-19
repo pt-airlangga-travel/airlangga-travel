@@ -519,7 +519,7 @@ class AdminUnairStore extends Component
             });
         }
 
-        $items = $query->paginate(10);
+        $items = $query->paginate(25);
 
         return view('livewire.admin.admin-unair-store', [
             'items' => $items,
