@@ -2,12 +2,12 @@
 
 namespace App\Models;
 
+use Database\Seeders\UnairStoreOfficialCatalogSeeder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
-use Illuminate\Support\Str;
 
 class UnairStoreItem extends Model
 {
@@ -40,6 +40,8 @@ class UnairStoreItem extends Model
         'is_featured' => 'boolean',
         'is_active' => 'boolean',
     ];
+
+    protected static bool $isBootstrapping = false;
 
     public function getFormattedPriceAttribute(): ?string
     {
@@ -186,152 +188,68 @@ class UnairStoreItem extends Model
 
     public static function ensureReady(): void
     {
-        if (! Schema::hasTable('unair_store_items')) {
-            Schema::create('unair_store_items', function (Blueprint $table) {
-                $table->id();
-                $table->string('title');
-                $table->string('slug')->unique();
-                $table->string('category')->default('Apparel & Fashion');
-                $table->json('available_sizes')->nullable();
-                $table->json('available_colors')->nullable();
-                $table->decimal('price', 14, 2)->nullable();
-                $table->decimal('discount_price', 14, 2)->nullable();
-                $table->string('stock_status')->default('Tersedia');
-                $table->string('badge')->nullable();
-                $table->text('description')->nullable();
-                $table->string('cover_image')->nullable();
-                $table->json('detail_images')->nullable();
-                $table->string('wa_template_message')->nullable();
-                $table->boolean('is_featured')->default(true);
-                $table->boolean('is_active')->default(true);
-                $table->timestamps();
-            });
-        } else {
-            if (! Schema::hasColumn('unair_store_items', 'available_sizes')) {
-                try {
-                    Schema::table('unair_store_items', function (Blueprint $table) {
-                        $table->json('available_sizes')->nullable()->after('category');
-                    });
-                } catch (\Throwable $e) {
-                    // Ignore if already added
-                }
-            }
-            if (! Schema::hasColumn('unair_store_items', 'available_colors')) {
-                try {
-                    Schema::table('unair_store_items', function (Blueprint $table) {
-                        $table->json('available_colors')->nullable()->after('available_sizes');
-                    });
-                } catch (\Throwable $e) {
-                    // Ignore if already added
-                }
-            }
-            try {
-                DB::statement('ALTER TABLE unair_store_items MODIFY price DECIMAL(14, 2) NULL DEFAULT NULL');
-            } catch (\Throwable $e) {
-                // Ignore if already nullable or SQLite in tests
-            }
+        if (self::$isBootstrapping) {
+            return;
         }
 
-        if (self::count() === 0) {
-            $defaults = [
-                [
-                    'title' => 'Varsity Jacket Exclusive Ksatria Airlangga',
-                    'category' => 'Apparel & Fashion',
-                    'price' => 325000,
-                    'discount_price' => 285000,
-                    'stock_status' => 'Tersedia',
-                    'badge' => 'Best Seller',
-                    'description' => 'Jaket Varsity premium edisi resmi Universitas Airlangga berbahan Cotton Fleece tebal dengan bordir logo Garuda Mukti presisi. Nyaman dipakai kuliah maupun traveling.',
-                    'cover_image' => 'https://images.unsplash.com/photo-1551028719-00167b16eac5?auto=format&fit=crop&w=1000&q=80',
-                    'detail_images' => [
-                        'https://images.unsplash.com/photo-1551028719-00167b16eac5?auto=format&fit=crop&w=1000&q=80',
-                        'https://images.unsplash.com/photo-1556821840-3a63f95609a7?auto=format&fit=crop&w=1000&q=80',
-                    ],
-                ],
-                [
-                    'title' => 'Hoodie Official Universitas Airlangga Navy Edition',
-                    'category' => 'Apparel & Fashion',
-                    'price' => 260000,
-                    'discount_price' => 225000,
-                    'stock_status' => 'Tersedia',
-                    'badge' => 'Official Merch',
-                    'description' => 'Hoodie pullover warna Navy khas Airlangga dengan bahan lembut, hangat, dan sablon plastisol high-density. Tersedia ukuran S, M, L, XL, hingga XXL.',
-                    'cover_image' => 'https://images.unsplash.com/photo-1556821840-3a63f95609a7?auto=format&fit=crop&w=1000&q=80',
-                    'detail_images' => [
-                        'https://images.unsplash.com/photo-1556821840-3a63f95609a7?auto=format&fit=crop&w=1000&q=80',
-                    ],
-                ],
-                [
-                    'title' => 'Tumbler Stainless Vacuum Flask LED UNAIR',
-                    'category' => 'Tumbler & Drinkware',
-                    'price' => 135000,
-                    'discount_price' => 110000,
-                    'stock_status' => 'Tersedia',
-                    'badge' => 'Favorit',
-                    'description' => 'Tumbler stainless steel SUS 304 tahan panas & dingin hingga 12 jam dengan indikator suhu LED sentuh dan grafir laser logo resmi Universitas Airlangga.',
-                    'cover_image' => 'https://images.unsplash.com/photo-1602143407151-7111542de6e8?auto=format&fit=crop&w=1000&q=80',
-                    'detail_images' => [
-                        'https://images.unsplash.com/photo-1602143407151-7111542de6e8?auto=format&fit=crop&w=1000&q=80',
-                    ],
-                ],
-                [
-                    'title' => 'Totebag Canvas Premium & Lanyard ID Card UNAIR',
-                    'category' => 'Souvenir & Aksesoris',
-                    'price' => 95000,
-                    'discount_price' => 79000,
-                    'stock_status' => 'Tersedia',
-                    'badge' => 'Paket Hemat',
-                    'description' => 'Paket bundling Totebag kanvas tebal ber-resleting muat laptop 15 inch dilengkapi Lanyard printing dua sisi + card holder kulit sintetis eksklusif UNAIR.',
-                    'cover_image' => 'https://images.unsplash.com/photo-1597484661643-2f5fef640dd1?auto=format&fit=crop&w=1000&q=80',
-                    'detail_images' => [
-                        'https://images.unsplash.com/photo-1597484661643-2f5fef640dd1?auto=format&fit=crop&w=1000&q=80',
-                    ],
-                ],
-                [
-                    'title' => 'Travel Kit & Neck Pillow Memory Foam Airlangga',
-                    'category' => 'Perlengkapan Travel',
-                    'price' => 175000,
-                    'discount_price' => 149000,
-                    'stock_status' => 'Tersedia',
-                    'badge' => 'Travel Series',
-                    'description' => 'Bantal leher memory foam empuk dilengkapi penutup mata, pouch organizer tahan air, dan luggage tag eksklusif kolaborasi UNAIR Store x Airlangga Travel.',
-                    'cover_image' => 'https://images.unsplash.com/photo-1553062407-98eeb64c6a62?auto=format&fit=crop&w=1000&q=80',
-                    'detail_images' => [
-                        'https://images.unsplash.com/photo-1553062407-98eeb64c6a62?auto=format&fit=crop&w=1000&q=80',
-                    ],
-                ],
-                [
-                    'title' => 'Paket Souvenir Wisuda & Seminar Kit Eksklusif UNAIR',
-                    'category' => 'Souvenir & Aksesoris',
-                    'price' => 195000,
-                    'discount_price' => 165000,
-                    'stock_status' => 'Pre-Order',
-                    'badge' => 'Custom Order',
-                    'description' => 'Gift box eksklusif berisi boneka maskot wisuda/agenda kulit, pulpen metal grafir, pin kuningan Garuda Mukti, dan goodie bag resmi untuk acara fakultas & seminar.',
-                    'cover_image' => 'https://images.unsplash.com/photo-1549465220-1a8b9238cd48?auto=format&fit=crop&w=1000&q=80',
-                    'detail_images' => [
-                        'https://images.unsplash.com/photo-1549465220-1a8b9238cd48?auto=format&fit=crop&w=1000&q=80',
-                    ],
-                ],
-            ];
+        self::$isBootstrapping = true;
 
-            foreach ($defaults as $item) {
-                self::create([
-                    'title' => $item['title'],
-                    'slug' => Str::slug($item['title']),
-                    'category' => $item['category'],
-                    'price' => $item['price'],
-                    'discount_price' => $item['discount_price'],
-                    'stock_status' => $item['stock_status'],
-                    'badge' => $item['badge'],
-                    'description' => $item['description'],
-                    'cover_image' => $item['cover_image'],
-                    'detail_images' => $item['detail_images'],
-                    'wa_template_message' => 'Halo Airlangga Travel / UNAIR Store, saya ingin memesan produk: '.$item['title'],
-                    'is_featured' => true,
-                    'is_active' => true,
-                ]);
+        try {
+            if (! Schema::hasTable('unair_store_items')) {
+                Schema::create('unair_store_items', function (Blueprint $table) {
+                    $table->id();
+                    $table->string('title');
+                    $table->string('slug')->unique();
+                    $table->string('category')->default('Apparel & Fashion');
+                    $table->json('available_sizes')->nullable();
+                    $table->json('available_colors')->nullable();
+                    $table->decimal('price', 14, 2)->nullable();
+                    $table->decimal('discount_price', 14, 2)->nullable();
+                    $table->string('stock_status')->default('Tersedia');
+                    $table->string('badge')->nullable();
+                    $table->text('description')->nullable();
+                    $table->string('cover_image')->nullable();
+                    $table->json('detail_images')->nullable();
+                    $table->string('wa_template_message')->nullable();
+                    $table->boolean('is_featured')->default(true);
+                    $table->boolean('is_active')->default(true);
+                    $table->timestamps();
+                });
+            } else {
+                if (! Schema::hasColumn('unair_store_items', 'available_sizes')) {
+                    try {
+                        Schema::table('unair_store_items', function (Blueprint $table) {
+                            $table->json('available_sizes')->nullable()->after('category');
+                        });
+                    } catch (\Throwable $e) {
+                        // Ignore if already added
+                    }
+                }
+                if (! Schema::hasColumn('unair_store_items', 'available_colors')) {
+                    try {
+                        Schema::table('unair_store_items', function (Blueprint $table) {
+                            $table->json('available_colors')->nullable()->after('available_sizes');
+                        });
+                    } catch (\Throwable $e) {
+                        // Ignore if already added
+                    }
+                }
+                try {
+                    DB::statement('ALTER TABLE unair_store_items MODIFY price DECIMAL(14, 2) NULL DEFAULT NULL');
+                } catch (\Throwable $e) {
+                    // Ignore if already nullable or SQLite in tests
+                }
             }
+
+            if (self::count() < 20) {
+                if (class_exists(UnairStoreOfficialCatalogSeeder::class)) {
+                    (new UnairStoreOfficialCatalogSeeder)->run();
+
+                    return;
+                }
+            }
+        } finally {
+            self::$isBootstrapping = false;
         }
     }
 }

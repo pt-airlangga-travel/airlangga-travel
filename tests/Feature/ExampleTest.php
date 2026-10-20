@@ -152,4 +152,42 @@ class ExampleTest extends TestCase
             ->assertSee('Catatan Pesanan (Opsional)')
             ->assertSeeHtml('placeholder="Catatan pesanan..."');
     }
+
+    public function test_admin_unair_store_search_and_no_price_stock_in_admin(): void
+    {
+        UnairStoreItem::ensureReady();
+        $catCount = count(UnairStoreItem::getCategories());
+
+        // 1. Pada "Semua Kategori", tabel menampilkan daftar kategori tanpa kolom Harga & Stok
+        Livewire::test(AdminUnairStore::class)
+            ->assertSeeHtml('placeholder="Cari nama / deskripsi produk..."')
+            ->assertSee("Semua Kategori ({$catCount})")
+            ->assertSee('Apparel & Fashion')
+            ->assertDontSeeHtml('<th class="py-4 px-6 font-bold">Harga</th>')
+            ->assertDontSeeHtml('<th class="py-4 px-6 font-bold">Stok</th>')
+            // 2. Ketika kategori diklik (misal Apparel & Fashion), tabel produk tampil LENGKAP dengan Harga & Stok
+            ->set('filterCategory', 'Apparel & Fashion')
+            ->assertSeeHtml('<th class="py-4 px-6 font-bold">Harga</th>')
+            ->assertSeeHtml('<th class="py-4 px-6 font-bold">Stok</th>')
+            // 3. Pencarian produk berfungsi
+            ->set('searchProduct', 'Varsity')
+            ->assertHasNoErrors()
+            // 4. Admin dapat membuat produk baru lengkap dengan harga dan stok
+            ->call('openCreateModal')
+            ->assertSet('category', 'Apparel & Fashion')
+            ->set('title', 'Topi Trucker Kampus')
+            ->set('category', 'Souvenir & Aksesoris')
+            ->set('price', 85000)
+            ->set('stock_status', 'Tersedia')
+            ->set('description', 'Topi jaring kualitas premium.')
+            ->call('saveItem')
+            ->assertHasNoErrors();
+
+        $this->assertDatabaseHas('unair_store_items', [
+            'title' => 'Topi Trucker Kampus',
+            'category' => 'Souvenir & Aksesoris',
+            'price' => 85000,
+            'stock_status' => 'Tersedia',
+        ]);
+    }
 }

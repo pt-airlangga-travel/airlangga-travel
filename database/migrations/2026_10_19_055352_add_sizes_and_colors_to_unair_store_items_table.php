@@ -12,8 +12,12 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('unair_store_items', function (Blueprint $table) {
-            $table->json('available_sizes')->nullable()->after('category');
-            $table->json('available_colors')->nullable()->after('available_sizes');
+            if (! Schema::hasColumn('unair_store_items', 'available_sizes')) {
+                $table->json('available_sizes')->nullable()->after('category');
+            }
+            if (! Schema::hasColumn('unair_store_items', 'available_colors')) {
+                $table->json('available_colors')->nullable()->after('available_sizes');
+            }
         });
     }
 

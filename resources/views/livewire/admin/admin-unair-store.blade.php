@@ -85,21 +85,22 @@
         <div class="space-y-4">
             <!-- Filter & Search Bar -->
             <div class="bg-slate-950 p-5 rounded-2xl border border-slate-800 space-y-4">
-                <!-- Search -->
-                <div class="flex items-center gap-3">
-                    <div class="relative flex-1 max-w-sm">
-                        <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-500">
-                            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0"></path></svg>
-                        </div>
-                        <input type="text"
-                               wire:model.live.debounce.300ms="searchProduct"
-                               placeholder="Cari nama / deskripsi produk..."
-                               class="w-full pl-9 pr-3.5 py-2.5 bg-slate-900 border border-slate-800 rounded-xl text-xs text-white placeholder-slate-500 focus:ring-2 focus:ring-sky-500 focus:outline-none">
-                    </div>
+                <!-- Search Box (Full Width) -->
+                <div class="flex items-center bg-slate-900 border border-slate-800 rounded-xl px-4 py-2.5 w-full focus-within:ring-2 focus-within:ring-sky-500 focus-within:border-sky-500 transition-all">
+                    <svg class="w-4 h-4 text-slate-400 shrink-0 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0"></path>
+                    </svg>
+                    <input type="text"
+                           wire:model.live.debounce.300ms="searchProduct"
+                           placeholder="Cari nama / deskripsi produk..."
+                           class="w-full bg-transparent border-0 p-0 text-xs sm:text-sm text-white placeholder-slate-500 focus:ring-0 focus:outline-none"
+                           style="background: transparent !important; border: 0 !important; outline: none !important; box-shadow: none !important; padding: 0 !important;">
                     @if(trim($searchProduct) !== '')
-                        <button type="button" wire:click="$set('searchProduct', '')"
-                                class="px-3 py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-400 hover:text-white text-xs font-bold transition-colors shrink-0">
-                            ✕ Reset
+                        <button type="button"
+                                wire:click="$set('searchProduct', '')"
+                                title="Reset pencarian"
+                                class="ml-2 text-slate-400 hover:text-white text-xs font-bold transition-colors shrink-0 px-1 py-0.5 rounded">
+                            ✕
                         </button>
                     @endif
                 </div>
@@ -109,9 +110,9 @@
                     <p class="text-[10px] font-bold text-slate-500 uppercase tracking-wider mb-2">Filter Kategori</p>
                     <div class="flex flex-wrap items-center gap-2">
                         <button type="button"
-                                wire:click="$set('filterCategory', '')"
+                                wire:click="$set('filterCategory', ''); $set('searchProduct', '')"
                                 class="px-3.5 py-2 rounded-xl text-xs font-bold transition-colors {{ $filterCategory === '' ? 'bg-sky-600 text-white shadow-md shadow-sky-600/25' : 'bg-slate-900 text-slate-400 hover:text-white hover:bg-slate-800 border border-slate-700' }}">
-                            🗂️ Semua Kategori
+                            🗂️ Semua Kategori ({{ count($categorySummaries) }})
                         </button>
                         @foreach($categories as $cat)
                             <button type="button"
@@ -125,129 +126,259 @@
                 </div>
             </div>
 
-            <!-- Products Data Table -->
+            <!-- Products Data Table Card -->
             <div class="bg-slate-950 rounded-3xl border border-slate-800 overflow-hidden shadow-xl">
-                <!-- Table Header Info -->
-                <div class="px-6 py-3.5 border-b border-slate-800 flex items-center justify-between gap-3">
-                    <p class="text-xs text-slate-400 font-semibold">
-                        Total <span class="text-white font-extrabold">{{ $totalProducts }}</span> produk
-                        @if($filterCategory !== '' || trim($searchProduct) !== '')
-                            &nbsp;·&nbsp; Menampilkan <span class="text-sky-400 font-extrabold">{{ $items->total() }}</span> hasil
-                        @endif
-                    </p>
-                    <p class="text-[11px] text-slate-500">
-                        Halaman {{ $items->currentPage() }} / {{ $items->lastPage() }}
-                    </p>
-                </div>
-                <div class="overflow-x-auto">
-                    <table class="w-full min-w-[720px] text-left text-xs text-slate-300">
-                        <thead class="bg-slate-900 text-slate-400 uppercase text-[10px] tracking-wider border-b border-slate-800">
-                            <tr>
-                                <th class="py-4 px-6 font-bold">Foto</th>
-                                <th class="py-4 px-6 font-bold">Nama Produk</th>
-                                <th class="py-4 px-6 font-bold">Kategori</th>
-                                <th class="py-4 px-6 font-bold">Harga</th>
-                                <th class="py-4 px-6 font-bold">Stok</th>
-                                <th class="py-4 px-6 font-bold">Status</th>
-                                <th class="py-4 px-6 font-bold text-right">Aksi</th>
-                            </tr>
-                        </thead>
-                        <tbody class="divide-y divide-slate-800/60">
-                            @forelse($items as $item)
-                                <tr wire:key="admin-store-{{ $item->id }}" class="hover:bg-slate-900/50 transition-colors">
-                                    <td class="py-4 px-6">
-                                        <div class="relative w-16 h-12">
-                                            <img src="{{ $item->cover_image }}" alt="{{ $item->title }}" class="w-16 h-12 object-cover rounded-xl border border-slate-700">
-                                            @if(is_array($item->detail_images) && count($item->detail_images) > 1)
-                                                <span class="absolute -bottom-1 -right-1 px-1.5 py-0.5 rounded-md bg-sky-600 text-white text-[9px] font-extrabold shadow">
-                                                    +{{ count($item->detail_images) }}
+                @if($filterCategory === '' && trim($searchProduct) === '')
+                    <!-- TAMPILAN SEMUA KATEGORI (Hanya Kategori, Tanpa Harga & Stok) -->
+                    <div class="px-6 py-4 border-b border-slate-800 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                        <div class="flex items-center gap-2.5">
+                            <span class="px-2.5 py-0.5 rounded-full bg-sky-500/20 text-sky-400 text-[10px] font-extrabold uppercase tracking-wider">
+                                Semua Kategori
+                            </span>
+                            <p class="text-xs text-slate-300 font-semibold">
+                                Menampilkan <span class="text-white font-extrabold">{{ count($categorySummaries) }} Kategori</span> Merchandise
+                            </p>
+                        </div>
+                        <p class="text-[11px] text-slate-400 italic">
+                            Klik salah satu kategori untuk melihat produk, harga, dan stok di dalamnya
+                        </p>
+                    </div>
+
+                    <div class="overflow-x-auto">
+                        <table class="w-full min-w-[640px] text-left text-xs text-slate-300">
+                            <thead class="bg-slate-900 text-slate-400 uppercase text-[10px] tracking-wider border-b border-slate-800">
+                                <tr>
+                                    <th class="py-4 px-6 font-bold w-16">#</th>
+                                    <th class="py-4 px-6 font-bold">Kategori Merchandise</th>
+                                    <th class="py-4 px-6 font-bold text-center">Jumlah Produk</th>
+                                    <th class="py-4 px-6 font-bold">Status Produk</th>
+                                    <th class="py-4 px-6 font-bold text-right">Aksi</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-slate-800/60">
+                                @forelse($categorySummaries as $catItem)
+                                    <tr wire:key="admin-cat-sum-{{ $loop->index }}"
+                                        wire:click="$set('filterCategory', '{{ addslashes($catItem['name']) }}')"
+                                        class="hover:bg-slate-900/70 cursor-pointer transition-colors group">
+                                        <td class="py-4 px-6 text-slate-500 font-bold">
+                                            <span class="w-7 h-7 rounded-lg bg-slate-900 border border-slate-800 text-slate-400 text-xs font-bold flex items-center justify-center group-hover:border-sky-500/50 group-hover:text-sky-400 transition-colors">
+                                                {{ $catItem['index'] }}
+                                            </span>
+                                        </td>
+                                        <td class="py-4 px-6">
+                                            <div class="flex items-center gap-3">
+                                                @if(!empty($catItem['thumbnail']))
+                                                    <img src="{{ $catItem['thumbnail'] }}" alt="{{ $catItem['name'] }}" class="w-12 h-10 object-cover rounded-lg border border-slate-800 shrink-0">
+                                                @else
+                                                    <div class="w-12 h-10 rounded-lg bg-slate-900 border border-slate-800 flex items-center justify-center text-slate-500 text-base shrink-0">
+                                                        🗂️
+                                                    </div>
+                                                @endif
+                                                <div>
+                                                    <div class="font-bold text-white text-sm group-hover:text-sky-400 transition-colors">
+                                                        {{ $catItem['name'] }}
+                                                    </div>
+                                                    <span class="text-[11px] text-slate-400">
+                                                        Klik untuk membuka katalog barang
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td class="py-4 px-6 text-center">
+                                            <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-extrabold bg-sky-950 text-sky-400 border border-sky-800/80">
+                                                {{ $catItem['total_products'] }} Produk
+                                            </span>
+                                        </td>
+                                        <td class="py-4 px-6">
+                                            @if($catItem['active_products'] > 0)
+                                                <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[10px] font-bold bg-emerald-500/20 text-emerald-400 border border-emerald-500/30">
+                                                    <span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>
+                                                    <span>{{ $catItem['active_products'] }} Aktif</span>
+                                                </span>
+                                            @else
+                                                <span class="px-2.5 py-1 rounded-full text-[10px] font-bold bg-slate-800 text-slate-500">
+                                                    Non-Aktif
                                                 </span>
                                             @endif
-                                        </div>
-                                    </td>
-                                    <td class="py-4 px-6">
-                                        <div class="font-bold text-white text-sm">{{ $item->title }}</div>
-                                        @if(!empty($item->badge))
-                                            <span class="inline-block mt-1 px-2 py-0.5 rounded-md bg-amber-500/20 text-amber-300 border border-amber-500/30 text-[10px] font-bold">
-                                                ★ {{ $item->badge }}
-                                            </span>
-                                        @endif
-                                        @if(!empty($item->sizes_list) || !empty($item->colors_list))
-                                            <div class="flex flex-wrap items-center gap-1 mt-1.5">
-                                                @if(!empty($item->sizes_list))
-                                                    <span class="px-1.5 py-0.5 rounded bg-sky-950 text-sky-400 border border-sky-800/80 text-[10px] font-medium">
-                                                        Ukuran: {{ implode(', ', $item->sizes_list) }}
-                                                    </span>
-                                                @endif
-                                                @if(!empty($item->colors_list))
-                                                    <span class="px-1.5 py-0.5 rounded bg-amber-950 text-amber-400 border border-amber-800/80 text-[10px] font-medium">
-                                                        Warna: {{ implode(', ', $item->colors_list) }}
+                                        </td>
+                                        <td class="py-4 px-6 text-right whitespace-nowrap" onclick="event.stopPropagation()">
+                                            <button type="button"
+                                                    wire:click="$set('filterCategory', '{{ addslashes($catItem['name']) }}')"
+                                                    class="px-3.5 py-2 rounded-xl bg-sky-600 hover:bg-sky-500 text-white font-bold text-xs transition-colors shadow-md shadow-sky-600/20 inline-flex items-center gap-1.5">
+                                                <span>Lihat Produk</span>
+                                                <span>➔</span>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                @empty
+                                    <tr>
+                                        <td colspan="5" class="py-12 text-center text-slate-500 text-xs">
+                                            Belum ada kategori produk merchandise.
+                                        </td>
+                                    </tr>
+                                @endforelse
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="p-4 border-t border-slate-800 flex flex-col sm:flex-row items-center justify-between gap-3">
+                        <p class="text-xs text-slate-400">
+                            Total <span class="text-white font-extrabold">{{ count($categorySummaries) }}</span> Kategori &middot; <span class="text-sky-400 font-extrabold">{{ $totalProducts }}</span> Total Produk Merchandise
+                        </p>
+                        <button type="button"
+                                wire:click="$set('activeTab', 'categories')"
+                                class="text-xs text-sky-400 hover:text-sky-300 font-bold hover:underline">
+                            ⚙️ Kelola / Tambah Kategori
+                        </button>
+                    </div>
+                @else
+                    <!-- TAMPILAN PRODUK SESUAI KATEGORI / PENCARIAN (Lengkap dengan Harga & Stok) -->
+                    <div class="px-6 py-3.5 border-b border-slate-800 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                        <div class="flex flex-wrap items-center gap-2">
+                            <button type="button"
+                                    wire:click="$set('filterCategory', ''); $set('searchProduct', '')"
+                                    class="px-3 py-1.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-sky-400 hover:text-sky-300 font-bold text-xs flex items-center gap-1.5 transition-colors border border-slate-700">
+                                <span>⬅</span>
+                                <span>Semua Kategori ({{ count($categorySummaries) }})</span>
+                            </button>
+                            <span class="text-slate-600">›</span>
+                            @if($filterCategory !== '')
+                                <span class="font-extrabold text-white text-sm">{{ $filterCategory }}</span>
+                            @endif
+                            @if(trim($searchProduct) !== '')
+                                <span class="text-xs text-slate-400">Pencarian: "<span class="text-sky-400 font-bold">{{ $searchProduct }}</span>"</span>
+                            @endif
+                            <span class="px-2 py-0.5 rounded-full bg-sky-500/20 text-sky-400 text-[10px] font-extrabold">
+                                {{ $items->total() }} Produk
+                            </span>
+                        </div>
+                        <p class="text-[11px] text-slate-500">
+                            Halaman {{ $items->currentPage() }} / {{ $items->lastPage() }}
+                        </p>
+                    </div>
+
+                    <div class="overflow-x-auto">
+                        <table class="w-full min-w-[720px] text-left text-xs text-slate-300">
+                            <thead class="bg-slate-900 text-slate-400 uppercase text-[10px] tracking-wider border-b border-slate-800">
+                                <tr>
+                                    <th class="py-4 px-6 font-bold">Foto</th>
+                                    <th class="py-4 px-6 font-bold">Nama Produk</th>
+                                    <th class="py-4 px-6 font-bold">Kategori</th>
+                                    <th class="py-4 px-6 font-bold">Harga</th>
+                                    <th class="py-4 px-6 font-bold">Stok</th>
+                                    <th class="py-4 px-6 font-bold">Status</th>
+                                    <th class="py-4 px-6 font-bold text-right">Aksi</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-slate-800/60">
+                                @forelse($items as $item)
+                                    <tr wire:key="admin-store-item-{{ $item->id }}" class="hover:bg-slate-900/50 transition-colors">
+                                        <td class="py-4 px-6">
+                                            <div class="relative w-16 h-12">
+                                                <img src="{{ $item->cover_image }}" alt="{{ $item->title }}" class="w-16 h-12 object-cover rounded-xl border border-slate-700">
+                                                @if(is_array($item->detail_images) && count($item->detail_images) > 1)
+                                                    <span class="absolute -bottom-1 -right-1 px-1.5 py-0.5 rounded-md bg-sky-600 text-white text-[9px] font-extrabold shadow">
+                                                        +{{ count($item->detail_images) }}
                                                     </span>
                                                 @endif
                                             </div>
-                                        @endif
-                                    </td>
-                                    <td class="py-4 px-6 text-slate-400 font-semibold">
-                                        {{ $item->category }}
-                                    </td>
-                                    <td class="py-4 px-6">
-                                        @if($item->formatted_discount_price)
-                                            @if($item->formatted_price)
-                                                <span class="text-[11px] text-slate-500 line-through block">{{ $item->formatted_price }}</span>
+                                        </td>
+                                        <td class="py-4 px-6">
+                                            <div class="font-bold text-white text-sm">{{ $item->title }}</div>
+                                            @if(!empty($item->badge))
+                                                <span class="inline-block mt-1 px-2 py-0.5 rounded-md bg-amber-500/20 text-amber-300 border border-amber-500/30 text-[10px] font-bold">
+                                                    ★ {{ $item->badge }}
+                                                </span>
                                             @endif
-                                            <span class="text-sm font-extrabold text-sky-400">{{ $item->formatted_discount_price }}</span>
-                                        @elseif($item->formatted_price)
-                                            <span class="text-sm font-extrabold text-sky-400">{{ $item->formatted_price }}</span>
-                                        @else
-                                            <span class="text-xs text-slate-500 italic">Tanpa Harga</span>
-                                        @endif
-                                    </td>
-                                    <td class="py-4 px-6">
-                                        <span class="px-2.5 py-1 rounded-full text-[10px] font-bold bg-slate-800 text-slate-200 border border-slate-700">
-                                            {{ $item->stock_status }}
-                                        </span>
-                                    </td>
-                                    <td class="py-4 px-6">
-                                        <button type="button"
-                                                wire:click="toggleItemStatus({{ $item->id }})"
-                                                title="Klik untuk ubah status tampil"
-                                                class="px-2.5 py-1 rounded-full text-[10px] font-bold transition-colors {{ $item->is_active ? 'bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 hover:bg-emerald-500/30' : 'bg-slate-800 text-slate-500 hover:bg-slate-700' }}">
-                                            {{ $item->is_active ? 'Aktif' : 'Non-Aktif' }}
-                                        </button>
-                                    </td>
-                                    <td class="py-4 px-6 text-right space-x-2 whitespace-nowrap">
-                                        <button type="button" wire:click="editItem({{ $item->id }})" class="px-3 py-1.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-sky-400 font-bold text-xs transition-colors">
-                                            ✏️ Edit
-                                        </button>
-                                        <button type="button" wire:click="deleteItem({{ $item->id }})" wire:confirm="Yakin ingin menghapus produk merchandise ini?" class="px-3 py-1.5 rounded-xl bg-rose-500/10 hover:bg-rose-500/20 text-rose-400 font-bold text-xs transition-colors border border-rose-500/20">
-                                            🗑️ Hapus
-                                        </button>
-                                    </td>
-                                </tr>
-                            @empty
-                                <tr>
-                                    <td colspan="7" class="py-12 text-center text-slate-500 text-xs">
-                                        Belum ada produk merchandise yang sesuai filter. Klik "Tambah Produk Merchandise" untuk membuat baru.
-                                    </td>
-                                </tr>
-                            @endforelse
-                        </tbody>
-                    </table>
-                </div>
-
-                <div class="p-4 border-t border-slate-800 flex items-center justify-between gap-4">
-                    <p class="text-xs text-slate-500 font-medium shrink-0">
-                        Menampilkan {{ $items->firstItem() ?? 0 }}–{{ $items->lastItem() ?? 0 }} dari {{ $items->total() }} produk
-                    </p>
-                    <div class="[&_.pagination]:flex [&_.pagination]:items-center [&_.pagination]:gap-1
-                                [&_.page-item_.page-link]:block [&_.page-item_.page-link]:px-3 [&_.page-item_.page-link]:py-1.5 [&_.page-item_.page-link]:rounded-lg [&_.page-item_.page-link]:text-xs [&_.page-item_.page-link]:font-bold [&_.page-item_.page-link]:transition-colors
-                                [&_.page-item_.page-link]:bg-slate-800 [&_.page-item_.page-link]:text-slate-300 [&_.page-item_.page-link]:border [&_.page-item_.page-link]:border-slate-700
-                                [&_.page-item_.page-link:hover]:bg-sky-600 [&_.page-item_.page-link:hover]:text-white [&_.page-item_.page-link:hover]:border-sky-600
-                                [&_.page-item.active_.page-link]:bg-sky-600 [&_.page-item.active_.page-link]:text-white [&_.page-item.active_.page-link]:border-sky-600
-                                [&_.page-item.disabled_.page-link]:opacity-30 [&_.page-item.disabled_.page-link]:cursor-not-allowed">
-                        {{ $items->links() }}
+                                            @if(!empty($item->sizes_list) || !empty($item->colors_list))
+                                                <div class="flex flex-wrap items-center gap-1 mt-1.5">
+                                                    @if(!empty($item->sizes_list))
+                                                        <span class="px-1.5 py-0.5 rounded bg-sky-950 text-sky-400 border border-sky-800/80 text-[10px] font-medium">
+                                                            Ukuran: {{ implode(', ', $item->sizes_list) }}
+                                                        </span>
+                                                    @endif
+                                                    @if(!empty($item->colors_list))
+                                                        <span class="px-1.5 py-0.5 rounded bg-amber-950 text-amber-400 border border-amber-800/80 text-[10px] font-medium">
+                                                            Warna: {{ implode(', ', $item->colors_list) }}
+                                                        </span>
+                                                    @endif
+                                                </div>
+                                            @endif
+                                        </td>
+                                        <td class="py-4 px-6 text-slate-400 font-semibold whitespace-nowrap">
+                                            {{ $item->category }}
+                                        </td>
+                                        <td class="py-4 px-6 whitespace-nowrap">
+                                            @if($item->formatted_discount_price)
+                                                <span class="text-[11px] text-rose-400 line-through block">{{ $item->formatted_price }}</span>
+                                                <span class="text-sm font-extrabold text-sky-400">{{ $item->formatted_discount_price }}</span>
+                                            @elseif($item->formatted_price)
+                                                <span class="text-sm font-extrabold text-sky-400">{{ $item->formatted_price }}</span>
+                                            @else
+                                                <span class="text-xs text-slate-500 italic">-</span>
+                                            @endif
+                                        </td>
+                                        <td class="py-4 px-6 whitespace-nowrap">
+                                            @if($item->stock_status === 'Tersedia')
+                                                <span class="px-2.5 py-1 rounded-full text-[10px] font-bold bg-emerald-500/20 text-emerald-400 border border-emerald-500/30">
+                                                    Tersedia
+                                                </span>
+                                            @elseif($item->stock_status === 'Pre-Order')
+                                                <span class="px-2.5 py-1 rounded-full text-[10px] font-bold bg-purple-500/20 text-purple-400 border border-purple-500/30">
+                                                    Pre-Order
+                                                </span>
+                                            @elseif($item->stock_status === 'Stok Terbatas')
+                                                <span class="px-2.5 py-1 rounded-full text-[10px] font-bold bg-amber-500/20 text-amber-400 border border-amber-500/30">
+                                                    Stok Terbatas
+                                                </span>
+                                            @else
+                                                <span class="px-2.5 py-1 rounded-full text-[10px] font-bold bg-rose-500/20 text-rose-400 border border-rose-500/30">
+                                                    {{ $item->stock_status ?: 'Habis' }}
+                                                </span>
+                                            @endif
+                                        </td>
+                                        <td class="py-4 px-6 whitespace-nowrap">
+                                            <button type="button"
+                                                    wire:click="toggleItemStatus({{ $item->id }})"
+                                                    title="Klik untuk ubah status tampil"
+                                                    class="px-2.5 py-1 rounded-full text-[10px] font-bold transition-colors {{ $item->is_active ? 'bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 hover:bg-emerald-500/30' : 'bg-slate-800 text-slate-500 hover:bg-slate-700' }}">
+                                                {{ $item->is_active ? 'Aktif' : 'Non-Aktif' }}
+                                            </button>
+                                        </td>
+                                        <td class="py-4 px-6 text-right space-x-2 whitespace-nowrap">
+                                            <button type="button" wire:click="editItem({{ $item->id }})" class="px-3 py-1.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-sky-400 font-bold text-xs transition-colors">
+                                                ✏️ Edit
+                                            </button>
+                                            <button type="button" wire:click="deleteItem({{ $item->id }})" wire:confirm="Yakin ingin menghapus produk merchandise ini?" class="px-3 py-1.5 rounded-xl bg-rose-500/10 hover:bg-rose-500/20 text-rose-400 font-bold text-xs transition-colors border border-rose-500/20">
+                                                🗑️ Hapus
+                                            </button>
+                                        </td>
+                                    </tr>
+                                @empty
+                                    <tr>
+                                        <td colspan="7" class="py-12 text-center text-slate-500 text-xs">
+                                            Belum ada produk merchandise yang sesuai filter. Klik "Tambah Produk Merchandise" untuk membuat baru.
+                                        </td>
+                                    </tr>
+                                @endforelse
+                            </tbody>
+                        </table>
                     </div>
-                </div>
+
+                    <div class="p-4 border-t border-slate-800 flex flex-col sm:flex-row items-center justify-between gap-4">
+                        <p class="text-xs text-slate-500 font-medium shrink-0">
+                            Menampilkan {{ $items->firstItem() ?? 0 }}–{{ $items->lastItem() ?? 0 }} dari {{ $items->total() }} produk
+                        </p>
+                        <div class="[&_.pagination]:flex [&_.pagination]:items-center [&_.pagination]:gap-1
+                                    [&_.page-item_.page-link]:block [&_.page-item_.page-link]:px-3 [&_.page-item_.page-link]:py-1.5 [&_.page-item_.page-link]:rounded-lg [&_.page-item_.page-link]:text-xs [&_.page-item_.page-link]:font-bold [&_.page-item_.page-link]:transition-colors
+                                    [&_.page-item_.page-link]:bg-slate-800 [&_.page-item_.page-link]:text-slate-300 [&_.page-item_.page-link]:border [&_.page-item_.page-link]:border-slate-700
+                                    [&_.page-item_.page-link:hover]:bg-sky-600 [&_.page-item_.page-link:hover]:text-white [&_.page-item_.page-link:hover]:border-sky-600
+                                    [&_.page-item.active_.page-link]:bg-sky-600 [&_.page-item.active_.page-link]:text-white [&_.page-item.active_.page-link]:border-sky-600
+                                    [&_.page-item.disabled_.page-link]:opacity-30 [&_.page-item.disabled_.page-link]:cursor-not-allowed">
+                            {{ $items->links() }}
+                        </div>
+                    </div>
+                @endif
             </div>
         </div>
     @endif
@@ -630,7 +761,7 @@
                             @error('title') <span class="text-xs text-rose-400 mt-1 block">{{ $message }}</span> @enderror
                         </div>
 
-                        <div>
+                        <div class="sm:col-span-1">
                             <div class="flex items-center justify-between mb-1">
                                 <label class="font-bold text-slate-300 block uppercase tracking-wider text-xs">Kategori Produk</label>
                                 <button type="button"
@@ -647,7 +778,7 @@
                             @error('category') <span class="text-xs text-rose-400 mt-1 block">{{ $message }}</span> @enderror
                         </div>
 
-                        <div>
+                        <div class="sm:col-span-1">
                             <label class="font-bold text-slate-300 block mb-1 uppercase tracking-wider text-xs">Status Stok</label>
                             <select wire:model="stock_status" class="w-full px-4 py-2.5 bg-slate-950 border border-slate-800 rounded-xl text-white focus:ring-2 focus:ring-sky-500 focus:outline-none font-semibold">
                                 <option value="Tersedia">Tersedia</option>
@@ -655,17 +786,19 @@
                                 <option value="Stok Terbatas">Stok Terbatas</option>
                                 <option value="Habis">Habis</option>
                             </select>
+                            @error('stock_status') <span class="text-xs text-rose-400 mt-1 block">{{ $message }}</span> @enderror
                         </div>
 
-                        <div>
+                        <div class="sm:col-span-1">
                             <label class="font-bold text-slate-300 block mb-1 uppercase tracking-wider text-xs">Harga Normal (Rp) (Opsional)</label>
-                            <input type="number" wire:model="price" placeholder="Kosongkan jika tanpa harga" class="w-full px-4 py-2.5 bg-slate-950 border border-slate-800 rounded-xl text-white focus:ring-2 focus:ring-sky-500 focus:outline-none font-semibold">
+                            <input type="number" wire:model="price" placeholder="Contoh: 250000" class="w-full px-4 py-2.5 bg-slate-950 border border-slate-800 rounded-xl text-white focus:ring-2 focus:ring-sky-500 focus:outline-none font-semibold">
                             @error('price') <span class="text-xs text-rose-400 mt-1 block">{{ $message }}</span> @enderror
                         </div>
 
-                        <div>
-                            <label class="font-bold text-slate-300 block mb-1 uppercase tracking-wider text-xs">Harga Promo / Diskon (Opsional)</label>
+                        <div class="sm:col-span-1">
+                            <label class="font-bold text-slate-300 block mb-1 uppercase tracking-wider text-xs">Harga Promo / Coret (Rp) (Opsional)</label>
                             <input type="number" wire:model="discount_price" placeholder="Kosongkan jika tidak diskon" class="w-full px-4 py-2.5 bg-slate-950 border border-slate-800 rounded-xl text-white focus:ring-2 focus:ring-sky-500 focus:outline-none font-semibold">
+                            @error('discount_price') <span class="text-xs text-rose-400 mt-1 block">{{ $message }}</span> @enderror
                         </div>
 
                         <div class="sm:col-span-2">

@@ -407,5 +407,6 @@ class DatabaseSeeder extends Seeder
         }
 
         $this->call(ServicesSeeder::class);
+        $this->call(UnairStoreOfficialCatalogSeeder::class);
     }
 }

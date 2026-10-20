@@ -10,8 +10,6 @@ class UnairStoreOfficialCatalogSeeder extends Seeder
 {
     public function run(): void
     {
-        UnairStoreItem::ensureReady();
-
         // 1. Truncate existing items to replace with official neat catalog
         UnairStoreItem::truncate();
 

@@ -368,7 +368,11 @@ class AdminUnairStore extends Component
             'newColorInput',
         ]);
         $categories = UnairStoreItem::getCategories();
-        $this->category = $categories[0] ?? 'Apparel & Fashion';
+        if ($this->filterCategory !== '' && in_array($this->filterCategory, $categories, true)) {
+            $this->category = $this->filterCategory;
+        } else {
+            $this->category = $categories[0] ?? 'Apparel & Fashion';
+        }
         $this->stock_status = 'Tersedia';
         $this->is_active = true;
         $this->modalOpen = true;
@@ -415,7 +419,7 @@ class AdminUnairStore extends Component
             'category' => 'required|string|max:100',
             'price' => 'nullable|numeric|min:0',
             'discount_price' => 'nullable|numeric|min:0',
-            'stock_status' => 'required|string|max:50',
+            'stock_status' => 'nullable|string|max:50',
             'description' => 'required|string',
             'coverImageFile' => 'nullable|image|max:10240',
             'detailImageFiles.*' => 'nullable|image|max:10240',
@@ -464,7 +468,7 @@ class AdminUnairStore extends Component
             'category' => $this->category,
             'price' => $normalizedPrice,
             'discount_price' => $normalizedDiscountPrice,
-            'stock_status' => $this->stock_status,
+            'stock_status' => $this->stock_status ?: 'Tersedia',
             'badge' => trim($this->badge) !== '' ? trim($this->badge) : null,
             'description' => $this->description,
             'available_sizes' => ! empty($this->available_sizes) ? array_values($this->available_sizes) : null,
@@ -504,6 +508,34 @@ class AdminUnairStore extends Component
     {
         UnairStoreItem::ensureReady();
 
+        $categoriesList = UnairStoreItem::getCategories();
+
+        $categoryStats = UnairStoreItem::query()
+            ->selectRaw('category, count(*) as total, sum(case when is_active = 1 then 1 else 0 end) as active_total')
+            ->groupBy('category')
+            ->get()
+            ->keyBy('category');
+
+        $categoryThumbnails = UnairStoreItem::query()
+            ->whereNotNull('cover_image')
+            ->where('cover_image', '!=', '')
+            ->orderBy('id', 'asc')
+            ->get(['category', 'cover_image'])
+            ->groupBy('category')
+            ->map(fn ($group) => $group->first()->cover_image);
+
+        $categorySummaries = collect($categoriesList)->map(function ($catName, $index) use ($categoryStats, $categoryThumbnails) {
+            $info = $categoryStats->get($catName);
+
+            return [
+                'index' => $index + 1,
+                'name' => $catName,
+                'total_products' => $info ? (int) $info->total : 0,
+                'active_products' => $info ? (int) $info->active_total : 0,
+                'thumbnail' => $categoryThumbnails->get($catName),
+            ];
+        });
+
         $query = UnairStoreItem::query()->latest();
 
         if ($this->filterCategory !== '') {
@@ -523,7 +555,8 @@ class AdminUnairStore extends Component
 
         return view('livewire.admin.admin-unair-store', [
             'items' => $items,
-            'categories' => UnairStoreItem::getCategories(),
+            'categories' => $categoriesList,
+            'categorySummaries' => $categorySummaries,
             'totalProducts' => UnairStoreItem::count(),
             'activeProducts' => UnairStoreItem::where('is_active', true)->count(),
         ])->layout('components.layouts.admin', ['title' => 'Master Data Merchandise Universitas Airlangga']);
