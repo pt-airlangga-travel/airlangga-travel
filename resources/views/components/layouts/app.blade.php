@@ -134,6 +134,10 @@
                         Beranda
                     </a>
 
+                    <a href="{{ route('about') }}" class="px-3.5 py-1.5 rounded-xl transition-colors hover:text-sky-600 hover:bg-sky-50/80 {{ request()->routeIs('about') ? 'text-sky-600 font-bold bg-sky-50' : '' }}">
+                        Tentang Kami
+                    </a>
+
                     <!-- Layanan Dropdown Menu -->
                     <div class="relative"
                          x-data="{ dropdownOpen: false, closeTimer: null }"
@@ -222,9 +226,6 @@
                         <svg class="w-3.5 h-3.5 text-sky-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
                     </a>
 
-                    <a href="{{ route('about') }}" class="px-3.5 py-1.5 rounded-xl transition-colors hover:text-sky-600 hover:bg-sky-50/80 {{ request()->routeIs('about') ? 'text-sky-600 font-bold bg-sky-50' : '' }}">
-                        Tentang Kami
-                    </a>
                     <a href="{{ route('articles.index') }}" class="px-3.5 py-1.5 rounded-xl transition-colors hover:text-sky-600 hover:bg-sky-50/80 {{ request()->routeIs('articles.*') ? 'text-sky-600 font-bold bg-sky-50' : '' }}">
                         Blog
                     </a>
@@ -323,6 +324,8 @@
 
             <a href="{{ route('home') }}" class="block px-4 py-2.5 rounded-xl font-medium text-slate-700 hover:bg-sky-50 hover:text-sky-600">Beranda</a>
 
+            <a href="{{ route('about') }}" class="block px-4 py-2.5 rounded-xl font-medium text-slate-700 hover:bg-sky-50 hover:text-sky-600">Tentang Kami</a>
+
             <div x-data="{ open: true }" class="space-y-1">
                 <button @click="open = !open" class="w-full flex items-center justify-between px-4 py-2.5 rounded-xl font-bold text-slate-800 bg-sky-50/50">
                     <span class="flex items-center gap-2">
@@ -343,7 +346,6 @@
                 <span>Ticketing</span>
                 <svg class="w-4 h-4 text-sky-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
             </a>
-            <a href="{{ route('about') }}" class="block px-4 py-2.5 rounded-xl font-medium text-slate-700 hover:bg-sky-50 hover:text-sky-600">Tentang Kami</a>
             <a href="{{ route('articles.index') }}" class="block px-4 py-2.5 rounded-xl font-medium text-slate-700 hover:bg-sky-50 hover:text-sky-600">Blog</a>
             <a href="{{ route('contact') }}" class="block px-4 py-2.5 rounded-xl font-medium text-slate-700 hover:bg-sky-50 hover:text-sky-600">Kontak</a>
 

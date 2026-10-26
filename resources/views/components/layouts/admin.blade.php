@@ -83,6 +83,10 @@
                     Konten & Pengaturan
                 </div>
 
+                <a href="{{ route('admin.hero-images') }}" class="flex items-center justify-between px-4 py-2.5 rounded-xl transition-colors {{ request()->routeIs('admin.hero-images') ? 'bg-sky-600 text-white font-bold' : 'text-slate-400 hover:bg-slate-800 hover:text-white' }}">
+                    <span>Foto Hero Beranda</span>
+                    <span class="text-[10px] px-1.5 py-0.5 rounded bg-sky-500/20 text-sky-300 font-bold">Slider</span>
+                </a>
                 <a href="{{ route('admin.testimonials') }}" class="flex items-center gap-3 px-4 py-2.5 rounded-xl transition-colors {{ request()->routeIs('admin.testimonials') ? 'bg-sky-600 text-white font-bold' : 'text-slate-400 hover:bg-slate-800 hover:text-white' }}">
                     Ulasan Wisatawan
                 </a>

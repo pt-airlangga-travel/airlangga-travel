@@ -4,6 +4,7 @@ namespace App\Livewire;
 
 use App\Models\Article;
 use App\Models\Category;
+use App\Models\HeroImage;
 use App\Models\Testimonial;
 use App\Models\TourPackage;
 use Livewire\Component;
@@ -53,6 +54,9 @@ class HomePage extends Component
         $categories = Category::all();
         $testimonials = Testimonial::latest()->take(10)->get();
         $articles = Article::where('is_published', true)->latest()->take(3)->get();
+        $heroImages = HeroImage::where('is_active', true)
+            ->orderBy('sort_order', 'asc')
+            ->get();
 
         return view('livewire.home-page', [
             'featuredPackages' => $featuredPackages,
@@ -60,6 +64,7 @@ class HomePage extends Component
             'categories' => $categories,
             'testimonials' => $testimonials,
             'articles' => $articles,
+            'heroImages' => $heroImages,
         ])->layout('components.layouts.app', ['title' => 'Airlangga Travel & Tour Agency | Beranda']);
     }
 }

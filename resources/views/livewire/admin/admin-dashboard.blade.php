@@ -25,6 +25,17 @@
             </div>
         </div>
 
+        <a href="{{ route('admin.hero-images') }}" class="bg-slate-950 p-5 sm:p-6 rounded-3xl border border-slate-800 space-y-2 hover:border-sky-500/50 transition-colors block group">
+            <div class="flex items-center justify-between">
+                <span class="text-xs text-slate-400 font-bold uppercase tracking-wider group-hover:text-sky-400 transition-colors">Foto Hero Slider</span>
+                <span class="text-[10px] text-sky-400 font-bold">Kelola →</span>
+            </div>
+            <div class="flex items-baseline justify-between">
+                <span class="text-3xl font-extrabold text-sky-400">{{ $totalHeroImages }}</span>
+                <span class="text-xs text-slate-500 font-semibold">Tampil di Beranda</span>
+            </div>
+        </a>
+
         <div class="bg-slate-950 p-5 sm:p-6 rounded-3xl border border-slate-800 space-y-2">
             <span class="text-xs text-slate-400 font-bold uppercase tracking-wider">Status Sistem</span>
             <div class="flex items-center gap-2 pt-1">

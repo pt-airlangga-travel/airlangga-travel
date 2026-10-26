@@ -3,6 +3,7 @@
 namespace App\Livewire\Admin;
 
 use App\Models\Article;
+use App\Models\HeroImage;
 use App\Models\InquiryLog;
 use App\Models\TourPackage;
 use Livewire\Component;
@@ -16,6 +17,7 @@ class AdminDashboard extends Component
         $totalInquiries = InquiryLog::count();
         $pendingInquiries = InquiryLog::where('status', 'pending')->count();
         $totalArticles = Article::count();
+        $totalHeroImages = HeroImage::count();
 
         $recentInquiries = InquiryLog::latest()->take(5)->get();
         $recentPackages = TourPackage::latest()->take(4)->get();
@@ -26,6 +28,7 @@ class AdminDashboard extends Component
             'totalInquiries' => $totalInquiries,
             'pendingInquiries' => $pendingInquiries,
             'totalArticles' => $totalArticles,
+            'totalHeroImages' => $totalHeroImages,
             'recentInquiries' => $recentInquiries,
             'recentPackages' => $recentPackages,
         ])->layout('components.layouts.admin', ['title' => 'Ringkasan Dashboard']);

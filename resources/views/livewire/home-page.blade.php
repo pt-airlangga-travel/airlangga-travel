@@ -1,47 +1,108 @@
 <div>
-    <!-- Traveloka Light Gradient Hero Section with NAVY Text -->
-    <section class="relative bg-gradient-to-br from-sky-100 via-blue-50 to-cyan-100/80 hero-pattern pt-6 sm:pt-7 lg:pt-8 pb-20 sm:pb-24 px-4 overflow-hidden border-b border-sky-100">
-        <div class="max-w-7xl mx-auto text-center relative z-10 space-y-2">
-            <div>
-                <span class="inline-block px-5 py-2.5 rounded-full bg-sky-600/10 text-sky-950 border border-sky-300/80 text-xs sm:text-sm font-extrabold tracking-wide shadow-sm">
-                    ✈️ #1 Travel & Tour Agency Terpercaya di Indonesia
-                </span>
-            </div>
-            
-            <!-- Hero Banner Image (ytpbg.png) -->
-            <div class="-my-2 sm:-my-3 flex justify-center">
-                <img src="{{ asset('assets/ytpbg.png') }}" 
-                     alt="your travelling partner" 
-                     style="max-height: 270px; width: auto;"
-                     class="h-44 sm:h-56 lg:h-72 w-auto max-w-full object-contain drop-shadow-lg transition-transform hover:scale-[1.03]">
-            </div>
+    <!-- Hero Section: Full-Bleed Background Slider with Elegant Overlay Content -->
+    <section x-data="{
+                activeSlide: 0,
+                totalSlides: {{ $heroImages->count() > 0 ? $heroImages->count() : 1 }},
+                slides: @js($heroImages->map(fn($item) => ['title' => $item->title, 'subtitle' => $item->subtitle, 'badge' => $item->badge, 'image_url' => $item->image_url])->values()),
+                timer: null,
+                startAutoplay() {
+                    if (this.totalSlides > 1) {
+                        this.stopAutoplay();
+                        this.timer = setInterval(() => { this.next(); }, 5000);
+                    }
+                },
+                stopAutoplay() {
+                    if (this.timer) { clearInterval(this.timer); this.timer = null; }
+                },
+                next() { this.activeSlide = (this.activeSlide + 1) % this.totalSlides; },
+                prev() { this.activeSlide = (this.activeSlide - 1 + this.totalSlides) % this.totalSlides; },
+                goTo(index) { this.activeSlide = index; this.startAutoplay(); }
+            }"
+            x-init="startAutoplay()"
+            class="relative min-h-[440px] sm:min-h-[490px] lg:min-h-[530px] flex flex-col justify-end pt-8 sm:pt-12 pb-20 sm:pb-22 overflow-hidden text-white border-b border-slate-900">
 
-            <div class="max-w-3xl mx-auto space-y-3 pt-1">
-                <p class="text-slate-600 text-xs sm:text-sm md:text-base font-medium leading-relaxed">
-                    Nikmati kemudahan booking <span class="font-bold text-sky-900">Paket Wisata Bali & Labuan Bajo</span>, <span class="font-bold text-emerald-700">Umrah Bintang 5</span>, serta <span class="font-bold text-sky-900">Tiket Pesawat & Sewa Armada</span> dengan layanan <span class="inline-flex items-center gap-1 font-extrabold text-emerald-700 bg-emerald-500/15 border border-emerald-500/30 px-2.5 py-0.5 rounded-full text-xs">⚡ Fast Response via WhatsApp</span>
-                </p>
+        <!-- ── Full-Bleed Background Photos (Layer 0) ── -->
+        <div class="absolute inset-0 z-0">
+            @if($heroImages->isNotEmpty())
+                @foreach($heroImages as $index => $slide)
+                    <div x-show="activeSlide === {{ $index }}"
+                         x-transition:enter="transition-opacity duration-1000 ease-out"
+                         x-transition:enter-start="opacity-0"
+                         x-transition:enter-end="opacity-100"
+                         x-transition:leave="transition-opacity duration-1000 ease-in"
+                         x-transition:leave-start="opacity-100"
+                         x-transition:leave-end="opacity-0"
+                         class="absolute inset-0 w-full h-full"
+                         style="{{ $index === 0 ? '' : 'display:none;' }}">
+                        <img src="{{ $slide->image_url }}"
+                             alt="{{ $slide->title }}"
+                             class="w-full h-full object-cover object-center scale-105 transition-transform duration-[8000ms] ease-linear"
+                             :class="activeSlide === {{ $index }} ? 'scale-100' : 'scale-105'">
+                    </div>
+                @endforeach
+            @else
+                <div class="absolute inset-0 bg-gradient-to-br from-slate-900 via-sky-950 to-slate-950"></div>
+            @endif
 
-                <!-- Quick Feature Pills -->
-                <div class="flex flex-wrap items-center justify-center gap-2 pt-1">
-                    <a href="{{ route('services.tours') }}" class="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-white/80 hover:bg-white text-sky-900 border border-sky-200/80 shadow-sm text-[11px] sm:text-xs font-bold transition-all hover:scale-105 hover:shadow">
-                        <span>🏝️</span> Paket Tour Favorit
+            <!-- Gradient Overlays: dark vignette bottom + top so text stays readable, photos stay bright -->
+            <div class="absolute inset-0 bg-gradient-to-t from-slate-950/85 via-slate-950/20 to-slate-950/50"></div>
+            <!-- Left edge fade for content legibility -->
+            <div class="absolute inset-y-0 left-0 w-2/3 bg-gradient-to-r from-slate-950/60 to-transparent"></div>
+        </div>
+
+        <!-- ── Foreground Content (Z-10) ── -->
+        <div class="relative z-10 max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 pt-4 sm:pt-6 pb-6">
+            <div class="max-w-2xl space-y-6">
+
+                <!-- Trust Pills -->
+                <div class="flex flex-wrap items-center gap-2">
+                    <span class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-black/50 backdrop-blur-md text-sky-200 border border-white/15 text-xs font-bold tracking-wide shadow-lg">
+                        ✈️ <span>Official Partner Universitas Airlangga</span>
+                        <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+                    </span>
+                    <span class="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-black/50 backdrop-blur-md text-emerald-300 border border-emerald-400/25 text-xs font-bold shadow-md">
+                        🛡️ Izin PPIU Kemenag RI & ASITA
+                    </span>
+                </div>
+
+                <!-- Main Headline -->
+                <div class="space-y-4">
+                    <h1 class="text-4xl sm:text-5xl lg:text-6xl font-black text-white tracking-tight leading-[1.1] drop-shadow-[0_4px_24px_rgba(0,0,0,0.95)]">
+                        Wujudkan Perjalanan<br>
+                        Impian & <span class="bg-gradient-to-r from-sky-300 via-cyan-200 to-amber-300 bg-clip-text text-transparent">Event Terbaik</span>
+                    </h1>
+                    <p class="text-white/85 text-sm sm:text-[15px] leading-relaxed drop-shadow-[0_2px_8px_rgba(0,0,0,0.9)] max-w-lg">
+                        Biro perjalanan resmi terpercaya untuk civitas akademika UNAIR.<br class="hidden sm:inline">
+                        <span class="text-amber-300 font-semibold">Wisata Nusantara & Mancanegara</span> · <span class="text-emerald-300 font-semibold">Umrah VIP Bintang 5</span> · <span class="text-sky-300 font-semibold">Sewa Armada & Merchandise UNAIR</span>.
+                    </p>
+                </div>
+
+                <!-- CTA Buttons -->
+                <div class="flex flex-wrap items-center gap-3">
+                    <a href="https://wa.me/6281233020117?text=Halo%20Airlangga%20Travel,%20saya%20ingin%20konsultasi%20paket%20perjalanan%20/%20gathering"
+                       target="_blank"
+                       class="inline-flex items-center gap-2.5 px-6 py-3 rounded-2xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-sm shadow-xl shadow-black/40 transition-all hover:-translate-y-0.5 hover:shadow-emerald-600/40">
+                        <svg class="w-4 h-4 fill-current shrink-0" viewBox="0 0 24 24"><path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.711 2.598 2.664-.698c.969.54 1.861.855 2.796.855 3.18 0 5.767-2.587 5.768-5.766 0-3.18-2.587-5.766-5.768-5.766zm9.969 5.766c0 5.514-4.486 10-10 10-1.802 0-3.489-.481-4.949-1.319l-7.051 1.847 1.884-6.885c-.958-1.536-1.516-3.344-1.516-5.275 0-5.514 4.486-10 10-10 5.514 0 10 4.486 10 10z"/></svg>
+                        Konsultasi WhatsApp
                     </a>
-                    <a href="{{ route('services.umrah') }}" class="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-white/80 hover:bg-white text-emerald-800 border border-emerald-200/80 shadow-sm text-[11px] sm:text-xs font-bold transition-all hover:scale-105 hover:shadow">
-                        <span>🕋</span> Umrah & Hajj Resmi
+                    <a href="{{ route('services.tours') }}"
+                       class="inline-flex items-center gap-2 px-6 py-3 rounded-2xl bg-white/15 hover:bg-white/25 text-white font-bold text-sm border border-white/30 backdrop-blur-md transition-all hover:-translate-y-0.5">
+                        Jelajahi Paket Wisata
+                        <svg class="w-4 h-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
                     </a>
-                    <a href="{{ route('services.tickets') }}" class="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-white/80 hover:bg-white text-amber-800 border border-amber-200/80 shadow-sm text-[11px] sm:text-xs font-bold transition-all hover:scale-105 hover:shadow">
-                        <span>🎟️</span> Tiket Pesawat & Wisata
-                    </a>
-                    <a href="{{ route('services.transport') }}" class="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-white/80 hover:bg-white text-blue-900 border border-blue-200/80 shadow-sm text-[11px] sm:text-xs font-bold transition-all hover:scale-105 hover:shadow">
-                        <span>🚐</span> Sewa HiAce & Bus VIP
-                    </a>
+                </div>
+
+                <!-- Quick Service Chips -->
+                <div class="flex flex-wrap items-center gap-2">
+                    <a href="{{ route('services.tours') }}" class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-black/40 hover:bg-black/70 text-white/80 hover:text-white border border-white/15 text-xs font-semibold backdrop-blur-sm transition">🏝️ Paket Tour</a>
+                    <a href="{{ route('services.umrah') }}" class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-black/40 hover:bg-black/70 text-white/80 hover:text-white border border-white/15 text-xs font-semibold backdrop-blur-sm transition">🕋 Umrah & Hajj</a>
+                    <a href="{{ route('services.tickets') }}" class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-black/40 hover:bg-black/70 text-white/80 hover:text-white border border-white/15 text-xs font-semibold backdrop-blur-sm transition">🎟️ Tiket Pesawat</a>
+                    <a href="{{ route('services.transport') }}" class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-black/40 hover:bg-black/70 text-white/80 hover:text-white border border-white/15 text-xs font-semibold backdrop-blur-sm transition">🚐 Sewa Armada</a>
+                    <a href="{{ route('services.unair-store') }}" class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-black/40 hover:bg-black/70 text-white/80 hover:text-white border border-white/15 text-xs font-semibold backdrop-blur-sm transition">🎓 UNAIR Store</a>
                 </div>
             </div>
         </div>
 
-        <!-- Floating Decorative Glow -->
-        <div class="absolute top-10 left-10 w-80 h-80 bg-sky-300/30 rounded-full blur-3xl pointer-events-none"></div>
-        <div class="absolute bottom-0 right-10 w-96 h-96 bg-cyan-300/30 rounded-full blur-3xl pointer-events-none"></div>
     </section>
 
     <!-- Traveloka Multi-Tab Interactive Search Box (Overlaps Hero) -->

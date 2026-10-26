@@ -2,8 +2,10 @@
 
 namespace App\Providers;
 
+use Database\Seeders\HeroImageSeeder;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -57,6 +59,34 @@ class AppServiceProvider extends ServiceProvider
         }
 
         $this->ensureDatabaseAutoIncrement();
+        $this->ensureHeroImagesTable();
+    }
+
+    /**
+     * Ensure hero_images table exists and has seed data for shared hosting deployments.
+     */
+    protected function ensureHeroImagesTable(): void
+    {
+        try {
+            if (! Schema::hasTable('hero_images')) {
+                Schema::create('hero_images', function ($table) {
+                    $table->id();
+                    $table->string('title')->nullable();
+                    $table->string('subtitle')->nullable();
+                    $table->string('badge')->nullable();
+                    $table->string('image_url');
+                    $table->integer('sort_order')->default(0);
+                    $table->boolean('is_active')->default(true);
+                    $table->timestamps();
+                });
+
+                if (class_exists(HeroImageSeeder::class)) {
+                    (new HeroImageSeeder)->run();
+                }
+            }
+        } catch (\Throwable $e) {
+            // Ignore DB errors when database is not yet configured or reachable
+        }
     }
 
     /**

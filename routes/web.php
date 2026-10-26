@@ -5,6 +5,7 @@ use App\Livewire\Admin\AdminArticles;
 use App\Livewire\Admin\AdminCategories;
 use App\Livewire\Admin\AdminDashboard;
 use App\Livewire\Admin\AdminGalleries;
+use App\Livewire\Admin\AdminHeroImages;
 use App\Livewire\Admin\AdminInquiries;
 use App\Livewire\Admin\AdminLogin;
 use App\Livewire\Admin\AdminPackages;
@@ -64,6 +65,7 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::get('/unair-store', AdminUnairStore::class)->name('unair-store');
         Route::get('/categories', AdminCategories::class)->name('categories');
         Route::get('/testimonials', AdminTestimonials::class)->name('testimonials');
+        Route::get('/hero-images', AdminHeroImages::class)->name('hero-images');
         Route::get('/galleries', AdminGalleries::class)->name('galleries');
         Route::get('/articles', AdminArticles::class)->name('articles');
         Route::get('/partners', AdminPartners::class)->name('partners');

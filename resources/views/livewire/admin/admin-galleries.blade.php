@@ -1,9 +1,20 @@
 <div class="space-y-6">
     <div class="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-3">
-        <h2 class="text-lg font-bold text-slate-900">Kelola Foto Dokumentasi Perjalanan</h2>
+        <h2 class="text-lg font-bold text-slate-100">Kelola Foto Dokumentasi Perjalanan</h2>
         <button wire:click="openCreateModal" class="px-4 py-2.5 rounded-xl bg-sky-600 hover:bg-sky-500 text-white font-bold text-xs shadow-md self-start sm:self-auto">
             + Unggah Foto Baru
         </button>
+    </div>
+
+    <!-- Shortcut to Hero Images -->
+    <div class="p-4 rounded-2xl bg-sky-950/40 border border-sky-800/60 flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs">
+        <div class="flex items-center gap-2.5 text-sky-200">
+            <span>✨</span>
+            <span>Ingin mengatur foto-foto slider di bagian paling atas <strong>Hero Beranda Publik</strong>?</span>
+        </div>
+        <a href="{{ route('admin.hero-images') }}" class="px-3.5 py-1.5 rounded-xl bg-sky-600 hover:bg-sky-500 text-white font-bold text-xs shrink-0 inline-flex items-center gap-1.5">
+            Buka Foto Hero Beranda &rarr;
+        </a>
     </div>
 
     @if(session()->has('message'))
