@@ -69,7 +69,7 @@
                         <div class="relative h-52 sm:h-60 bg-slate-900 overflow-hidden">
                             <img src="{{ $item->image_url }}"
                                  alt="{{ $item->title ?? 'Hero Image' }}"
-                                 class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                                 class="w-full h-full object-cover">
 
                             <!-- Subtle bottom scrim for label legibility only -->
                             <div class="absolute bottom-0 inset-x-0 h-24 bg-gradient-to-t from-black/70 to-transparent"></div>
@@ -169,12 +169,12 @@
                         @if ($imageFile)
                             <div class="mt-3 space-y-1">
                                 <span class="text-[11px] text-slate-400 block font-bold">Pratinjau Foto Baru:</span>
-                                <img src="{{ $imageFile->temporaryUrl() }}" class="h-44 w-full object-cover rounded-xl border border-sky-500/50">
+                                <img src="{{ $imageFile->temporaryUrl() }}" class="h-44 w-full object-contain rounded-xl border border-sky-500/50 bg-slate-950">
                             </div>
                         @elseif ($existingImageUrl)
                             <div class="mt-3 space-y-1">
                                 <span class="text-[11px] text-slate-400 block font-bold">Foto Saat Ini:</span>
-                                <img src="{{ $existingImageUrl }}" class="h-44 w-full object-cover rounded-xl border border-slate-700">
+                                <img src="{{ $existingImageUrl }}" class="h-44 w-full object-contain rounded-xl border border-slate-700 bg-slate-950">
                             </div>
                         @endif
                     </div>

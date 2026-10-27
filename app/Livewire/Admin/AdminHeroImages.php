@@ -3,6 +3,7 @@
 namespace App\Livewire\Admin;
 
 use App\Models\HeroImage;
+use App\Services\HeroImageProcessor;
 use Illuminate\Support\Facades\Storage;
 use Livewire\Component;
 use Livewire\WithFileUploads;
@@ -78,8 +79,8 @@ class AdminHeroImages extends Component
             $imageUrl = $hero->image_url;
 
             if ($this->imageFile) {
-                $path = $this->imageFile->store('hero_images', 'public');
-                $newImageUrl = '/storage/'.$path;
+                $processor = new HeroImageProcessor;
+                $newImageUrl = $processor->process($this->imageFile);
 
                 // Delete old file if stored locally in hero_images
                 if ($hero->image_url && str_contains($hero->image_url, '/storage/hero_images/')) {
@@ -103,8 +104,8 @@ class AdminHeroImages extends Component
 
             session()->flash('message', 'Foto hero berhasil diperbarui.');
         } else {
-            $path = $this->imageFile->store('hero_images', 'public');
-            $imageUrl = '/storage/'.$path;
+            $processor = new HeroImageProcessor;
+            $imageUrl = $processor->process($this->imageFile);
 
             HeroImage::create([
                 'title' => $this->title ?: null,

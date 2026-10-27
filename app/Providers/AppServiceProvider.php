@@ -67,6 +67,11 @@ class AppServiceProvider extends ServiceProvider
      */
     protected function ensureHeroImagesTable(): void
     {
+        // Seeder version bump: increment this string whenever the seeder adds new records.
+        // AppServiceProvider will re-run the seeder once on the next request after deploy.
+        $seederVersion = 'v3-2026-10-27';
+        $seederFlag = storage_path('framework/hero_seeder_'.$seederVersion.'.flag');
+
         try {
             if (! Schema::hasTable('hero_images')) {
                 Schema::create('hero_images', function ($table) {
@@ -79,10 +84,12 @@ class AppServiceProvider extends ServiceProvider
                     $table->boolean('is_active')->default(true);
                     $table->timestamps();
                 });
+            }
 
-                if (class_exists(HeroImageSeeder::class)) {
-                    (new HeroImageSeeder)->run();
-                }
+            // Run seeder once per version to sync new records (updateOrCreate is idempotent)
+            if (! is_file($seederFlag) && class_exists(HeroImageSeeder::class)) {
+                (new HeroImageSeeder)->run();
+                @file_put_contents($seederFlag, date('c'));
             }
         } catch (\Throwable $e) {
             // Ignore DB errors when database is not yet configured or reachable
