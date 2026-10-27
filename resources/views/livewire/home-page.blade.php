@@ -36,8 +36,9 @@
                          style="{{ $index === 0 ? '' : 'display:none;' }}">
                         <img src="{{ $slide->image_url }}"
                              alt="{{ $slide->title }}"
-                             class="w-full h-full object-cover object-center scale-105 transition-transform duration-[8000ms] ease-linear"
-                             :class="activeSlide === {{ $index }} ? 'scale-100' : 'scale-105'">
+                             class="w-full h-full object-cover object-center"
+                             loading="eager"
+                             decoding="async">
                     </div>
                 @endforeach
             @else
