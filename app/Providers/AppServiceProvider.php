@@ -69,7 +69,7 @@ class AppServiceProvider extends ServiceProvider
     {
         // Seeder version bump: increment this string whenever the seeder adds new records.
         // AppServiceProvider will re-run the seeder once on the next request after deploy.
-        $seederVersion = 'v4-2026-10-27-sync';
+        $seederVersion = 'v5-2026-10-28-clean-hd';
         $seederFlag = storage_path('framework/hero_seeder_'.$seederVersion.'.flag');
 
         try {
