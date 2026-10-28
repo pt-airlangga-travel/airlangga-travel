@@ -19,7 +19,7 @@
                 goTo(index) { this.activeSlide = index; this.startAutoplay(); }
             }"
             x-init="startAutoplay()"
-            class="relative min-h-[360px] sm:min-h-[490px] lg:min-h-[530px] flex flex-col justify-end pt-6 sm:pt-12 pb-14 sm:pb-22 overflow-hidden text-white border-b border-slate-900">
+            class="relative min-h-[440px] sm:min-h-[490px] lg:min-h-[530px] flex flex-col justify-end pt-8 sm:pt-12 pb-20 sm:pb-22 overflow-hidden text-white border-b border-slate-900">
 
         <!-- ── Full-Bleed Background Photos (Layer 0) ── -->
         <div class="absolute inset-0 z-0">
@@ -36,10 +36,9 @@
                          style="{{ $index === 0 ? '' : 'display:none;' }}">
                         <img src="{{ $slide->image_url }}"
                              alt="{{ $slide->title }}"
-                             class="w-full h-full object-cover object-[center_25%] sm:object-center select-none"
+                             class="w-full h-full object-cover object-center"
                              loading="eager"
-                             decoding="async"
-                             style="transform: translateZ(0);">
+                             decoding="async">
                     </div>
                 @endforeach
             @else
@@ -47,60 +46,60 @@
             @endif
 
             <!-- Gradient Overlays: dark vignette bottom + top so text stays readable, photos stay bright -->
-            <div class="absolute inset-0 bg-gradient-to-t from-slate-950/90 via-slate-950/20 to-slate-950/40 sm:from-slate-950/85 sm:via-slate-950/20 sm:to-slate-950/50"></div>
-            <!-- Left edge fade for content legibility (desktop only, to keep mobile photo uniform and bright) -->
-            <div class="hidden sm:block absolute inset-y-0 left-0 w-2/3 bg-gradient-to-r from-slate-950/60 to-transparent"></div>
+            <div class="absolute inset-0 bg-gradient-to-t from-slate-950/85 via-slate-950/20 to-slate-950/50"></div>
+            <!-- Left edge fade for content legibility -->
+            <div class="absolute inset-y-0 left-0 w-2/3 bg-gradient-to-r from-slate-950/60 to-transparent"></div>
         </div>
 
         <!-- ── Foreground Content (Z-10) ── -->
-        <div class="relative z-10 max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 pt-3 sm:pt-6 pb-4 sm:pb-6">
-            <div class="max-w-2xl space-y-4 sm:space-y-6">
+        <div class="relative z-10 max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 pt-4 sm:pt-6 pb-6">
+            <div class="max-w-2xl space-y-6">
 
                 <!-- Trust Pills -->
-                <div class="flex flex-wrap items-center gap-1.5 sm:gap-2">
-                    <span class="inline-flex items-center gap-1.5 sm:gap-2 px-3 py-1 sm:px-4 sm:py-1.5 rounded-full bg-black/50 backdrop-blur-md text-sky-200 border border-white/15 text-[11px] sm:text-xs font-bold tracking-wide shadow-lg">
+                <div class="flex flex-wrap items-center gap-2">
+                    <span class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-black/50 backdrop-blur-md text-sky-200 border border-white/15 text-xs font-bold tracking-wide shadow-lg">
                         ✈️ <span>Official Partner Universitas Airlangga</span>
                         <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
                     </span>
-                    <span class="inline-flex items-center gap-1.5 px-3 py-1 sm:px-3.5 sm:py-1.5 rounded-full bg-black/50 backdrop-blur-md text-emerald-300 border border-emerald-400/25 text-[11px] sm:text-xs font-bold shadow-md">
+                    <span class="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-black/50 backdrop-blur-md text-emerald-300 border border-emerald-400/25 text-xs font-bold shadow-md">
                         🛡️ Izin PPIU Kemenag RI & ASITA
                     </span>
                 </div>
 
                 <!-- Main Headline -->
-                <div class="space-y-2.5 sm:space-y-4">
-                    <h1 class="text-3xl sm:text-5xl lg:text-6xl font-black text-white tracking-tight leading-[1.15] sm:leading-[1.1] drop-shadow-[0_4px_24px_rgba(0,0,0,0.95)]">
+                <div class="space-y-4">
+                    <h1 class="text-4xl sm:text-5xl lg:text-6xl font-black text-white tracking-tight leading-[1.1] drop-shadow-[0_4px_24px_rgba(0,0,0,0.95)]">
                         Wujudkan Perjalanan<br>
                         Impian & <span class="bg-gradient-to-r from-sky-300 via-cyan-200 to-amber-300 bg-clip-text text-transparent">Event Terbaik</span>
                     </h1>
-                    <p class="text-white/85 text-xs sm:text-[15px] leading-relaxed drop-shadow-[0_2px_8px_rgba(0,0,0,0.9)] max-w-lg">
+                    <p class="text-white/85 text-sm sm:text-[15px] leading-relaxed drop-shadow-[0_2px_8px_rgba(0,0,0,0.9)] max-w-lg">
                         Biro perjalanan resmi terpercaya untuk civitas akademika UNAIR.<br class="hidden sm:inline">
                         <span class="text-amber-300 font-semibold">Wisata Nusantara & Mancanegara</span> · <span class="text-emerald-300 font-semibold">Umrah VIP Bintang 5</span> · <span class="text-sky-300 font-semibold">Sewa Armada & Merchandise UNAIR</span>.
                     </p>
                 </div>
 
                 <!-- CTA Buttons -->
-                <div class="flex flex-wrap items-center gap-2.5 sm:gap-3">
+                <div class="flex flex-wrap items-center gap-3">
                     <a href="https://wa.me/6281233020117?text=Halo%20Airlangga%20Travel,%20saya%20ingin%20konsultasi%20paket%20perjalanan%20/%20gathering"
                        target="_blank"
-                       class="inline-flex items-center gap-2 px-4 py-2.5 sm:px-6 sm:py-3 rounded-xl sm:rounded-2xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs sm:text-sm shadow-xl shadow-black/40 transition-all hover:-translate-y-0.5 hover:shadow-emerald-600/40">
+                       class="inline-flex items-center gap-2.5 px-6 py-3 rounded-2xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-sm shadow-xl shadow-black/40 transition-all hover:-translate-y-0.5 hover:shadow-emerald-600/40">
                         <svg class="w-4 h-4 fill-current shrink-0" viewBox="0 0 24 24"><path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.711 2.598 2.664-.698c.969.54 1.861.855 2.796.855 3.18 0 5.767-2.587 5.768-5.766 0-3.18-2.587-5.766-5.768-5.766zm9.969 5.766c0 5.514-4.486 10-10 10-1.802 0-3.489-.481-4.949-1.319l-7.051 1.847 1.884-6.885c-.958-1.536-1.516-3.344-1.516-5.275 0-5.514 4.486-10 10-10 5.514 0 10 4.486 10 10z"/></svg>
                         Konsultasi WhatsApp
                     </a>
                     <a href="{{ route('services.tours') }}"
-                       class="inline-flex items-center gap-2 px-4 py-2.5 sm:px-6 sm:py-3 rounded-xl sm:rounded-2xl bg-white/15 hover:bg-white/25 text-white font-bold text-xs sm:text-sm border border-white/30 backdrop-blur-md transition-all hover:-translate-y-0.5">
+                       class="inline-flex items-center gap-2 px-6 py-3 rounded-2xl bg-white/15 hover:bg-white/25 text-white font-bold text-sm border border-white/30 backdrop-blur-md transition-all hover:-translate-y-0.5">
                         Jelajahi Paket Wisata
                         <svg class="w-4 h-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
                     </a>
                 </div>
 
                 <!-- Quick Service Chips -->
-                <div class="flex items-center gap-1.5 sm:gap-2 overflow-x-auto pb-1 sm:pb-0 sm:flex-wrap no-scrollbar">
-                    <a href="{{ route('services.tours') }}" class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-black/40 hover:bg-black/70 text-white/80 hover:text-white border border-white/15 text-xs font-semibold backdrop-blur-sm transition shrink-0">🏝️ Paket Tour</a>
-                    <a href="{{ route('services.umrah') }}" class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-black/40 hover:bg-black/70 text-white/80 hover:text-white border border-white/15 text-xs font-semibold backdrop-blur-sm transition shrink-0">🕋 Umrah & Hajj</a>
-                    <a href="{{ route('services.tickets') }}" class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-black/40 hover:bg-black/70 text-white/80 hover:text-white border border-white/15 text-xs font-semibold backdrop-blur-sm transition shrink-0">🎟️ Tiket Pesawat</a>
-                    <a href="{{ route('services.transport') }}" class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-black/40 hover:bg-black/70 text-white/80 hover:text-white border border-white/15 text-xs font-semibold backdrop-blur-sm transition shrink-0">🚐 Sewa Armada</a>
-                    <a href="{{ route('services.unair-store') }}" class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-black/40 hover:bg-black/70 text-white/80 hover:text-white border border-white/15 text-xs font-semibold backdrop-blur-sm transition shrink-0">🎓 UNAIR Store</a>
+                <div class="flex flex-wrap items-center gap-2">
+                    <a href="{{ route('services.tours') }}" class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-black/40 hover:bg-black/70 text-white/80 hover:text-white border border-white/15 text-xs font-semibold backdrop-blur-sm transition">🏝️ Paket Tour</a>
+                    <a href="{{ route('services.umrah') }}" class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-black/40 hover:bg-black/70 text-white/80 hover:text-white border border-white/15 text-xs font-semibold backdrop-blur-sm transition">🕋 Umrah & Hajj</a>
+                    <a href="{{ route('services.tickets') }}" class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-black/40 hover:bg-black/70 text-white/80 hover:text-white border border-white/15 text-xs font-semibold backdrop-blur-sm transition">🎟️ Tiket Pesawat</a>
+                    <a href="{{ route('services.transport') }}" class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-black/40 hover:bg-black/70 text-white/80 hover:text-white border border-white/15 text-xs font-semibold backdrop-blur-sm transition">🚐 Sewa Armada</a>
+                    <a href="{{ route('services.unair-store') }}" class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-black/40 hover:bg-black/70 text-white/80 hover:text-white border border-white/15 text-xs font-semibold backdrop-blur-sm transition">🎓 UNAIR Store</a>
                 </div>
             </div>
         </div>
