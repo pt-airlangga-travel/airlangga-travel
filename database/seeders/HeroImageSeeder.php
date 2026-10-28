@@ -71,6 +71,9 @@ class HeroImageSeeder extends Seeder
             ],
         ];
 
+        $keepUrls = array_column($items, 'image_url');
+        HeroImage::whereNotIn('image_url', $keepUrls)->delete();
+
         foreach ($items as $data) {
             HeroImage::updateOrCreate(
                 ['image_url' => $data['image_url']],
